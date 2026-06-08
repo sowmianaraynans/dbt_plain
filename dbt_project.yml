@@ -1,0 +1,30 @@
+name: 'plain_analytics'
+version: '1.0.0'
+config-version: 2
+
+profile: 'plain_analytics'
+
+model-paths: ["models"]
+seed-paths: ["seeds"]
+test-paths: ["tests"]
+analysis-paths: ["analyses"]
+docs-paths: ["docs"]
+
+target-path: "target"
+clean-targets: ["target", "dbt_packages"]
+
+models:
+  plain_analytics:
+    raw:
+      +materialized: view
+      +schema: raw
+    staging:
+      +materialized: view
+      +schema: staging
+    dwh:
+      +materialized: table
+      +schema: dwh
+
+seeds:
+  plain_analytics:
+    +schema: seeds

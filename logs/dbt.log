@@ -1,0 +1,2398 @@
+[0m05:43:09.038626 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fcae5f40ef0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fcae8c40740>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fcae62a1160>]}
+
+
+============================== 05:43:09.042666 | 6b06eb5f-c089-49e0-9e9f-dba91a05ebbf ==============================
+[0m05:43:09.042666 [info ] [MainThread]: Running with dbt=1.11.11
+[0m05:43:09.043286 [debug] [MainThread]: running dbt with arguments {'fail_fast': 'False', 'empty': 'None', 'debug': 'False', 'send_anonymous_usage_stats': 'True', 'indirect_selection': 'eager', 'invocation_command': 'dbt seed --quiet', 'write_json': 'True', 'partial_parse': 'True', 'quiet': 'True', 'use_colors': 'True', 'use_experimental_parser': 'False', 'warn_error': 'None', 'no_print': 'None', 'target_path': 'None', 'cache_selected_only': 'False', 'log_cache_events': 'False', 'introspect': 'True', 'profiles_dir': '.', 'version_check': 'True', 'printer_width': '80', 'log_path': '/home/claude/plain-analytics/logs', 'static_parser': 'True', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'log_format': 'default'}
+[0m05:43:09.335533 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'project_id', 'label': '6b06eb5f-c089-49e0-9e9f-dba91a05ebbf', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fcae175c050>]}
+[0m05:43:09.412824 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'adapter_info', 'label': '6b06eb5f-c089-49e0-9e9f-dba91a05ebbf', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fcae676d580>]}
+[0m05:43:09.415061 [info ] [MainThread]: Registered adapter: duckdb=1.10.1
+[0m05:43:09.523591 [debug] [MainThread]: checksum: 30a8cc8fdcbf66701b0944d4ccce3fa46dd04b61e5df68b9f16d57b2e0e3f0be, vars: {}, profile: , target: , version: 1.11.11
+[0m05:43:09.524339 [info ] [MainThread]: Unable to do partial parsing because saved manifest not found. Starting full parse.
+[0m05:43:09.524791 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'partial_parser', 'label': '6b06eb5f-c089-49e0-9e9f-dba91a05ebbf', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fcae175d4f0>]}
+[0m05:43:11.205833 [warn ] [MainThread]: [[33mWARNING[0m][MissingArgumentsPropertyInGenericTestDeprecation]: Deprecated
+functionality
+Found top-level arguments to test `accepted_values` defined on
+'gold_customer_spine' in package 'plain_analytics' (models/schema.yml).
+Arguments to generic tests should be nested under the `arguments` property.
+[0m05:43:11.206499 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'deprecation', 'label': '6b06eb5f-c089-49e0-9e9f-dba91a05ebbf', 'property_': 'warn', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fcae175e450>]}
+[0m05:43:11.512398 [warn ] [MainThread]: [[33mWARNING[0m]: Deprecated functionality
+Found resources with the same name 'raw_customers' in package 'plain_analytics':
+'model.plain_analytics.raw_customers' and 'seed.plain_analytics.raw_customers'.
+Please update one of the resources to have a unique name.
+[0m05:43:11.513015 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'deprecation', 'label': '6b06eb5f-c089-49e0-9e9f-dba91a05ebbf', 'property_': 'warn', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fcae0ef7800>]}
+[0m05:43:11.524602 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'load_project', 'label': '6b06eb5f-c089-49e0-9e9f-dba91a05ebbf', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fcae0cd9bb0>]}
+[0m05:43:11.644123 [debug] [MainThread]: Wrote artifact WritableManifest to /home/claude/plain-analytics/target/manifest.json
+[0m05:43:11.646592 [debug] [MainThread]: Wrote artifact SemanticManifest to /home/claude/plain-analytics/target/semantic_manifest.json
+[0m05:43:11.773096 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'resource_counts', 'label': '6b06eb5f-c089-49e0-9e9f-dba91a05ebbf', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fcae0c3e060>]}
+[0m05:43:11.773766 [info ] [MainThread]: Found 10 models, 6 seeds, 13 data tests, 6 sources, 485 macros
+[0m05:43:11.774143 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': '6b06eb5f-c089-49e0-9e9f-dba91a05ebbf', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fcae6d36de0>]}
+[0m05:43:11.777085 [info ] [MainThread]: 
+[0m05:43:11.777518 [info ] [MainThread]: Concurrency: 4 threads (target='dev')
+[0m05:43:11.777955 [info ] [MainThread]: 
+[0m05:43:11.778537 [debug] [MainThread]: Acquiring new duckdb connection 'master'
+[0m05:43:11.784590 [debug] [ThreadPool]: Acquiring new duckdb connection 'list_plain_analytics'
+[0m05:43:11.888301 [debug] [ThreadPool]: Using duckdb connection "list_plain_analytics"
+[0m05:43:11.888912 [debug] [ThreadPool]: On list_plain_analytics: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "plain_analytics", "target_name": "dev", "connection_name": "list_plain_analytics"} */
+
+    
+    select schema_name
+    from system.information_schema.schemata
+    
+    where lower(catalog_name) = '"plain_analytics"'
+    
+  
+  
+[0m05:43:11.889381 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m05:43:11.910172 [debug] [ThreadPool]: SQL status: OK in 0.021 seconds
+[0m05:43:11.912147 [debug] [ThreadPool]: On list_plain_analytics: Close
+[0m05:43:11.913109 [debug] [ThreadPool]: Re-using an available connection from the pool (formerly list_plain_analytics, now create_plain_analytics_main_seeds)
+[0m05:43:11.913621 [debug] [ThreadPool]: Creating schema "database: "plain_analytics"
+schema: "main_seeds"
+"
+[0m05:43:11.921841 [debug] [ThreadPool]: Using duckdb connection "create_plain_analytics_main_seeds"
+[0m05:43:11.922212 [debug] [ThreadPool]: On create_plain_analytics_main_seeds: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "plain_analytics", "target_name": "dev", "connection_name": "create_plain_analytics_main_seeds"} */
+
+    
+        select type from duckdb_databases()
+        where lower(database_name)='plain_analytics'
+        and type='sqlite'
+    
+  
+[0m05:43:11.922503 [debug] [ThreadPool]: Opening a new connection, currently in state closed
+[0m05:43:11.923564 [debug] [ThreadPool]: SQL status: OK in 0.001 seconds
+[0m05:43:11.924975 [debug] [ThreadPool]: Using duckdb connection "create_plain_analytics_main_seeds"
+[0m05:43:11.925316 [debug] [ThreadPool]: On create_plain_analytics_main_seeds: BEGIN
+[0m05:43:11.925770 [debug] [ThreadPool]: SQL status: OK in 0.000 seconds
+[0m05:43:11.926097 [debug] [ThreadPool]: Using duckdb connection "create_plain_analytics_main_seeds"
+[0m05:43:11.926366 [debug] [ThreadPool]: On create_plain_analytics_main_seeds: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "plain_analytics", "target_name": "dev", "connection_name": "create_plain_analytics_main_seeds"} */
+
+    
+    
+        create schema if not exists "plain_analytics"."main_seeds"
+    
+[0m05:43:11.926923 [debug] [ThreadPool]: SQL status: OK in 0.000 seconds
+[0m05:43:11.927851 [debug] [ThreadPool]: On create_plain_analytics_main_seeds: COMMIT
+[0m05:43:11.928208 [debug] [ThreadPool]: Using duckdb connection "create_plain_analytics_main_seeds"
+[0m05:43:11.928471 [debug] [ThreadPool]: On create_plain_analytics_main_seeds: COMMIT
+[0m05:43:11.931566 [debug] [ThreadPool]: SQL status: OK in 0.003 seconds
+[0m05:43:11.931869 [debug] [ThreadPool]: On create_plain_analytics_main_seeds: Close
+[0m05:43:11.934542 [debug] [ThreadPool]: Acquiring new duckdb connection 'list_plain_analytics_main_raw'
+[0m05:43:11.941508 [debug] [ThreadPool]: Re-using an available connection from the pool (formerly create_plain_analytics_main_seeds, now list_plain_analytics_main_seeds)
+[0m05:43:11.948016 [debug] [ThreadPool]: Using duckdb connection "list_plain_analytics_main_seeds"
+[0m05:43:11.948470 [debug] [ThreadPool]: Acquiring new duckdb connection 'list_plain_analytics_main_gold'
+[0m05:43:11.948919 [debug] [ThreadPool]: Using duckdb connection "list_plain_analytics_main_raw"
+[0m05:43:11.949715 [debug] [ThreadPool]: Acquiring new duckdb connection 'list_plain_analytics_main_staging'
+[0m05:43:11.954108 [debug] [ThreadPool]: Using duckdb connection "list_plain_analytics_main_staging"
+[0m05:43:11.950116 [debug] [ThreadPool]: On list_plain_analytics_main_seeds: BEGIN
+[0m05:43:11.954680 [debug] [ThreadPool]: Opening a new connection, currently in state closed
+[0m05:43:11.955389 [debug] [ThreadPool]: SQL status: OK in 0.001 seconds
+[0m05:43:11.955688 [debug] [ThreadPool]: Using duckdb connection "list_plain_analytics_main_seeds"
+[0m05:43:11.955953 [debug] [ThreadPool]: On list_plain_analytics_main_seeds: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "plain_analytics", "target_name": "dev", "connection_name": "list_plain_analytics_main_seeds"} */
+select
+      'plain_analytics' as database,
+      table_name as name,
+      table_schema as schema,
+      CASE table_type
+        WHEN 'BASE TABLE' THEN 'table'
+        WHEN 'VIEW' THEN 'view'
+        WHEN 'LOCAL TEMPORARY' THEN 'table'
+        END as type
+    from system.information_schema.tables
+    where lower(table_schema) = 'main_seeds'
+    and lower(table_catalog) = 'plain_analytics'
+  
+[0m05:43:11.951962 [debug] [ThreadPool]: Using duckdb connection "list_plain_analytics_main_gold"
+[0m05:43:11.956994 [debug] [ThreadPool]: On list_plain_analytics_main_gold: BEGIN
+[0m05:43:11.957376 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m05:43:11.957938 [debug] [ThreadPool]: SQL status: OK in 0.001 seconds
+[0m05:43:11.958303 [debug] [ThreadPool]: Using duckdb connection "list_plain_analytics_main_gold"
+[0m05:43:11.958584 [debug] [ThreadPool]: On list_plain_analytics_main_gold: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "plain_analytics", "target_name": "dev", "connection_name": "list_plain_analytics_main_gold"} */
+select
+      'plain_analytics' as database,
+      table_name as name,
+      table_schema as schema,
+      CASE table_type
+        WHEN 'BASE TABLE' THEN 'table'
+        WHEN 'VIEW' THEN 'view'
+        WHEN 'LOCAL TEMPORARY' THEN 'table'
+        END as type
+    from system.information_schema.tables
+    where lower(table_schema) = 'main_gold'
+    and lower(table_catalog) = 'plain_analytics'
+  
+[0m05:43:11.952326 [debug] [ThreadPool]: On list_plain_analytics_main_raw: BEGIN
+[0m05:43:11.961002 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m05:43:11.961660 [debug] [ThreadPool]: SQL status: OK in 0.001 seconds
+[0m05:43:11.961952 [debug] [ThreadPool]: Using duckdb connection "list_plain_analytics_main_raw"
+[0m05:43:11.962287 [debug] [ThreadPool]: On list_plain_analytics_main_raw: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "plain_analytics", "target_name": "dev", "connection_name": "list_plain_analytics_main_raw"} */
+select
+      'plain_analytics' as database,
+      table_name as name,
+      table_schema as schema,
+      CASE table_type
+        WHEN 'BASE TABLE' THEN 'table'
+        WHEN 'VIEW' THEN 'view'
+        WHEN 'LOCAL TEMPORARY' THEN 'table'
+        END as type
+    from system.information_schema.tables
+    where lower(table_schema) = 'main_raw'
+    and lower(table_catalog) = 'plain_analytics'
+  
+[0m05:43:11.954413 [debug] [ThreadPool]: On list_plain_analytics_main_staging: BEGIN
+[0m05:43:11.966245 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m05:43:11.966812 [debug] [ThreadPool]: SQL status: OK in 0.001 seconds
+[0m05:43:11.967270 [debug] [ThreadPool]: Using duckdb connection "list_plain_analytics_main_staging"
+[0m05:43:11.967569 [debug] [ThreadPool]: On list_plain_analytics_main_staging: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "plain_analytics", "target_name": "dev", "connection_name": "list_plain_analytics_main_staging"} */
+select
+      'plain_analytics' as database,
+      table_name as name,
+      table_schema as schema,
+      CASE table_type
+        WHEN 'BASE TABLE' THEN 'table'
+        WHEN 'VIEW' THEN 'view'
+        WHEN 'LOCAL TEMPORARY' THEN 'table'
+        END as type
+    from system.information_schema.tables
+    where lower(table_schema) = 'main_staging'
+    and lower(table_catalog) = 'plain_analytics'
+  
+[0m05:43:11.969401 [debug] [ThreadPool]: SQL status: OK in 0.013 seconds
+[0m05:43:11.970835 [debug] [ThreadPool]: On list_plain_analytics_main_seeds: ROLLBACK
+[0m05:43:11.972190 [debug] [ThreadPool]: Failed to rollback 'list_plain_analytics_main_seeds'
+[0m05:43:11.972491 [debug] [ThreadPool]: On list_plain_analytics_main_seeds: Close
+[0m05:43:11.964661 [debug] [ThreadPool]: SQL status: OK in 0.002 seconds
+[0m05:43:11.974285 [debug] [ThreadPool]: On list_plain_analytics_main_raw: ROLLBACK
+[0m05:43:11.975259 [debug] [ThreadPool]: Failed to rollback 'list_plain_analytics_main_raw'
+[0m05:43:11.975546 [debug] [ThreadPool]: On list_plain_analytics_main_raw: Close
+[0m05:43:11.976366 [debug] [ThreadPool]: SQL status: OK in 0.017 seconds
+[0m05:43:11.977703 [debug] [ThreadPool]: On list_plain_analytics_main_gold: ROLLBACK
+[0m05:43:11.978466 [debug] [ThreadPool]: SQL status: OK in 0.011 seconds
+[0m05:43:11.980695 [debug] [ThreadPool]: On list_plain_analytics_main_staging: ROLLBACK
+[0m05:43:11.981662 [debug] [ThreadPool]: Failed to rollback 'list_plain_analytics_main_staging'
+[0m05:43:11.981968 [debug] [ThreadPool]: On list_plain_analytics_main_staging: Close
+[0m05:43:11.979478 [debug] [ThreadPool]: Failed to rollback 'list_plain_analytics_main_gold'
+[0m05:43:11.982481 [debug] [ThreadPool]: On list_plain_analytics_main_gold: Close
+[0m05:43:11.983426 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': '6b06eb5f-c089-49e0-9e9f-dba91a05ebbf', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fcae0b3bda0>]}
+[0m05:43:11.983914 [debug] [MainThread]: Using duckdb connection "master"
+[0m05:43:11.984251 [debug] [MainThread]: On master: BEGIN
+[0m05:43:11.984502 [debug] [MainThread]: Opening a new connection, currently in state init
+[0m05:43:11.985179 [debug] [MainThread]: SQL status: OK in 0.001 seconds
+[0m05:43:11.985553 [debug] [MainThread]: On master: COMMIT
+[0m05:43:11.985838 [debug] [MainThread]: Using duckdb connection "master"
+[0m05:43:11.986145 [debug] [MainThread]: On master: COMMIT
+[0m05:43:11.986617 [debug] [MainThread]: SQL status: OK in 0.000 seconds
+[0m05:43:11.986907 [debug] [MainThread]: On master: Close
+[0m05:43:11.991223 [debug] [Thread-1 (]: Began running node seed.plain_analytics.raw_companies
+[0m05:43:11.991893 [info ] [Thread-1 (]: 1 of 6 START seed file main_seeds.raw_companies ................................ [RUN]
+[0m05:43:11.992356 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly list_plain_analytics_main_staging, now seed.plain_analytics.raw_companies)
+[0m05:43:11.992726 [debug] [Thread-1 (]: Began compiling node seed.plain_analytics.raw_companies
+[0m05:43:11.993199 [debug] [Thread-2 (]: Began running node seed.plain_analytics.raw_customers
+[0m05:43:11.994760 [info ] [Thread-2 (]: 2 of 6 START seed file main_seeds.raw_customers ................................ [RUN]
+[0m05:43:11.995187 [debug] [Thread-2 (]: Re-using an available connection from the pool (formerly list_plain_analytics_main_gold, now seed.plain_analytics.raw_customers)
+[0m05:43:11.995541 [debug] [Thread-2 (]: Began compiling node seed.plain_analytics.raw_customers
+[0m05:43:11.995897 [debug] [Thread-2 (]: Began executing node seed.plain_analytics.raw_customers
+[0m05:43:11.994292 [debug] [Thread-1 (]: Began executing node seed.plain_analytics.raw_companies
+[0m05:43:11.993526 [debug] [Thread-3 (]: Began running node seed.plain_analytics.raw_sla_breaches
+[0m05:43:12.017175 [info ] [Thread-3 (]: 3 of 6 START seed file main_seeds.raw_sla_breaches ............................. [RUN]
+[0m05:43:12.017607 [debug] [Thread-3 (]: Re-using an available connection from the pool (formerly list_plain_analytics_main_seeds, now seed.plain_analytics.raw_sla_breaches)
+[0m05:43:12.017969 [debug] [Thread-3 (]: Began compiling node seed.plain_analytics.raw_sla_breaches
+[0m05:43:12.018390 [debug] [Thread-3 (]: Began executing node seed.plain_analytics.raw_sla_breaches
+[0m05:43:11.993848 [debug] [Thread-4 (]: Began running node seed.plain_analytics.raw_tenants
+[0m05:43:12.036185 [info ] [Thread-4 (]: 4 of 6 START seed file main_seeds.raw_tenants .................................. [RUN]
+[0m05:43:12.036655 [debug] [Thread-4 (]: Re-using an available connection from the pool (formerly list_plain_analytics_main_raw, now seed.plain_analytics.raw_tenants)
+[0m05:43:12.037138 [debug] [Thread-4 (]: Began compiling node seed.plain_analytics.raw_tenants
+[0m05:43:12.037478 [debug] [Thread-4 (]: Began executing node seed.plain_analytics.raw_tenants
+[0m05:43:12.091277 [debug] [Thread-2 (]: Using duckdb connection "seed.plain_analytics.raw_customers"
+[0m05:43:12.102910 [debug] [Thread-2 (]: On seed.plain_analytics.raw_customers: BEGIN
+[0m05:43:12.103354 [debug] [Thread-2 (]: Opening a new connection, currently in state closed
+[0m05:43:12.104473 [debug] [Thread-2 (]: SQL status: OK in 0.001 seconds
+[0m05:43:12.100774 [debug] [Thread-1 (]: Using duckdb connection "seed.plain_analytics.raw_companies"
+[0m05:43:12.102466 [debug] [Thread-3 (]: Using duckdb connection "seed.plain_analytics.raw_sla_breaches"
+[0m05:43:12.105770 [debug] [Thread-3 (]: On seed.plain_analytics.raw_sla_breaches: BEGIN
+[0m05:43:12.106191 [debug] [Thread-3 (]: Opening a new connection, currently in state closed
+[0m05:43:12.105383 [debug] [Thread-1 (]: On seed.plain_analytics.raw_companies: BEGIN
+[0m05:43:12.110245 [debug] [Thread-1 (]: Opening a new connection, currently in state closed
+[0m05:43:12.110906 [debug] [Thread-1 (]: SQL status: OK in 0.001 seconds
+[0m05:43:12.111314 [debug] [Thread-1 (]: Using duckdb connection "seed.plain_analytics.raw_companies"
+[0m05:43:12.111635 [debug] [Thread-1 (]: On seed.plain_analytics.raw_companies: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "plain_analytics", "target_name": "dev", "node_id": "seed.plain_analytics.raw_companies"} */
+
+    create table "plain_analytics"."main_seeds"."raw_companies" ("id" text,"name" text,"tier" text,"domain_name" text,"region" text,"is_active" boolean,"mrr_usd" integer,"created_at" timestamp without time zone,"updated_at" timestamp without time zone)
+  
+[0m05:43:12.107037 [debug] [Thread-3 (]: SQL status: OK in 0.001 seconds
+[0m05:43:12.113252 [debug] [Thread-3 (]: Using duckdb connection "seed.plain_analytics.raw_sla_breaches"
+[0m05:43:12.113633 [debug] [Thread-3 (]: On seed.plain_analytics.raw_sla_breaches: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "plain_analytics", "target_name": "dev", "node_id": "seed.plain_analytics.raw_sla_breaches"} */
+
+    create table "plain_analytics"."main_seeds"."raw_sla_breaches" ("id" text,"thread_id" text,"customer_id" text,"company_id" text,"company_tier" text,"sla_type" text,"target_minutes" integer,"actual_minutes" integer,"breach_by_minutes" integer,"priority" text,"channel" text,"assigned_agent_id" text,"assigned_agent_name" text,"breached_at" timestamp without time zone)
+  
+[0m05:43:12.114563 [debug] [Thread-3 (]: SQL status: OK in 0.001 seconds
+[0m05:43:12.104912 [debug] [Thread-2 (]: Using duckdb connection "seed.plain_analytics.raw_customers"
+[0m05:43:12.123090 [debug] [Thread-2 (]: On seed.plain_analytics.raw_customers: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "plain_analytics", "target_name": "dev", "node_id": "seed.plain_analytics.raw_customers"} */
+
+    create table "plain_analytics"."main_seeds"."raw_customers" ("id" text,"full_name" text,"short_name" text,"email" text,"company_id" text,"tenant_id" text,"company_tier" text,"is_spam" boolean,"status" text,"created_at" timestamp without time zone,"updated_at" timestamp without time zone)
+  
+[0m05:43:12.123936 [debug] [Thread-2 (]: SQL status: OK in 0.000 seconds
+[0m05:43:12.112699 [debug] [Thread-1 (]: SQL status: OK in 0.001 seconds
+[0m05:43:12.138997 [debug] [Thread-1 (]: Using duckdb connection "seed.plain_analytics.raw_companies"
+[0m05:43:12.139399 [debug] [Thread-1 (]: On seed.plain_analytics.raw_companies: 
+          COPY "plain_analytics"."main_seeds"."raw_companies" FROM '/home/claude/plain-analytics/seeds/raw_companies.csv' (FORMAT CSV, HEADER TRUE, DELIMITER ',')
+        ...
+[0m05:43:12.122655 [debug] [Thread-4 (]: Using duckdb connection "seed.plain_analytics.raw_tenants"
+[0m05:43:12.141084 [debug] [Thread-4 (]: On seed.plain_analytics.raw_tenants: BEGIN
+[0m05:43:12.141420 [debug] [Thread-4 (]: Opening a new connection, currently in state closed
+[0m05:43:12.142140 [debug] [Thread-4 (]: SQL status: OK in 0.001 seconds
+[0m05:43:12.142478 [debug] [Thread-4 (]: Using duckdb connection "seed.plain_analytics.raw_tenants"
+[0m05:43:12.142795 [debug] [Thread-4 (]: On seed.plain_analytics.raw_tenants: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "plain_analytics", "target_name": "dev", "node_id": "seed.plain_analytics.raw_tenants"} */
+
+    create table "plain_analytics"."main_seeds"."raw_tenants" ("id" text,"external_id" text,"company_id" text,"name" text,"tier" text,"created_at" timestamp without time zone,"updated_at" timestamp without time zone)
+  
+[0m05:43:12.148224 [debug] [Thread-2 (]: Using duckdb connection "seed.plain_analytics.raw_customers"
+[0m05:43:12.148574 [debug] [Thread-2 (]: On seed.plain_analytics.raw_customers: 
+          COPY "plain_analytics"."main_seeds"."raw_customers" FROM '/home/claude/plain-analytics/seeds/raw_customers.csv' (FORMAT CSV, HEADER TRUE, DELIMITER ',')
+        ...
+[0m05:43:12.153134 [debug] [Thread-4 (]: SQL status: OK in 0.010 seconds
+[0m05:43:12.154331 [debug] [Thread-4 (]: Using duckdb connection "seed.plain_analytics.raw_tenants"
+[0m05:43:12.154668 [debug] [Thread-4 (]: On seed.plain_analytics.raw_tenants: 
+          COPY "plain_analytics"."main_seeds"."raw_tenants" FROM '/home/claude/plain-analytics/seeds/raw_tenants.csv' (FORMAT CSV, HEADER TRUE, DELIMITER ',')
+        ...
+[0m05:43:12.137709 [debug] [Thread-3 (]: Using duckdb connection "seed.plain_analytics.raw_sla_breaches"
+[0m05:43:12.155945 [debug] [Thread-3 (]: On seed.plain_analytics.raw_sla_breaches: 
+          COPY "plain_analytics"."main_seeds"."raw_sla_breaches" FROM '/home/claude/plain-analytics/seeds/raw_sla_breaches.csv' (FORMAT CSV, HEADER TRUE, DELIMITER ',')
+        ...
+[0m05:43:12.190822 [debug] [Thread-3 (]: SQL status: OK in 0.034 seconds
+[0m05:43:12.199401 [debug] [Thread-1 (]: SQL status: OK in 0.060 seconds
+[0m05:43:12.219437 [debug] [Thread-1 (]: Writing runtime SQL for node "seed.plain_analytics.raw_companies"
+[0m05:43:12.220317 [debug] [Thread-3 (]: Writing runtime SQL for node "seed.plain_analytics.raw_sla_breaches"
+[0m05:43:12.250228 [debug] [Thread-4 (]: SQL status: OK in 0.095 seconds
+[0m05:43:12.250875 [debug] [Thread-4 (]: Writing runtime SQL for node "seed.plain_analytics.raw_tenants"
+[0m05:43:12.252548 [debug] [Thread-4 (]: On seed.plain_analytics.raw_tenants: COMMIT
+[0m05:43:12.253069 [debug] [Thread-4 (]: Using duckdb connection "seed.plain_analytics.raw_tenants"
+[0m05:43:12.258158 [debug] [Thread-4 (]: On seed.plain_analytics.raw_tenants: COMMIT
+[0m05:43:12.257751 [debug] [Thread-2 (]: SQL status: OK in 0.109 seconds
+[0m05:43:12.259364 [debug] [Thread-2 (]: Writing runtime SQL for node "seed.plain_analytics.raw_customers"
+[0m05:43:12.261107 [debug] [Thread-2 (]: On seed.plain_analytics.raw_customers: COMMIT
+[0m05:43:12.261817 [debug] [Thread-2 (]: Using duckdb connection "seed.plain_analytics.raw_customers"
+[0m05:43:12.262186 [debug] [Thread-2 (]: On seed.plain_analytics.raw_customers: COMMIT
+[0m05:43:12.261436 [debug] [Thread-3 (]: On seed.plain_analytics.raw_sla_breaches: COMMIT
+[0m05:43:12.262758 [debug] [Thread-3 (]: Using duckdb connection "seed.plain_analytics.raw_sla_breaches"
+[0m05:43:12.263201 [debug] [Thread-3 (]: On seed.plain_analytics.raw_sla_breaches: COMMIT
+[0m05:43:12.256556 [debug] [Thread-1 (]: On seed.plain_analytics.raw_companies: COMMIT
+[0m05:43:12.263800 [debug] [Thread-1 (]: Using duckdb connection "seed.plain_analytics.raw_companies"
+[0m05:43:12.264181 [debug] [Thread-1 (]: On seed.plain_analytics.raw_companies: COMMIT
+[0m05:43:12.264776 [debug] [Thread-4 (]: SQL status: OK in 0.006 seconds
+[0m05:43:12.266912 [debug] [Thread-4 (]: On seed.plain_analytics.raw_tenants: Close
+[0m05:43:12.269576 [debug] [Thread-4 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': '6b06eb5f-c089-49e0-9e9f-dba91a05ebbf', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fcae16ee4b0>]}
+[0m05:43:12.270193 [info ] [Thread-4 (]: 4 of 6 OK loaded seed file main_seeds.raw_tenants .............................. [[32mINSERT 40[0m in 0.23s]
+[0m05:43:12.270733 [debug] [Thread-4 (]: Finished running node seed.plain_analytics.raw_tenants
+[0m05:43:12.271196 [debug] [Thread-4 (]: Began running node seed.plain_analytics.raw_thread_events
+[0m05:43:12.271796 [info ] [Thread-4 (]: 5 of 6 START seed file main_seeds.raw_thread_events ............................ [RUN]
+[0m05:43:12.273298 [debug] [Thread-4 (]: Re-using an available connection from the pool (formerly seed.plain_analytics.raw_tenants, now seed.plain_analytics.raw_thread_events)
+[0m05:43:12.273649 [debug] [Thread-4 (]: Began compiling node seed.plain_analytics.raw_thread_events
+[0m05:43:12.272798 [debug] [Thread-2 (]: SQL status: OK in 0.010 seconds
+[0m05:43:12.275368 [debug] [Thread-2 (]: On seed.plain_analytics.raw_customers: Close
+[0m05:43:12.275875 [debug] [Thread-2 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': '6b06eb5f-c089-49e0-9e9f-dba91a05ebbf', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fcae01397c0>]}
+[0m05:43:12.276439 [info ] [Thread-2 (]: 2 of 6 OK loaded seed file main_seeds.raw_customers ............................ [[32mINSERT 120[0m in 0.28s]
+[0m05:43:12.274443 [debug] [Thread-4 (]: Began executing node seed.plain_analytics.raw_thread_events
+[0m05:43:12.277509 [debug] [Thread-3 (]: SQL status: OK in 0.014 seconds
+[0m05:43:12.281495 [debug] [Thread-3 (]: On seed.plain_analytics.raw_sla_breaches: Close
+[0m05:43:12.281979 [debug] [Thread-3 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': '6b06eb5f-c089-49e0-9e9f-dba91a05ebbf', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fcae0ed9370>]}
+[0m05:43:12.282502 [info ] [Thread-3 (]: 3 of 6 OK loaded seed file main_seeds.raw_sla_breaches ......................... [[32mINSERT 56[0m in 0.26s]
+[0m05:43:12.282980 [debug] [Thread-3 (]: Finished running node seed.plain_analytics.raw_sla_breaches
+[0m05:43:12.277130 [debug] [Thread-2 (]: Finished running node seed.plain_analytics.raw_customers
+[0m05:43:12.283850 [debug] [Thread-1 (]: SQL status: OK in 0.019 seconds
+[0m05:43:12.284741 [debug] [Thread-1 (]: On seed.plain_analytics.raw_companies: Close
+[0m05:43:12.285305 [debug] [Thread-1 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': '6b06eb5f-c089-49e0-9e9f-dba91a05ebbf', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fcae0139460>]}
+[0m05:43:12.285753 [info ] [Thread-1 (]: 1 of 6 OK loaded seed file main_seeds.raw_companies ............................ [[32mINSERT 30[0m in 0.29s]
+[0m05:43:12.283470 [debug] [Thread-3 (]: Began running node seed.plain_analytics.raw_threads
+[0m05:43:12.286401 [debug] [Thread-1 (]: Finished running node seed.plain_analytics.raw_companies
+[0m05:43:12.294329 [info ] [Thread-3 (]: 6 of 6 START seed file main_seeds.raw_threads .................................. [RUN]
+[0m05:43:12.294929 [debug] [Thread-3 (]: Re-using an available connection from the pool (formerly seed.plain_analytics.raw_sla_breaches, now seed.plain_analytics.raw_threads)
+[0m05:43:12.295342 [debug] [Thread-3 (]: Began compiling node seed.plain_analytics.raw_threads
+[0m05:43:12.295696 [debug] [Thread-3 (]: Began executing node seed.plain_analytics.raw_threads
+[0m05:43:12.389206 [debug] [Thread-3 (]: Using duckdb connection "seed.plain_analytics.raw_threads"
+[0m05:43:12.395042 [debug] [Thread-3 (]: On seed.plain_analytics.raw_threads: BEGIN
+[0m05:43:12.395547 [debug] [Thread-3 (]: Opening a new connection, currently in state closed
+[0m05:43:12.397820 [debug] [Thread-4 (]: Using duckdb connection "seed.plain_analytics.raw_thread_events"
+[0m05:43:12.398234 [debug] [Thread-4 (]: On seed.plain_analytics.raw_thread_events: BEGIN
+[0m05:43:12.398541 [debug] [Thread-4 (]: Opening a new connection, currently in state closed
+[0m05:43:12.399274 [debug] [Thread-4 (]: SQL status: OK in 0.001 seconds
+[0m05:43:12.399610 [debug] [Thread-4 (]: Using duckdb connection "seed.plain_analytics.raw_thread_events"
+[0m05:43:12.399917 [debug] [Thread-4 (]: On seed.plain_analytics.raw_thread_events: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "plain_analytics", "target_name": "dev", "node_id": "seed.plain_analytics.raw_thread_events"} */
+
+    create table "plain_analytics"."main_seeds"."raw_thread_events" ("id" text,"thread_id" text,"customer_id" text,"company_id" text,"event_type" text,"actor_type" text,"actor_id" text,"payload_summary" integer,"occurred_at" timestamp without time zone)
+  
+[0m05:43:12.401046 [debug] [Thread-4 (]: SQL status: OK in 0.001 seconds
+[0m05:43:12.401473 [debug] [Thread-3 (]: SQL status: OK in 0.006 seconds
+[0m05:43:12.403257 [debug] [Thread-3 (]: Using duckdb connection "seed.plain_analytics.raw_threads"
+[0m05:43:12.403590 [debug] [Thread-3 (]: On seed.plain_analytics.raw_threads: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "plain_analytics", "target_name": "dev", "node_id": "seed.plain_analytics.raw_threads"} */
+
+    create table "plain_analytics"."main_seeds"."raw_threads" ("id" text,"external_id" text,"customer_id" text,"company_id" text,"tenant_id" text,"company_tier" text,"title" text,"status" text,"status_detail" text,"priority" text,"channel" text,"label" text,"assigned_agent_id" text,"assigned_agent_name" text,"first_response_time_mins" integer,"resolution_time_mins" integer,"message_count" integer,"is_escalated" boolean,"created_at" timestamp without time zone,"updated_at" timestamp without time zone,"resolved_at" timestamp without time zone)
+  
+[0m05:43:12.404550 [debug] [Thread-3 (]: SQL status: OK in 0.001 seconds
+[0m05:43:12.405812 [debug] [Thread-3 (]: Using duckdb connection "seed.plain_analytics.raw_threads"
+[0m05:43:12.406208 [debug] [Thread-3 (]: On seed.plain_analytics.raw_threads: 
+          COPY "plain_analytics"."main_seeds"."raw_threads" FROM '/home/claude/plain-analytics/seeds/raw_threads.csv' (FORMAT CSV, HEADER TRUE, DELIMITER ',')
+        ...
+[0m05:43:12.402847 [debug] [Thread-4 (]: Using duckdb connection "seed.plain_analytics.raw_thread_events"
+[0m05:43:12.408727 [debug] [Thread-4 (]: On seed.plain_analytics.raw_thread_events: 
+          COPY "plain_analytics"."main_seeds"."raw_thread_events" FROM '/home/claude/plain-analytics/seeds/raw_thread_events.csv' (FORMAT CSV, HEADER TRUE, DELIMITER ',')
+        ...
+[0m05:43:12.699448 [debug] [Thread-3 (]: SQL status: OK in 0.293 seconds
+[0m05:43:12.700563 [debug] [Thread-3 (]: Writing runtime SQL for node "seed.plain_analytics.raw_threads"
+[0m05:43:12.708918 [debug] [Thread-3 (]: On seed.plain_analytics.raw_threads: COMMIT
+[0m05:43:12.709479 [debug] [Thread-3 (]: Using duckdb connection "seed.plain_analytics.raw_threads"
+[0m05:43:12.709815 [debug] [Thread-3 (]: On seed.plain_analytics.raw_threads: COMMIT
+[0m05:43:12.715049 [debug] [Thread-3 (]: SQL status: OK in 0.005 seconds
+[0m05:43:12.715922 [debug] [Thread-3 (]: On seed.plain_analytics.raw_threads: Close
+[0m05:43:12.716635 [debug] [Thread-3 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': '6b06eb5f-c089-49e0-9e9f-dba91a05ebbf', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fcad88aaa20>]}
+[0m05:43:12.721298 [info ] [Thread-3 (]: 6 of 6 OK loaded seed file main_seeds.raw_threads .............................. [[32mINSERT 500[0m in 0.42s]
+[0m05:43:12.721858 [debug] [Thread-3 (]: Finished running node seed.plain_analytics.raw_threads
+[0m05:43:12.787255 [debug] [Thread-4 (]: SQL status: OK in 0.378 seconds
+[0m05:43:12.788195 [debug] [Thread-4 (]: Writing runtime SQL for node "seed.plain_analytics.raw_thread_events"
+[0m05:43:12.790283 [debug] [Thread-4 (]: On seed.plain_analytics.raw_thread_events: COMMIT
+[0m05:43:12.790772 [debug] [Thread-4 (]: Using duckdb connection "seed.plain_analytics.raw_thread_events"
+[0m05:43:12.791145 [debug] [Thread-4 (]: On seed.plain_analytics.raw_thread_events: COMMIT
+[0m05:43:12.797431 [debug] [Thread-4 (]: SQL status: OK in 0.006 seconds
+[0m05:43:12.798295 [debug] [Thread-4 (]: On seed.plain_analytics.raw_thread_events: Close
+[0m05:43:12.798904 [debug] [Thread-4 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': '6b06eb5f-c089-49e0-9e9f-dba91a05ebbf', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fcae0ef6d50>]}
+[0m05:43:12.799530 [info ] [Thread-4 (]: 5 of 6 OK loaded seed file main_seeds.raw_thread_events ........................ [[32mINSERT 2027[0m in 0.53s]
+[0m05:43:12.800186 [debug] [Thread-4 (]: Finished running node seed.plain_analytics.raw_thread_events
+[0m05:43:12.802391 [debug] [MainThread]: Using duckdb connection "master"
+[0m05:43:12.802750 [debug] [MainThread]: On master: BEGIN
+[0m05:43:12.803072 [debug] [MainThread]: Opening a new connection, currently in state closed
+[0m05:43:12.803689 [debug] [MainThread]: SQL status: OK in 0.001 seconds
+[0m05:43:12.804022 [debug] [MainThread]: On master: COMMIT
+[0m05:43:12.804372 [debug] [MainThread]: Using duckdb connection "master"
+[0m05:43:12.804668 [debug] [MainThread]: On master: COMMIT
+[0m05:43:12.805422 [debug] [MainThread]: SQL status: OK in 0.000 seconds
+[0m05:43:12.805725 [debug] [MainThread]: On master: Close
+[0m05:43:12.806138 [debug] [MainThread]: Connection 'master' was properly closed.
+[0m05:43:12.806403 [debug] [MainThread]: Connection 'seed.plain_analytics.raw_threads' was properly closed.
+[0m05:43:12.806648 [debug] [MainThread]: Connection 'seed.plain_analytics.raw_thread_events' was properly closed.
+[0m05:43:12.807003 [debug] [MainThread]: Connection 'seed.plain_analytics.raw_customers' was properly closed.
+[0m05:43:12.807365 [debug] [MainThread]: Connection 'seed.plain_analytics.raw_companies' was properly closed.
+[0m05:43:12.807841 [info ] [MainThread]: 
+[0m05:43:12.808305 [info ] [MainThread]: Finished running 6 seeds in 0 hours 0 minutes and 1.03 seconds (1.03s).
+[0m05:43:12.810461 [debug] [MainThread]: Command end result
+[0m05:43:12.850994 [debug] [MainThread]: Wrote artifact WritableManifest to /home/claude/plain-analytics/target/manifest.json
+[0m05:43:12.853143 [debug] [MainThread]: Wrote artifact SemanticManifest to /home/claude/plain-analytics/target/semantic_manifest.json
+[0m05:43:12.859678 [debug] [MainThread]: Wrote artifact RunExecutionResult to /home/claude/plain-analytics/target/run_results.json
+[0m05:43:12.860134 [info ] [MainThread]: 
+[0m05:43:12.860494 [info ] [MainThread]: [32mCompleted successfully[0m
+[0m05:43:12.860754 [info ] [MainThread]: 
+[0m05:43:12.861142 [info ] [MainThread]: Done. PASS=6 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=6
+[0m05:43:12.861728 [warn ] [MainThread]: [[33mWARNING[0m][DeprecationsSummary]: Deprecated functionality
+Summary of encountered deprecations:
+- MissingArgumentsPropertyInGenericTestDeprecation: 4 occurrences
+- DuplicateNameDistinctNodeTypesDeprecation: 2 occurrences
+To see all deprecation instances instead of just the first occurrence of each,
+run command again with the `--show-all-deprecations` flag. You may also need to
+run with `--no-partial-parse` as some deprecations are only encountered during
+parsing.
+[0m05:43:12.863144 [debug] [MainThread]: Resource report: {"command_name": "seed", "command_success": true, "command_wall_clock_time": 3.8995597, "process_in_blocks": "40592", "process_kernel_time": 0.278997, "process_mem_max_rss": "184348", "process_out_blocks": "8944", "process_user_time": 5.292969}
+[0m05:43:12.863649 [debug] [MainThread]: Command `dbt seed` succeeded at 05:43:12.863538 after 3.90 seconds
+[0m05:43:12.864056 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fcae63b5ca0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fcae01c0dd0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fcae6502750>]}
+[0m05:43:12.864438 [debug] [MainThread]: Flushing usage events
+[0m05:43:13.160768 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m05:43:18.778664 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f87a4b0e510>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f87a4416060>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f87a4aa5d30>]}
+
+
+============================== 05:43:18.782780 | 0b7c8e2c-c201-462e-8b34-ad42d2bc0e3f ==============================
+[0m05:43:18.782780 [info ] [MainThread]: Running with dbt=1.11.11
+[0m05:43:18.783433 [debug] [MainThread]: running dbt with arguments {'send_anonymous_usage_stats': 'True', 'warn_error': 'None', 'cache_selected_only': 'False', 'target_path': 'None', 'version_check': 'True', 'log_format': 'default', 'no_print': 'None', 'introspect': 'True', 'invocation_command': 'dbt run', 'fail_fast': 'False', 'partial_parse': 'True', 'use_experimental_parser': 'False', 'indirect_selection': 'eager', 'use_colors': 'True', 'write_json': 'True', 'debug': 'False', 'static_parser': 'True', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'log_path': '/home/claude/plain-analytics/logs', 'quiet': 'False', 'profiles_dir': '.', 'log_cache_events': 'False', 'empty': 'False', 'printer_width': '80'}
+[0m05:43:19.061118 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'project_id', 'label': '0b7c8e2c-c201-462e-8b34-ad42d2bc0e3f', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f87a671db20>]}
+[0m05:43:19.144700 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'adapter_info', 'label': '0b7c8e2c-c201-462e-8b34-ad42d2bc0e3f', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f87a390a3c0>]}
+[0m05:43:19.147089 [info ] [MainThread]: Registered adapter: duckdb=1.10.1
+[0m05:43:19.255145 [debug] [MainThread]: checksum: 30a8cc8fdcbf66701b0944d4ccce3fa46dd04b61e5df68b9f16d57b2e0e3f0be, vars: {}, profile: , target: , version: 1.11.11
+[0m05:43:19.409525 [debug] [MainThread]: Partial parsing enabled: 0 files deleted, 0 files added, 0 files changed.
+[0m05:43:19.410030 [debug] [MainThread]: Nothing changed, skipping partial parsing.
+[0m05:43:19.410327 [debug] [MainThread]: Partial parsing enabled, no changes found, skipping parsing
+[0m05:43:19.418042 [warn ] [MainThread]: [[33mWARNING[0m]: Deprecated functionality
+Found resources with the same name 'raw_customers' in package 'plain_analytics':
+'model.plain_analytics.raw_customers' and 'seed.plain_analytics.raw_customers'.
+Please update one of the resources to have a unique name.
+[0m05:43:19.418596 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'deprecation', 'label': '0b7c8e2c-c201-462e-8b34-ad42d2bc0e3f', 'property_': 'warn', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f879f1579b0>]}
+[0m05:43:19.478112 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'load_project', 'label': '0b7c8e2c-c201-462e-8b34-ad42d2bc0e3f', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f879f23ee40>]}
+[0m05:43:19.597804 [debug] [MainThread]: Wrote artifact WritableManifest to /home/claude/plain-analytics/target/manifest.json
+[0m05:43:19.600245 [debug] [MainThread]: Wrote artifact SemanticManifest to /home/claude/plain-analytics/target/semantic_manifest.json
+[0m05:43:19.612002 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'resource_counts', 'label': '0b7c8e2c-c201-462e-8b34-ad42d2bc0e3f', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f87a3857ce0>]}
+[0m05:43:19.612506 [info ] [MainThread]: Found 10 models, 6 seeds, 13 data tests, 6 sources, 485 macros
+[0m05:43:19.612934 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': '0b7c8e2c-c201-462e-8b34-ad42d2bc0e3f', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f87a3808ad0>]}
+[0m05:43:19.615626 [info ] [MainThread]: 
+[0m05:43:19.616019 [info ] [MainThread]: Concurrency: 4 threads (target='dev')
+[0m05:43:19.616438 [info ] [MainThread]: 
+[0m05:43:19.617122 [debug] [MainThread]: Acquiring new duckdb connection 'master'
+[0m05:43:19.623148 [debug] [ThreadPool]: Acquiring new duckdb connection 'list_plain_analytics'
+[0m05:43:19.623758 [debug] [ThreadPool]: Acquiring new duckdb connection 'list_plain_analytics'
+[0m05:43:19.642227 [debug] [ThreadPool]: Acquiring new duckdb connection 'list_plain_analytics'
+[0m05:43:19.676830 [debug] [ThreadPool]: Using duckdb connection "list_plain_analytics"
+[0m05:43:19.677419 [debug] [ThreadPool]: Using duckdb connection "list_plain_analytics"
+[0m05:43:19.677823 [debug] [ThreadPool]: Using duckdb connection "list_plain_analytics"
+[0m05:43:19.678919 [debug] [ThreadPool]: On list_plain_analytics: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "plain_analytics", "target_name": "dev", "connection_name": "list_plain_analytics"} */
+
+    
+    select schema_name
+    from system.information_schema.schemata
+    
+    where lower(catalog_name) = '"plain_analytics"'
+    
+  
+  
+[0m05:43:19.679205 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m05:43:19.678585 [debug] [ThreadPool]: On list_plain_analytics: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "plain_analytics", "target_name": "dev", "connection_name": "list_plain_analytics"} */
+
+    
+    select schema_name
+    from system.information_schema.schemata
+    
+    where lower(catalog_name) = '"plain_analytics"'
+    
+  
+  
+[0m05:43:19.683384 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m05:43:19.678182 [debug] [ThreadPool]: On list_plain_analytics: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "plain_analytics", "target_name": "dev", "connection_name": "list_plain_analytics"} */
+
+    
+    select schema_name
+    from system.information_schema.schemata
+    
+    where lower(catalog_name) = '"plain_analytics"'
+    
+  
+  
+[0m05:43:19.683799 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m05:43:19.699006 [debug] [ThreadPool]: SQL status: OK in 0.016 seconds
+[0m05:43:19.700782 [debug] [ThreadPool]: On list_plain_analytics: Close
+[0m05:43:19.701402 [debug] [ThreadPool]: SQL status: OK in 0.018 seconds
+[0m05:43:19.704280 [debug] [ThreadPool]: On list_plain_analytics: Close
+[0m05:43:19.702511 [debug] [ThreadPool]: SQL status: OK in 0.023 seconds
+[0m05:43:19.705901 [debug] [ThreadPool]: On list_plain_analytics: Close
+[0m05:43:19.706623 [debug] [ThreadPool]: Re-using an available connection from the pool (formerly list_plain_analytics, now create_plain_analytics_main_raw)
+[0m05:43:19.707140 [debug] [ThreadPool]: Creating schema "database: "plain_analytics"
+schema: "main_raw"
+"
+[0m05:43:19.714192 [debug] [ThreadPool]: Re-using an available connection from the pool (formerly list_plain_analytics, now create_plain_analytics_main_staging)
+[0m05:43:19.714736 [debug] [ThreadPool]: Creating schema "database: "plain_analytics"
+schema: "main_staging"
+"
+[0m05:43:19.723212 [debug] [ThreadPool]: Re-using an available connection from the pool (formerly list_plain_analytics, now create_plain_analytics_main_gold)
+[0m05:43:19.723764 [debug] [ThreadPool]: Creating schema "database: "plain_analytics"
+schema: "main_gold"
+"
+[0m05:43:19.825565 [debug] [ThreadPool]: Using duckdb connection "create_plain_analytics_main_raw"
+[0m05:43:19.826095 [debug] [ThreadPool]: On create_plain_analytics_main_raw: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "plain_analytics", "target_name": "dev", "connection_name": "create_plain_analytics_main_raw"} */
+
+    
+        select type from duckdb_databases()
+        where lower(database_name)='plain_analytics'
+        and type='sqlite'
+    
+  
+[0m05:43:19.826409 [debug] [ThreadPool]: Opening a new connection, currently in state closed
+[0m05:43:19.828001 [debug] [ThreadPool]: SQL status: OK in 0.002 seconds
+[0m05:43:19.829691 [debug] [ThreadPool]: Using duckdb connection "create_plain_analytics_main_raw"
+[0m05:43:19.830199 [debug] [ThreadPool]: Using duckdb connection "create_plain_analytics_main_staging"
+[0m05:43:19.832731 [debug] [ThreadPool]: On create_plain_analytics_main_staging: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "plain_analytics", "target_name": "dev", "connection_name": "create_plain_analytics_main_staging"} */
+
+    
+        select type from duckdb_databases()
+        where lower(database_name)='plain_analytics'
+        and type='sqlite'
+    
+  
+[0m05:43:19.833135 [debug] [ThreadPool]: Opening a new connection, currently in state closed
+[0m05:43:19.834234 [debug] [ThreadPool]: SQL status: OK in 0.001 seconds
+[0m05:43:19.835642 [debug] [ThreadPool]: Using duckdb connection "create_plain_analytics_main_staging"
+[0m05:43:19.835976 [debug] [ThreadPool]: On create_plain_analytics_main_staging: BEGIN
+[0m05:43:19.836502 [debug] [ThreadPool]: SQL status: OK in 0.000 seconds
+[0m05:43:19.832369 [debug] [ThreadPool]: On create_plain_analytics_main_raw: BEGIN
+[0m05:43:19.837335 [debug] [ThreadPool]: SQL status: OK in 0.000 seconds
+[0m05:43:19.837668 [debug] [ThreadPool]: Using duckdb connection "create_plain_analytics_main_raw"
+[0m05:43:19.837930 [debug] [ThreadPool]: On create_plain_analytics_main_raw: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "plain_analytics", "target_name": "dev", "connection_name": "create_plain_analytics_main_raw"} */
+
+    
+    
+        create schema if not exists "plain_analytics"."main_raw"
+    
+[0m05:43:19.832021 [debug] [ThreadPool]: Using duckdb connection "create_plain_analytics_main_gold"
+[0m05:43:19.838534 [debug] [ThreadPool]: On create_plain_analytics_main_gold: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "plain_analytics", "target_name": "dev", "connection_name": "create_plain_analytics_main_gold"} */
+
+    
+        select type from duckdb_databases()
+        where lower(database_name)='plain_analytics'
+        and type='sqlite'
+    
+  
+[0m05:43:19.838827 [debug] [ThreadPool]: Opening a new connection, currently in state closed
+[0m05:43:19.839720 [debug] [ThreadPool]: SQL status: OK in 0.001 seconds
+[0m05:43:19.841094 [debug] [ThreadPool]: Using duckdb connection "create_plain_analytics_main_gold"
+[0m05:43:19.841389 [debug] [ThreadPool]: On create_plain_analytics_main_gold: BEGIN
+[0m05:43:19.841868 [debug] [ThreadPool]: SQL status: OK in 0.000 seconds
+[0m05:43:19.842163 [debug] [ThreadPool]: Using duckdb connection "create_plain_analytics_main_gold"
+[0m05:43:19.842416 [debug] [ThreadPool]: On create_plain_analytics_main_gold: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "plain_analytics", "target_name": "dev", "connection_name": "create_plain_analytics_main_gold"} */
+
+    
+    
+        create schema if not exists "plain_analytics"."main_gold"
+    
+[0m05:43:19.843007 [debug] [ThreadPool]: SQL status: OK in 0.000 seconds
+[0m05:43:19.843878 [debug] [ThreadPool]: On create_plain_analytics_main_gold: COMMIT
+[0m05:43:19.844193 [debug] [ThreadPool]: Using duckdb connection "create_plain_analytics_main_gold"
+[0m05:43:19.844447 [debug] [ThreadPool]: On create_plain_analytics_main_gold: COMMIT
+[0m05:43:19.845044 [debug] [ThreadPool]: SQL status: OK in 0.007 seconds
+[0m05:43:19.845912 [debug] [ThreadPool]: On create_plain_analytics_main_raw: COMMIT
+[0m05:43:19.846230 [debug] [ThreadPool]: Using duckdb connection "create_plain_analytics_main_raw"
+[0m05:43:19.846544 [debug] [ThreadPool]: On create_plain_analytics_main_raw: COMMIT
+[0m05:43:19.836797 [debug] [ThreadPool]: Using duckdb connection "create_plain_analytics_main_staging"
+[0m05:43:19.847056 [debug] [ThreadPool]: On create_plain_analytics_main_staging: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "plain_analytics", "target_name": "dev", "connection_name": "create_plain_analytics_main_staging"} */
+
+    
+    
+        create schema if not exists "plain_analytics"."main_staging"
+    
+[0m05:43:19.847633 [debug] [ThreadPool]: SQL status: OK in 0.000 seconds
+[0m05:43:19.848495 [debug] [ThreadPool]: On create_plain_analytics_main_staging: COMMIT
+[0m05:43:19.848810 [debug] [ThreadPool]: Using duckdb connection "create_plain_analytics_main_staging"
+[0m05:43:19.849170 [debug] [ThreadPool]: On create_plain_analytics_main_staging: COMMIT
+[0m05:43:19.856300 [debug] [ThreadPool]: SQL status: OK in 0.012 seconds
+[0m05:43:19.856673 [debug] [ThreadPool]: On create_plain_analytics_main_gold: Close
+[0m05:43:19.857685 [debug] [ThreadPool]: SQL status: OK in 0.011 seconds
+[0m05:43:19.858006 [debug] [ThreadPool]: On create_plain_analytics_main_raw: Close
+[0m05:43:19.858670 [debug] [ThreadPool]: SQL status: OK in 0.009 seconds
+[0m05:43:19.858983 [debug] [ThreadPool]: On create_plain_analytics_main_staging: Close
+[0m05:43:19.861565 [debug] [ThreadPool]: Re-using an available connection from the pool (formerly create_plain_analytics_main_staging, now list_plain_analytics_main_raw)
+[0m05:43:19.867996 [debug] [ThreadPool]: Using duckdb connection "list_plain_analytics_main_raw"
+[0m05:43:19.868594 [debug] [ThreadPool]: Re-using an available connection from the pool (formerly create_plain_analytics_main_gold, now list_plain_analytics_main_staging)
+[0m05:43:19.869416 [debug] [ThreadPool]: Re-using an available connection from the pool (formerly create_plain_analytics_main_raw, now list_plain_analytics_main_gold)
+[0m05:43:19.869894 [debug] [ThreadPool]: Acquiring new duckdb connection 'list_plain_analytics_main_seeds'
+[0m05:43:19.875898 [debug] [ThreadPool]: Using duckdb connection "list_plain_analytics_main_seeds"
+[0m05:43:19.870263 [debug] [ThreadPool]: On list_plain_analytics_main_raw: BEGIN
+[0m05:43:19.876525 [debug] [ThreadPool]: Opening a new connection, currently in state closed
+[0m05:43:19.872202 [debug] [ThreadPool]: Using duckdb connection "list_plain_analytics_main_staging"
+[0m05:43:19.877663 [debug] [ThreadPool]: On list_plain_analytics_main_staging: BEGIN
+[0m05:43:19.877921 [debug] [ThreadPool]: Opening a new connection, currently in state closed
+[0m05:43:19.878528 [debug] [ThreadPool]: SQL status: OK in 0.001 seconds
+[0m05:43:19.878819 [debug] [ThreadPool]: Using duckdb connection "list_plain_analytics_main_staging"
+[0m05:43:19.879100 [debug] [ThreadPool]: On list_plain_analytics_main_staging: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "plain_analytics", "target_name": "dev", "connection_name": "list_plain_analytics_main_staging"} */
+select
+      'plain_analytics' as database,
+      table_name as name,
+      table_schema as schema,
+      CASE table_type
+        WHEN 'BASE TABLE' THEN 'table'
+        WHEN 'VIEW' THEN 'view'
+        WHEN 'LOCAL TEMPORARY' THEN 'table'
+        END as type
+    from system.information_schema.tables
+    where lower(table_schema) = 'main_staging'
+    and lower(table_catalog) = 'plain_analytics'
+  
+[0m05:43:19.874162 [debug] [ThreadPool]: Using duckdb connection "list_plain_analytics_main_gold"
+[0m05:43:19.881023 [debug] [ThreadPool]: On list_plain_analytics_main_gold: BEGIN
+[0m05:43:19.881306 [debug] [ThreadPool]: Opening a new connection, currently in state closed
+[0m05:43:19.881890 [debug] [ThreadPool]: SQL status: OK in 0.001 seconds
+[0m05:43:19.882190 [debug] [ThreadPool]: Using duckdb connection "list_plain_analytics_main_gold"
+[0m05:43:19.882497 [debug] [ThreadPool]: On list_plain_analytics_main_gold: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "plain_analytics", "target_name": "dev", "connection_name": "list_plain_analytics_main_gold"} */
+select
+      'plain_analytics' as database,
+      table_name as name,
+      table_schema as schema,
+      CASE table_type
+        WHEN 'BASE TABLE' THEN 'table'
+        WHEN 'VIEW' THEN 'view'
+        WHEN 'LOCAL TEMPORARY' THEN 'table'
+        END as type
+    from system.information_schema.tables
+    where lower(table_schema) = 'main_gold'
+    and lower(table_catalog) = 'plain_analytics'
+  
+[0m05:43:19.877310 [debug] [ThreadPool]: SQL status: OK in 0.001 seconds
+[0m05:43:19.883434 [debug] [ThreadPool]: Using duckdb connection "list_plain_analytics_main_raw"
+[0m05:43:19.883798 [debug] [ThreadPool]: On list_plain_analytics_main_raw: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "plain_analytics", "target_name": "dev", "connection_name": "list_plain_analytics_main_raw"} */
+select
+      'plain_analytics' as database,
+      table_name as name,
+      table_schema as schema,
+      CASE table_type
+        WHEN 'BASE TABLE' THEN 'table'
+        WHEN 'VIEW' THEN 'view'
+        WHEN 'LOCAL TEMPORARY' THEN 'table'
+        END as type
+    from system.information_schema.tables
+    where lower(table_schema) = 'main_raw'
+    and lower(table_catalog) = 'plain_analytics'
+  
+[0m05:43:19.876220 [debug] [ThreadPool]: On list_plain_analytics_main_seeds: BEGIN
+[0m05:43:19.885016 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m05:43:19.885634 [debug] [ThreadPool]: SQL status: OK in 0.001 seconds
+[0m05:43:19.885940 [debug] [ThreadPool]: Using duckdb connection "list_plain_analytics_main_seeds"
+[0m05:43:19.886222 [debug] [ThreadPool]: On list_plain_analytics_main_seeds: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "plain_analytics", "target_name": "dev", "connection_name": "list_plain_analytics_main_seeds"} */
+select
+      'plain_analytics' as database,
+      table_name as name,
+      table_schema as schema,
+      CASE table_type
+        WHEN 'BASE TABLE' THEN 'table'
+        WHEN 'VIEW' THEN 'view'
+        WHEN 'LOCAL TEMPORARY' THEN 'table'
+        END as type
+    from system.information_schema.tables
+    where lower(table_schema) = 'main_seeds'
+    and lower(table_catalog) = 'plain_analytics'
+  
+[0m05:43:19.890167 [debug] [ThreadPool]: SQL status: OK in 0.007 seconds
+[0m05:43:19.892043 [debug] [ThreadPool]: On list_plain_analytics_main_gold: ROLLBACK
+[0m05:43:19.892871 [debug] [ThreadPool]: SQL status: OK in 0.009 seconds
+[0m05:43:19.893633 [debug] [ThreadPool]: SQL status: OK in 0.014 seconds
+[0m05:43:19.896938 [debug] [ThreadPool]: On list_plain_analytics_main_staging: ROLLBACK
+[0m05:43:19.900364 [debug] [ThreadPool]: Failed to rollback 'list_plain_analytics_main_staging'
+[0m05:43:19.898191 [debug] [ThreadPool]: On list_plain_analytics_main_raw: ROLLBACK
+[0m05:43:19.902696 [debug] [ThreadPool]: Failed to rollback 'list_plain_analytics_main_raw'
+[0m05:43:19.899088 [debug] [ThreadPool]: SQL status: OK in 0.013 seconds
+[0m05:43:19.900711 [debug] [ThreadPool]: On list_plain_analytics_main_staging: Close
+[0m05:43:19.901784 [debug] [ThreadPool]: Failed to rollback 'list_plain_analytics_main_gold'
+[0m05:43:19.905121 [debug] [ThreadPool]: On list_plain_analytics_main_gold: Close
+[0m05:43:19.903004 [debug] [ThreadPool]: On list_plain_analytics_main_raw: Close
+[0m05:43:19.904522 [debug] [ThreadPool]: On list_plain_analytics_main_seeds: ROLLBACK
+[0m05:43:19.906388 [debug] [ThreadPool]: Failed to rollback 'list_plain_analytics_main_seeds'
+[0m05:43:19.906724 [debug] [ThreadPool]: On list_plain_analytics_main_seeds: Close
+[0m05:43:19.908825 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': '0b7c8e2c-c201-462e-8b34-ad42d2bc0e3f', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f879ee52060>]}
+[0m05:43:19.909388 [debug] [MainThread]: Using duckdb connection "master"
+[0m05:43:19.909747 [debug] [MainThread]: On master: BEGIN
+[0m05:43:19.910018 [debug] [MainThread]: Opening a new connection, currently in state init
+[0m05:43:19.910819 [debug] [MainThread]: SQL status: OK in 0.001 seconds
+[0m05:43:19.911141 [debug] [MainThread]: On master: COMMIT
+[0m05:43:19.911413 [debug] [MainThread]: Using duckdb connection "master"
+[0m05:43:19.911751 [debug] [MainThread]: On master: COMMIT
+[0m05:43:19.912214 [debug] [MainThread]: SQL status: OK in 0.000 seconds
+[0m05:43:19.912574 [debug] [MainThread]: On master: Close
+[0m05:43:19.915004 [debug] [Thread-1 (]: Began running node model.plain_analytics.raw_customers
+[0m05:43:19.915992 [debug] [Thread-2 (]: Began running node model.plain_analytics.raw_threads
+[0m05:43:19.916967 [debug] [Thread-3 (]: Began running node model.plain_analytics.stg_companies
+[0m05:43:19.917781 [debug] [Thread-4 (]: Began running node model.plain_analytics.stg_customers
+[0m05:43:19.915609 [info ] [Thread-1 (]: 1 of 10 START sql view model main_raw.raw_customers ............................ [RUN]
+[0m05:43:19.918699 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly list_plain_analytics_main_seeds, now model.plain_analytics.raw_customers)
+[0m05:43:19.919070 [debug] [Thread-1 (]: Began compiling node model.plain_analytics.raw_customers
+[0m05:43:19.916566 [info ] [Thread-2 (]: 2 of 10 START sql view model main_raw.raw_threads .............................. [RUN]
+[0m05:43:19.926280 [debug] [Thread-2 (]: Re-using an available connection from the pool (formerly list_plain_analytics_main_gold, now model.plain_analytics.raw_threads)
+[0m05:43:19.926684 [debug] [Thread-2 (]: Began compiling node model.plain_analytics.raw_threads
+[0m05:43:19.929764 [debug] [Thread-2 (]: Writing injected SQL for node "model.plain_analytics.raw_threads"
+[0m05:43:19.917411 [info ] [Thread-3 (]: 3 of 10 START sql view model main_staging.stg_companies ........................ [RUN]
+[0m05:43:19.931961 [debug] [Thread-3 (]: Re-using an available connection from the pool (formerly list_plain_analytics_main_raw, now model.plain_analytics.stg_companies)
+[0m05:43:19.918221 [info ] [Thread-4 (]: 4 of 10 START sql view model main_staging.stg_customers ........................ [RUN]
+[0m05:43:19.932755 [debug] [Thread-4 (]: Re-using an available connection from the pool (formerly list_plain_analytics_main_staging, now model.plain_analytics.stg_customers)
+[0m05:43:19.933173 [debug] [Thread-4 (]: Began compiling node model.plain_analytics.stg_customers
+[0m05:43:19.931361 [debug] [Thread-1 (]: Writing injected SQL for node "model.plain_analytics.raw_customers"
+[0m05:43:19.936547 [debug] [Thread-1 (]: Began executing node model.plain_analytics.raw_customers
+[0m05:43:19.932323 [debug] [Thread-3 (]: Began compiling node model.plain_analytics.stg_companies
+[0m05:43:19.935858 [debug] [Thread-4 (]: Writing injected SQL for node "model.plain_analytics.stg_customers"
+[0m05:43:19.947031 [debug] [Thread-4 (]: Began executing node model.plain_analytics.stg_customers
+[0m05:43:19.946363 [debug] [Thread-3 (]: Writing injected SQL for node "model.plain_analytics.stg_companies"
+[0m05:43:19.954733 [debug] [Thread-3 (]: Began executing node model.plain_analytics.stg_companies
+[0m05:43:19.954225 [debug] [Thread-2 (]: Began executing node model.plain_analytics.raw_threads
+[0m05:43:20.000984 [debug] [Thread-1 (]: Writing runtime sql for node "model.plain_analytics.raw_customers"
+[0m05:43:20.004508 [debug] [Thread-4 (]: Writing runtime sql for node "model.plain_analytics.stg_customers"
+[0m05:43:20.013271 [debug] [Thread-4 (]: Using duckdb connection "model.plain_analytics.stg_customers"
+[0m05:43:20.013697 [debug] [Thread-4 (]: On model.plain_analytics.stg_customers: BEGIN
+[0m05:43:20.014031 [debug] [Thread-4 (]: Opening a new connection, currently in state closed
+[0m05:43:20.015048 [debug] [Thread-4 (]: SQL status: OK in 0.001 seconds
+[0m05:43:20.015386 [debug] [Thread-4 (]: Using duckdb connection "model.plain_analytics.stg_customers"
+[0m05:43:20.015800 [debug] [Thread-4 (]: On model.plain_analytics.stg_customers: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "plain_analytics", "target_name": "dev", "node_id": "model.plain_analytics.stg_customers"} */
+
+  
+  create view "plain_analytics"."main_staging"."stg_customers__dbt_tmp" as (
+    -- stg_customers.sql
+-- Cleaned, typed, and renamed from raw_customers.
+-- Deduplication: keep the most recently updated record per customer id.
+-- This is the safe-to-join version — all downstream models use this, not raw.
+
+with source as (
+    select * from "plain_analytics"."main_seeds"."raw_customers"
+),
+
+deduped as (
+    select *,
+        row_number() over (
+            partition by id
+            order by updated_at desc
+        ) as rn
+    from source
+),
+
+final as (
+    select
+        id                                          as customer_id,
+        full_name,
+        short_name,
+        email,
+        company_id,
+        tenant_id,
+        company_tier,
+        is_spam::boolean                            as is_spam,
+        status,
+        status = 'active'                           as is_active,
+        status = 'churned'                          as is_churned,
+        created_at::timestamp                       as created_at,
+        updated_at::timestamp                       as updated_at,
+        date_trunc('month', created_at::timestamp)  as cohort_month
+    from deduped
+    where rn = 1
+      and is_spam = false
+)
+
+select * from final
+  );
+
+[0m05:43:20.010342 [debug] [Thread-3 (]: Writing runtime sql for node "model.plain_analytics.stg_companies"
+[0m05:43:20.017209 [debug] [Thread-3 (]: Using duckdb connection "model.plain_analytics.stg_companies"
+[0m05:43:20.017587 [debug] [Thread-3 (]: On model.plain_analytics.stg_companies: BEGIN
+[0m05:43:20.017896 [debug] [Thread-3 (]: Opening a new connection, currently in state closed
+[0m05:43:20.018653 [debug] [Thread-3 (]: SQL status: OK in 0.001 seconds
+[0m05:43:20.018996 [debug] [Thread-3 (]: Using duckdb connection "model.plain_analytics.stg_companies"
+[0m05:43:20.019352 [debug] [Thread-3 (]: On model.plain_analytics.stg_companies: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "plain_analytics", "target_name": "dev", "node_id": "model.plain_analytics.stg_companies"} */
+
+  
+  create view "plain_analytics"."main_staging"."stg_companies__dbt_tmp" as (
+    -- stg_companies.sql
+-- Cleaned company (account) records.
+-- Companies map to B2B accounts — the account-level unit for GTM and CSM.
+
+with source as (
+    select * from "plain_analytics"."main_seeds"."raw_companies"
+),
+
+deduped as (
+    select *,
+        row_number() over (partition by id order by updated_at desc) as rn
+    from source
+),
+
+final as (
+    select
+        id                                          as company_id,
+        name                                        as company_name,
+        domain_name,
+        tier                                        as company_tier,
+        region,
+        is_active::boolean                          as is_active,
+        mrr_usd::integer                            as mrr_usd,
+        tier in ('enterprise', 'pro')               as is_paying,
+        tier = 'enterprise'                         as is_enterprise,
+        created_at::timestamp                       as created_at,
+        updated_at::timestamp                       as updated_at
+    from deduped
+    where rn = 1
+)
+
+select * from final
+  );
+
+[0m05:43:20.011810 [debug] [Thread-2 (]: Writing runtime sql for node "model.plain_analytics.raw_threads"
+[0m05:43:20.021742 [debug] [Thread-2 (]: Using duckdb connection "model.plain_analytics.raw_threads"
+[0m05:43:20.022081 [debug] [Thread-2 (]: On model.plain_analytics.raw_threads: BEGIN
+[0m05:43:20.022374 [debug] [Thread-2 (]: Opening a new connection, currently in state closed
+[0m05:43:20.012643 [debug] [Thread-1 (]: Using duckdb connection "model.plain_analytics.raw_customers"
+[0m05:43:20.023497 [debug] [Thread-1 (]: On model.plain_analytics.raw_customers: BEGIN
+[0m05:43:20.023814 [debug] [Thread-1 (]: Opening a new connection, currently in state closed
+[0m05:43:20.024418 [debug] [Thread-1 (]: SQL status: OK in 0.001 seconds
+[0m05:43:20.023097 [debug] [Thread-2 (]: SQL status: OK in 0.001 seconds
+[0m05:43:20.025185 [debug] [Thread-2 (]: Using duckdb connection "model.plain_analytics.raw_threads"
+[0m05:43:20.025551 [debug] [Thread-2 (]: On model.plain_analytics.raw_threads: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "plain_analytics", "target_name": "dev", "node_id": "model.plain_analytics.raw_threads"} */
+
+  
+  create view "plain_analytics"."main_raw"."raw_threads__dbt_tmp" as (
+    -- raw_threads.sql
+-- Direct mirror of Plain's /graphql/threads API response.
+-- Includes all fields: status, priority, channel, SLA timing, assignment.
+
+select * from "plain_analytics"."main_seeds"."raw_threads"
+  );
+
+[0m05:43:20.026355 [debug] [Thread-2 (]: SQL status: OK in 0.000 seconds
+[0m05:43:20.024796 [debug] [Thread-1 (]: Using duckdb connection "model.plain_analytics.raw_customers"
+[0m05:43:20.033888 [debug] [Thread-1 (]: On model.plain_analytics.raw_customers: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "plain_analytics", "target_name": "dev", "node_id": "model.plain_analytics.raw_customers"} */
+
+  
+  create view "plain_analytics"."main_raw"."raw_customers__dbt_tmp" as (
+    -- raw_customers.sql
+-- Direct mirror of Plain's /graphql/customers API response.
+-- Nothing is dropped, renamed, or cast here.
+-- Append-only — this is the source of truth for all customer data.
+
+select * from "plain_analytics"."main_seeds"."raw_customers"
+  );
+
+[0m05:43:20.034753 [debug] [Thread-1 (]: SQL status: OK in 0.000 seconds
+[0m05:43:20.020719 [debug] [Thread-3 (]: SQL status: OK in 0.001 seconds
+[0m05:43:20.033433 [debug] [Thread-2 (]: Using duckdb connection "model.plain_analytics.raw_threads"
+[0m05:43:20.041795 [debug] [Thread-2 (]: On model.plain_analytics.raw_threads: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "plain_analytics", "target_name": "dev", "node_id": "model.plain_analytics.raw_threads"} */
+alter view "plain_analytics"."main_raw"."raw_threads__dbt_tmp" rename to "raw_threads"
+[0m05:43:20.042514 [debug] [Thread-2 (]: SQL status: OK in 0.000 seconds
+[0m05:43:20.038324 [debug] [Thread-4 (]: SQL status: OK in 0.022 seconds
+[0m05:43:20.052530 [debug] [Thread-4 (]: Using duckdb connection "model.plain_analytics.stg_customers"
+[0m05:43:20.041230 [debug] [Thread-3 (]: Using duckdb connection "model.plain_analytics.stg_companies"
+[0m05:43:20.053322 [debug] [Thread-3 (]: On model.plain_analytics.stg_companies: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "plain_analytics", "target_name": "dev", "node_id": "model.plain_analytics.stg_companies"} */
+alter view "plain_analytics"."main_staging"."stg_companies__dbt_tmp" rename to "stg_companies"
+[0m05:43:20.054043 [debug] [Thread-3 (]: SQL status: OK in 0.000 seconds
+[0m05:43:20.037903 [debug] [Thread-1 (]: Using duckdb connection "model.plain_analytics.raw_customers"
+[0m05:43:20.060790 [debug] [Thread-1 (]: On model.plain_analytics.raw_customers: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "plain_analytics", "target_name": "dev", "node_id": "model.plain_analytics.raw_customers"} */
+alter view "plain_analytics"."main_raw"."raw_customers__dbt_tmp" rename to "raw_customers"
+[0m05:43:20.061545 [debug] [Thread-1 (]: SQL status: OK in 0.000 seconds
+[0m05:43:20.052958 [debug] [Thread-4 (]: On model.plain_analytics.stg_customers: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "plain_analytics", "target_name": "dev", "node_id": "model.plain_analytics.stg_customers"} */
+alter view "plain_analytics"."main_staging"."stg_customers__dbt_tmp" rename to "stg_customers"
+[0m05:43:20.063621 [debug] [Thread-4 (]: SQL status: OK in 0.000 seconds
+[0m05:43:20.062912 [debug] [Thread-1 (]: On model.plain_analytics.raw_customers: COMMIT
+[0m05:43:20.065839 [debug] [Thread-1 (]: Using duckdb connection "model.plain_analytics.raw_customers"
+[0m05:43:20.066166 [debug] [Thread-1 (]: On model.plain_analytics.raw_customers: COMMIT
+[0m05:43:20.065477 [debug] [Thread-2 (]: On model.plain_analytics.raw_threads: COMMIT
+[0m05:43:20.066920 [debug] [Thread-2 (]: Using duckdb connection "model.plain_analytics.raw_threads"
+[0m05:43:20.067260 [debug] [Thread-2 (]: On model.plain_analytics.raw_threads: COMMIT
+[0m05:43:20.064955 [debug] [Thread-4 (]: On model.plain_analytics.stg_customers: COMMIT
+[0m05:43:20.067880 [debug] [Thread-4 (]: Using duckdb connection "model.plain_analytics.stg_customers"
+[0m05:43:20.068329 [debug] [Thread-4 (]: On model.plain_analytics.stg_customers: COMMIT
+[0m05:43:20.060369 [debug] [Thread-3 (]: On model.plain_analytics.stg_companies: COMMIT
+[0m05:43:20.068927 [debug] [Thread-3 (]: Using duckdb connection "model.plain_analytics.stg_companies"
+[0m05:43:20.069636 [debug] [Thread-1 (]: SQL status: OK in 0.003 seconds
+[0m05:43:20.072011 [debug] [Thread-2 (]: SQL status: OK in 0.002 seconds
+[0m05:43:20.072643 [debug] [Thread-3 (]: On model.plain_analytics.stg_companies: COMMIT
+[0m05:43:20.079136 [debug] [Thread-4 (]: SQL status: OK in 0.010 seconds
+[0m05:43:20.078726 [debug] [Thread-1 (]: Using duckdb connection "model.plain_analytics.raw_customers"
+[0m05:43:20.084109 [debug] [Thread-1 (]: On model.plain_analytics.raw_customers: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "plain_analytics", "target_name": "dev", "node_id": "model.plain_analytics.raw_customers"} */
+
+      drop view if exists "plain_analytics"."main_raw"."raw_customers__dbt_backup" cascade
+    
+[0m05:43:20.081425 [debug] [Thread-2 (]: Using duckdb connection "model.plain_analytics.raw_threads"
+[0m05:43:20.085278 [debug] [Thread-2 (]: On model.plain_analytics.raw_threads: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "plain_analytics", "target_name": "dev", "node_id": "model.plain_analytics.raw_threads"} */
+
+      drop view if exists "plain_analytics"."main_raw"."raw_threads__dbt_backup" cascade
+    
+[0m05:43:20.085896 [debug] [Thread-2 (]: SQL status: OK in 0.000 seconds
+[0m05:43:20.084903 [debug] [Thread-1 (]: SQL status: OK in 0.000 seconds
+[0m05:43:20.090342 [debug] [Thread-1 (]: On model.plain_analytics.raw_customers: Close
+[0m05:43:20.092174 [debug] [Thread-1 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': '0b7c8e2c-c201-462e-8b34-ad42d2bc0e3f', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f87a492f050>]}
+[0m05:43:20.083735 [debug] [Thread-4 (]: Using duckdb connection "model.plain_analytics.stg_customers"
+[0m05:43:20.092928 [debug] [Thread-4 (]: On model.plain_analytics.stg_customers: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "plain_analytics", "target_name": "dev", "node_id": "model.plain_analytics.stg_customers"} */
+
+      drop view if exists "plain_analytics"."main_staging"."stg_customers__dbt_backup" cascade
+    
+[0m05:43:20.088587 [debug] [Thread-2 (]: On model.plain_analytics.raw_threads: Close
+[0m05:43:20.093629 [debug] [Thread-2 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': '0b7c8e2c-c201-462e-8b34-ad42d2bc0e3f', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f87a671cad0>]}
+[0m05:43:20.094420 [info ] [Thread-2 (]: 2 of 10 OK created sql view model main_raw.raw_threads ......................... [[32mOK[0m in 0.17s]
+[0m05:43:20.095078 [debug] [Thread-2 (]: Finished running node model.plain_analytics.raw_threads
+[0m05:43:20.095654 [debug] [Thread-2 (]: Began running node model.plain_analytics.stg_sla_breaches
+[0m05:43:20.096181 [debug] [Thread-3 (]: SQL status: OK in 0.014 seconds
+[0m05:43:20.096669 [debug] [Thread-4 (]: SQL status: OK in 0.003 seconds
+[0m05:43:20.101909 [debug] [Thread-4 (]: On model.plain_analytics.stg_customers: Close
+[0m05:43:20.097263 [info ] [Thread-2 (]: 5 of 10 START sql view model main_staging.stg_sla_breaches ..................... [RUN]
+[0m05:43:20.102878 [debug] [Thread-2 (]: Re-using an available connection from the pool (formerly model.plain_analytics.raw_threads, now model.plain_analytics.stg_sla_breaches)
+[0m05:43:20.103247 [debug] [Thread-2 (]: Began compiling node model.plain_analytics.stg_sla_breaches
+[0m05:43:20.097974 [info ] [Thread-1 (]: 1 of 10 OK created sql view model main_raw.raw_customers ....................... [[32mOK[0m in 0.17s]
+[0m05:43:20.106782 [debug] [Thread-1 (]: Finished running node model.plain_analytics.raw_customers
+[0m05:43:20.107170 [debug] [Thread-1 (]: Began running node model.plain_analytics.stg_threads
+[0m05:43:20.102423 [debug] [Thread-4 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': '0b7c8e2c-c201-462e-8b34-ad42d2bc0e3f', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f879d210710>]}
+[0m05:43:20.100376 [debug] [Thread-3 (]: Using duckdb connection "model.plain_analytics.stg_companies"
+[0m05:43:20.108610 [debug] [Thread-3 (]: On model.plain_analytics.stg_companies: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "plain_analytics", "target_name": "dev", "node_id": "model.plain_analytics.stg_companies"} */
+
+      drop view if exists "plain_analytics"."main_staging"."stg_companies__dbt_backup" cascade
+    
+[0m05:43:20.109244 [debug] [Thread-3 (]: SQL status: OK in 0.000 seconds
+[0m05:43:20.110560 [debug] [Thread-3 (]: On model.plain_analytics.stg_companies: Close
+[0m05:43:20.106169 [debug] [Thread-2 (]: Writing injected SQL for node "model.plain_analytics.stg_sla_breaches"
+[0m05:43:20.111671 [debug] [Thread-2 (]: Began executing node model.plain_analytics.stg_sla_breaches
+[0m05:43:20.111125 [debug] [Thread-3 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': '0b7c8e2c-c201-462e-8b34-ad42d2bc0e3f', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f879f32b080>]}
+[0m05:43:20.115593 [info ] [Thread-3 (]: 3 of 10 OK created sql view model main_staging.stg_companies ................... [[32mOK[0m in 0.18s]
+[0m05:43:20.116155 [debug] [Thread-3 (]: Finished running node model.plain_analytics.stg_companies
+[0m05:43:20.107640 [info ] [Thread-1 (]: 6 of 10 START sql view model main_staging.stg_threads .......................... [RUN]
+[0m05:43:20.116632 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.plain_analytics.raw_customers, now model.plain_analytics.stg_threads)
+[0m05:43:20.117109 [debug] [Thread-1 (]: Began compiling node model.plain_analytics.stg_threads
+[0m05:43:20.114895 [debug] [Thread-2 (]: Writing runtime sql for node "model.plain_analytics.stg_sla_breaches"
+[0m05:43:20.120827 [debug] [Thread-2 (]: Using duckdb connection "model.plain_analytics.stg_sla_breaches"
+[0m05:43:20.121244 [debug] [Thread-2 (]: On model.plain_analytics.stg_sla_breaches: BEGIN
+[0m05:43:20.121612 [debug] [Thread-2 (]: Opening a new connection, currently in state closed
+[0m05:43:20.122206 [debug] [Thread-2 (]: SQL status: OK in 0.001 seconds
+[0m05:43:20.122587 [debug] [Thread-2 (]: Using duckdb connection "model.plain_analytics.stg_sla_breaches"
+[0m05:43:20.108241 [info ] [Thread-4 (]: 4 of 10 OK created sql view model main_staging.stg_customers ................... [[32mOK[0m in 0.17s]
+[0m05:43:20.123699 [debug] [Thread-4 (]: Finished running node model.plain_analytics.stg_customers
+[0m05:43:20.120087 [debug] [Thread-1 (]: Writing injected SQL for node "model.plain_analytics.stg_threads"
+[0m05:43:20.124278 [debug] [Thread-1 (]: Began executing node model.plain_analytics.stg_threads
+[0m05:43:20.127314 [debug] [Thread-1 (]: Writing runtime sql for node "model.plain_analytics.stg_threads"
+[0m05:43:20.127859 [debug] [Thread-1 (]: Using duckdb connection "model.plain_analytics.stg_threads"
+[0m05:43:20.128200 [debug] [Thread-1 (]: On model.plain_analytics.stg_threads: BEGIN
+[0m05:43:20.128583 [debug] [Thread-1 (]: Opening a new connection, currently in state closed
+[0m05:43:20.122963 [debug] [Thread-2 (]: On model.plain_analytics.stg_sla_breaches: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "plain_analytics", "target_name": "dev", "node_id": "model.plain_analytics.stg_sla_breaches"} */
+
+  
+  create view "plain_analytics"."main_staging"."stg_sla_breaches__dbt_tmp" as (
+    -- stg_sla_breaches.sql
+-- SLA breach records — one row per breach event.
+-- Plain SLAs are defined per tier: first_response_time and next_response_time.
+
+with source as (
+    select * from "plain_analytics"."main_seeds"."raw_sla_breaches"
+),
+
+final as (
+    select
+        id                              as breach_id,
+        thread_id,
+        customer_id,
+        company_id,
+        company_tier,
+        sla_type,
+        target_minutes::integer         as target_minutes,
+        actual_minutes::integer         as actual_minutes,
+        breach_by_minutes::integer      as breach_by_minutes,
+        priority,
+        channel,
+        assigned_agent_id,
+        assigned_agent_name,
+        breached_at::timestamp          as breached_at,
+        date_trunc('week', breached_at::timestamp)   as breach_week,
+        date_trunc('month', breached_at::timestamp)  as breach_month
+    from source
+)
+
+select * from final
+  );
+
+[0m05:43:20.130376 [debug] [Thread-2 (]: SQL status: OK in 0.001 seconds
+[0m05:43:20.133483 [debug] [Thread-2 (]: Using duckdb connection "model.plain_analytics.stg_sla_breaches"
+[0m05:43:20.134899 [debug] [Thread-2 (]: On model.plain_analytics.stg_sla_breaches: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "plain_analytics", "target_name": "dev", "node_id": "model.plain_analytics.stg_sla_breaches"} */
+alter view "plain_analytics"."main_staging"."stg_sla_breaches__dbt_tmp" rename to "stg_sla_breaches"
+[0m05:43:20.135795 [debug] [Thread-2 (]: SQL status: OK in 0.000 seconds
+[0m05:43:20.134242 [debug] [Thread-1 (]: SQL status: OK in 0.006 seconds
+[0m05:43:20.137778 [debug] [Thread-1 (]: Using duckdb connection "model.plain_analytics.stg_threads"
+[0m05:43:20.138192 [debug] [Thread-1 (]: On model.plain_analytics.stg_threads: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "plain_analytics", "target_name": "dev", "node_id": "model.plain_analytics.stg_threads"} */
+
+  
+  create view "plain_analytics"."main_staging"."stg_threads__dbt_tmp" as (
+    -- stg_threads.sql
+-- Cleaned thread records. Threads are the core interaction unit in Plain —
+-- one thread = one customer conversation, regardless of channel.
+
+with source as (
+    select * from "plain_analytics"."main_seeds"."raw_threads"
+),
+
+deduped as (
+    select *,
+        row_number() over (partition by id order by updated_at desc) as rn
+    from source
+),
+
+final as (
+    select
+        id                                              as thread_id,
+        external_id,
+        customer_id,
+        company_id,
+        tenant_id,
+        company_tier,
+        title,
+        status,
+        status_detail,
+        priority,
+        channel,
+        label,
+        assigned_agent_id,
+        assigned_agent_name,
+
+        -- timing fields (minutes)
+        first_response_time_mins::integer               as first_response_time_mins,
+        resolution_time_mins::integer                   as resolution_time_mins,
+        message_count::integer                          as message_count,
+
+        -- derived booleans
+        status = 'done'                                 as is_resolved,
+        is_escalated::boolean                           as is_escalated,
+        priority in ('urgent', 'high')                  as is_high_priority,
+        assigned_agent_id is not null                   as is_assigned,
+
+        created_at::timestamp                           as created_at,
+        updated_at::timestamp                           as updated_at,
+        resolved_at::timestamp                          as resolved_at,
+        date_trunc('week', created_at::timestamp)       as created_week,
+        date_trunc('month', created_at::timestamp)      as created_month
+    from deduped
+    where rn = 1
+)
+
+select * from final
+  );
+
+[0m05:43:20.137275 [debug] [Thread-2 (]: On model.plain_analytics.stg_sla_breaches: COMMIT
+[0m05:43:20.140787 [debug] [Thread-2 (]: Using duckdb connection "model.plain_analytics.stg_sla_breaches"
+[0m05:43:20.141260 [debug] [Thread-2 (]: On model.plain_analytics.stg_sla_breaches: COMMIT
+[0m05:43:20.140375 [debug] [Thread-1 (]: SQL status: OK in 0.002 seconds
+[0m05:43:20.144612 [debug] [Thread-1 (]: Using duckdb connection "model.plain_analytics.stg_threads"
+[0m05:43:20.145172 [debug] [Thread-1 (]: On model.plain_analytics.stg_threads: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "plain_analytics", "target_name": "dev", "node_id": "model.plain_analytics.stg_threads"} */
+alter view "plain_analytics"."main_staging"."stg_threads__dbt_tmp" rename to "stg_threads"
+[0m05:43:20.145932 [debug] [Thread-1 (]: SQL status: OK in 0.000 seconds
+[0m05:43:20.147634 [debug] [Thread-1 (]: On model.plain_analytics.stg_threads: COMMIT
+[0m05:43:20.148002 [debug] [Thread-1 (]: Using duckdb connection "model.plain_analytics.stg_threads"
+[0m05:43:20.148316 [debug] [Thread-1 (]: On model.plain_analytics.stg_threads: COMMIT
+[0m05:43:20.146309 [debug] [Thread-2 (]: SQL status: OK in 0.005 seconds
+[0m05:43:20.153541 [debug] [Thread-2 (]: Using duckdb connection "model.plain_analytics.stg_sla_breaches"
+[0m05:43:20.153897 [debug] [Thread-2 (]: On model.plain_analytics.stg_sla_breaches: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "plain_analytics", "target_name": "dev", "node_id": "model.plain_analytics.stg_sla_breaches"} */
+
+      drop view if exists "plain_analytics"."main_staging"."stg_sla_breaches__dbt_backup" cascade
+    
+[0m05:43:20.154837 [debug] [Thread-1 (]: SQL status: OK in 0.006 seconds
+[0m05:43:20.157288 [debug] [Thread-1 (]: Using duckdb connection "model.plain_analytics.stg_threads"
+[0m05:43:20.157769 [debug] [Thread-2 (]: SQL status: OK in 0.003 seconds
+[0m05:43:20.159571 [debug] [Thread-2 (]: On model.plain_analytics.stg_sla_breaches: Close
+[0m05:43:20.160164 [debug] [Thread-2 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': '0b7c8e2c-c201-462e-8b34-ad42d2bc0e3f', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f879d26b890>]}
+[0m05:43:20.158210 [debug] [Thread-1 (]: On model.plain_analytics.stg_threads: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "plain_analytics", "target_name": "dev", "node_id": "model.plain_analytics.stg_threads"} */
+
+      drop view if exists "plain_analytics"."main_staging"."stg_threads__dbt_backup" cascade
+    
+[0m05:43:20.161555 [debug] [Thread-1 (]: SQL status: OK in 0.000 seconds
+[0m05:43:20.162844 [debug] [Thread-1 (]: On model.plain_analytics.stg_threads: Close
+[0m05:43:20.163486 [debug] [Thread-1 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': '0b7c8e2c-c201-462e-8b34-ad42d2bc0e3f', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f879d27f620>]}
+[0m05:43:20.160892 [info ] [Thread-2 (]: 5 of 10 OK created sql view model main_staging.stg_sla_breaches ................ [[32mOK[0m in 0.06s]
+[0m05:43:20.164218 [debug] [Thread-2 (]: Finished running node model.plain_analytics.stg_sla_breaches
+[0m05:43:20.164964 [info ] [Thread-1 (]: 6 of 10 OK created sql view model main_staging.stg_threads ..................... [[32mOK[0m in 0.05s]
+[0m05:43:20.165584 [debug] [Thread-1 (]: Finished running node model.plain_analytics.stg_threads
+[0m05:43:20.166499 [debug] [Thread-3 (]: Began running node model.plain_analytics.gold_agent_workload
+[0m05:43:20.167302 [debug] [Thread-4 (]: Began running node model.plain_analytics.gold_customer_spine
+[0m05:43:20.168052 [debug] [Thread-2 (]: Began running node model.plain_analytics.gold_sla_performance
+[0m05:43:20.168778 [debug] [Thread-1 (]: Began running node model.plain_analytics.gold_thread_metrics
+[0m05:43:20.166986 [info ] [Thread-3 (]: 7 of 10 START sql table model main_gold.gold_agent_workload .................... [RUN]
+[0m05:43:20.169935 [debug] [Thread-3 (]: Re-using an available connection from the pool (formerly model.plain_analytics.stg_companies, now model.plain_analytics.gold_agent_workload)
+[0m05:43:20.170296 [debug] [Thread-3 (]: Began compiling node model.plain_analytics.gold_agent_workload
+[0m05:43:20.167763 [info ] [Thread-4 (]: 8 of 10 START sql table model main_gold.gold_customer_spine .................... [RUN]
+[0m05:43:20.174532 [debug] [Thread-4 (]: Re-using an available connection from the pool (formerly model.plain_analytics.stg_customers, now model.plain_analytics.gold_customer_spine)
+[0m05:43:20.174902 [debug] [Thread-4 (]: Began compiling node model.plain_analytics.gold_customer_spine
+[0m05:43:20.168491 [info ] [Thread-2 (]: 9 of 10 START sql table model main_gold.gold_sla_performance ................... [RUN]
+[0m05:43:20.179496 [debug] [Thread-2 (]: Re-using an available connection from the pool (formerly model.plain_analytics.stg_sla_breaches, now model.plain_analytics.gold_sla_performance)
+[0m05:43:20.179847 [debug] [Thread-2 (]: Began compiling node model.plain_analytics.gold_sla_performance
+[0m05:43:20.169544 [info ] [Thread-1 (]: 10 of 10 START sql table model main_gold.gold_thread_metrics ................... [RUN]
+[0m05:43:20.174015 [debug] [Thread-3 (]: Writing injected SQL for node "model.plain_analytics.gold_agent_workload"
+[0m05:43:20.184322 [debug] [Thread-3 (]: Began executing node model.plain_analytics.gold_agent_workload
+[0m05:43:20.183696 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.plain_analytics.stg_threads, now model.plain_analytics.gold_thread_metrics)
+[0m05:43:20.179029 [debug] [Thread-4 (]: Writing injected SQL for node "model.plain_analytics.gold_customer_spine"
+[0m05:43:20.190682 [debug] [Thread-4 (]: Began executing node model.plain_analytics.gold_customer_spine
+[0m05:43:20.183132 [debug] [Thread-2 (]: Writing injected SQL for node "model.plain_analytics.gold_sla_performance"
+[0m05:43:20.198257 [debug] [Thread-2 (]: Began executing node model.plain_analytics.gold_sla_performance
+[0m05:43:20.190152 [debug] [Thread-1 (]: Began compiling node model.plain_analytics.gold_thread_metrics
+[0m05:43:20.207853 [debug] [Thread-1 (]: Writing injected SQL for node "model.plain_analytics.gold_thread_metrics"
+[0m05:43:20.251298 [debug] [Thread-1 (]: Began executing node model.plain_analytics.gold_thread_metrics
+[0m05:43:20.240582 [debug] [Thread-4 (]: Writing runtime sql for node "model.plain_analytics.gold_customer_spine"
+[0m05:43:20.246644 [debug] [Thread-2 (]: Writing runtime sql for node "model.plain_analytics.gold_sla_performance"
+[0m05:43:20.255326 [debug] [Thread-2 (]: Using duckdb connection "model.plain_analytics.gold_sla_performance"
+[0m05:43:20.255736 [debug] [Thread-2 (]: On model.plain_analytics.gold_sla_performance: BEGIN
+[0m05:43:20.256085 [debug] [Thread-2 (]: Opening a new connection, currently in state closed
+[0m05:43:20.250713 [debug] [Thread-3 (]: Writing runtime sql for node "model.plain_analytics.gold_agent_workload"
+[0m05:43:20.257190 [debug] [Thread-3 (]: Using duckdb connection "model.plain_analytics.gold_agent_workload"
+[0m05:43:20.257575 [debug] [Thread-3 (]: On model.plain_analytics.gold_agent_workload: BEGIN
+[0m05:43:20.257890 [debug] [Thread-3 (]: Opening a new connection, currently in state closed
+[0m05:43:20.258608 [debug] [Thread-3 (]: SQL status: OK in 0.001 seconds
+[0m05:43:20.258964 [debug] [Thread-3 (]: Using duckdb connection "model.plain_analytics.gold_agent_workload"
+[0m05:43:20.259389 [debug] [Thread-3 (]: On model.plain_analytics.gold_agent_workload: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "plain_analytics", "target_name": "dev", "node_id": "model.plain_analytics.gold_agent_workload"} */
+
+  
+    
+    
+
+    create  table
+      "plain_analytics"."main_gold"."gold_agent_workload__dbt_tmp"
+  
+    as (
+      -- gold_agent_workload.sql
+-- ============================================================
+-- AGENT WORKLOAD
+-- ============================================================
+-- Helps support leads understand capacity and performance.
+-- Answers: who is overloaded? who resolves fastest?
+--          where are SLA breaches concentrated by agent?
+--
+-- Grain: one row per assigned_agent_id (current snapshot)
+-- ============================================================
+
+with threads as (
+    select * from "plain_analytics"."main_staging"."stg_threads"
+),
+
+breaches as (
+    select * from "plain_analytics"."main_staging"."stg_sla_breaches"
+),
+
+thread_agg as (
+    select
+        assigned_agent_id,
+        assigned_agent_name,
+
+        count(*)                                        as total_threads,
+        countif(not is_resolved)                        as open_threads,
+        countif(is_resolved)                            as resolved_threads,
+        countif(is_escalated)                           as escalated_threads,
+        countif(is_high_priority and not is_resolved)   as open_high_priority,
+
+        round(avg(first_response_time_mins), 1)         as avg_frt_mins,
+        round(avg(resolution_time_mins), 1)             as avg_ttr_mins,
+        round(median(resolution_time_mins), 1)          as median_ttr_mins,
+
+        -- channel mix
+        countif(channel = 'slack')                      as slack_threads,
+        countif(channel = 'email')                      as email_threads,
+        countif(channel = 'chat')                       as chat_threads,
+
+        max(updated_at)                                 as last_activity_at
+
+    from threads
+    where assigned_agent_id is not null
+    group by 1, 2
+),
+
+breach_agg as (
+    select
+        assigned_agent_id,
+        count(*)                    as sla_breaches,
+        count(distinct company_id)  as companies_breached
+    from breaches
+    group by 1
+),
+
+final as (
+    select
+        ta.assigned_agent_id        as agent_id,
+        ta.assigned_agent_name      as agent_name,
+
+        -- Volume
+        ta.total_threads,
+        ta.open_threads,
+        ta.resolved_threads,
+        ta.escalated_threads,
+        ta.open_high_priority,
+
+        -- Speed
+        ta.avg_frt_mins,
+        ta.avg_ttr_mins,
+        ta.median_ttr_mins,
+
+        -- Channel mix
+        ta.slack_threads,
+        ta.email_threads,
+        ta.chat_threads,
+
+        -- SLA
+        coalesce(ba.sla_breaches, 0)            as sla_breaches,
+        coalesce(ba.companies_breached, 0)      as companies_breached_on_sla,
+
+        -- Workload flag (simple capacity signal)
+        case
+            when ta.open_threads > 20           then 'overloaded'
+            when ta.open_threads > 12           then 'busy'
+            when ta.open_threads > 5            then 'normal'
+            else 'light'
+        end                                     as workload_status,
+
+        ta.last_activity_at
+
+    from thread_agg ta
+    left join breach_agg ba using (assigned_agent_id)
+)
+
+select * from final
+order by open_threads desc
+    );
+  
+  
+[0m05:43:20.261124 [debug] [Thread-4 (]: Using duckdb connection "model.plain_analytics.gold_customer_spine"
+[0m05:43:20.261519 [debug] [Thread-4 (]: On model.plain_analytics.gold_customer_spine: BEGIN
+[0m05:43:20.261835 [debug] [Thread-4 (]: Opening a new connection, currently in state closed
+[0m05:43:20.262474 [debug] [Thread-4 (]: SQL status: OK in 0.001 seconds
+[0m05:43:20.262825 [debug] [Thread-4 (]: Using duckdb connection "model.plain_analytics.gold_customer_spine"
+[0m05:43:20.263324 [debug] [Thread-4 (]: On model.plain_analytics.gold_customer_spine: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "plain_analytics", "target_name": "dev", "node_id": "model.plain_analytics.gold_customer_spine"} */
+
+  
+    
+    
+
+    create  table
+      "plain_analytics"."main_gold"."gold_customer_spine__dbt_tmp"
+  
+    as (
+      -- gold_customer_spine.sql
+-- ============================================================
+-- THE CUSTOMER SPINE
+-- ============================================================
+-- The single canonical entity that unifies every customer record
+-- with their company (account), tenant, and tier context.
+--
+-- This is the table every downstream model joins on.
+-- It answers the first question every team asks differently:
+--   "How many active customers do we have?"
+--
+-- Without this spine, the answer varies by team.
+-- With it, there is one answer.
+--
+-- Grain: one row per customer_id (unique)
+-- ============================================================
+
+with customers as (
+    select * from "plain_analytics"."main_staging"."stg_customers"
+),
+
+companies as (
+    select * from "plain_analytics"."main_staging"."stg_companies"
+),
+
+tenants as (
+    select * from "plain_analytics"."main_seeds"."raw_tenants"
+),
+
+-- thread-level signals per customer
+thread_signals as (
+    select
+        customer_id,
+        count(*)                                            as total_threads,
+        countif(is_resolved)                                as resolved_threads,
+        countif(not is_resolved)                            as open_threads,
+        countif(is_escalated)                               as escalated_threads,
+        countif(is_high_priority)                           as high_priority_threads,
+        max(created_at)                                     as last_thread_at,
+        min(created_at)                                     as first_thread_at,
+        avg(first_response_time_mins)                       as avg_first_response_time_mins,
+        avg(resolution_time_mins)                           as avg_resolution_time_mins
+    from "plain_analytics"."main_staging"."stg_threads"
+    group by 1
+),
+
+final as (
+    select
+        -- ── Identity ──────────────────────────────────────────────
+        c.customer_id,
+        c.full_name                                         as customer_name,
+        c.short_name,
+        c.email,
+        c.cohort_month,
+
+        -- ── Company / Account ─────────────────────────────────────
+        co.company_id,
+        co.company_name,
+        co.domain_name,
+        co.company_tier,
+        co.is_enterprise,
+        co.is_paying,
+        co.mrr_usd,
+        co.region,
+        co.is_active                                        as company_is_active,
+
+        -- ── Tenant ────────────────────────────────────────────────
+        t.id                                                as tenant_id,
+        t.name                                              as tenant_name,
+
+        -- ── Customer status ───────────────────────────────────────
+        c.status                                            as customer_status,
+        c.is_active,
+        c.is_churned,
+
+        -- ── Support signals ───────────────────────────────────────
+        coalesce(ts.total_threads, 0)                       as total_threads,
+        coalesce(ts.open_threads, 0)                        as open_threads,
+        coalesce(ts.resolved_threads, 0)                    as resolved_threads,
+        coalesce(ts.escalated_threads, 0)                   as escalated_threads,
+        coalesce(ts.high_priority_threads, 0)               as high_priority_threads,
+        ts.avg_first_response_time_mins,
+        ts.avg_resolution_time_mins,
+        ts.last_thread_at,
+        ts.first_thread_at,
+
+        -- ── Health signal (simple rule-based) ─────────────────────
+        -- In production: plug in ML model score or CSM input here
+        case
+            when c.is_churned                               then 'churned'
+            when ts.escalated_threads > 2                   then 'at_risk'
+            when ts.open_threads > 5                        then 'needs_attention'
+            when ts.last_thread_at < current_timestamp - interval '60 days'
+                                                            then 'idle'
+            when c.is_active and ts.total_threads > 0       then 'healthy'
+            else 'new'
+        end                                                 as health_status,
+
+        -- ── Timestamps ────────────────────────────────────────────
+        c.created_at,
+        c.updated_at
+
+    from customers c
+    left join companies co  using (company_id)
+    left join tenants t     on c.tenant_id = t.id
+    left join thread_signals ts on c.customer_id = ts.customer_id
+)
+
+select * from final
+    );
+  
+  
+[0m05:43:20.265075 [debug] [Thread-2 (]: SQL status: OK in 0.009 seconds
+[0m05:43:20.265417 [debug] [Thread-2 (]: Using duckdb connection "model.plain_analytics.gold_sla_performance"
+[0m05:43:20.265901 [debug] [Thread-2 (]: On model.plain_analytics.gold_sla_performance: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "plain_analytics", "target_name": "dev", "node_id": "model.plain_analytics.gold_sla_performance"} */
+
+  
+    
+    
+
+    create  table
+      "plain_analytics"."main_gold"."gold_sla_performance__dbt_tmp"
+  
+    as (
+      -- gold_sla_performance.sql
+-- ============================================================
+-- SLA PERFORMANCE
+-- ============================================================
+-- Tracks SLA health by tier and company — the table a CSM or
+-- support leader opens when they ask "are we meeting our commitments?"
+--
+-- Grain: one row per (breach_month, company_tier, company_id)
+-- ============================================================
+
+with breaches as (
+    select * from "plain_analytics"."main_staging"."stg_sla_breaches"
+),
+
+threads as (
+    select
+        company_id,
+        company_tier,
+        date_trunc('month', created_at)     as thread_month,
+        count(*)                            as total_threads
+    from "plain_analytics"."main_staging"."stg_threads"
+    where company_tier != 'free'            -- free tier has no SLA
+    group by 1, 2, 3
+),
+
+breach_agg as (
+    select
+        breach_month,
+        company_id,
+        company_tier,
+        sla_type,
+
+        count(*)                                        as breach_count,
+        round(avg(breach_by_minutes), 1)                as avg_breach_by_mins,
+        round(max(breach_by_minutes), 1)                as worst_breach_mins,
+        count(distinct thread_id)                       as threads_breached,
+        count(distinct assigned_agent_id)               as agents_involved
+
+    from breaches
+    group by 1, 2, 3, 4
+),
+
+final as (
+    select
+        ba.breach_month,
+        ba.company_id,
+        ba.company_tier,
+        ba.sla_type,
+        ba.breach_count,
+        ba.threads_breached,
+        ba.avg_breach_by_mins,
+        ba.worst_breach_mins,
+        ba.agents_involved,
+
+        -- SLA compliance rate (for this company-month)
+        t.total_threads,
+        round(
+            100.0 * (1 - ba.threads_breached::float / nullif(t.total_threads, 0)),
+            1
+        )                                               as sla_compliance_pct,
+
+        -- Risk flag
+        case
+            when ba.company_tier = 'enterprise' and ba.breach_count > 1   then 'critical'
+            when ba.company_tier = 'enterprise' and ba.breach_count = 1   then 'warning'
+            when ba.company_tier = 'pro'        and ba.breach_count > 3   then 'warning'
+            else 'ok'
+        end                                             as risk_flag
+
+    from breach_agg ba
+    left join threads t
+        on  ba.company_id   = t.company_id
+        and ba.company_tier = t.company_tier
+        and ba.breach_month = t.thread_month
+)
+
+select * from final
+order by breach_month desc, risk_flag, company_tier
+    );
+  
+  
+[0m05:43:20.254511 [debug] [Thread-1 (]: Writing runtime sql for node "model.plain_analytics.gold_thread_metrics"
+[0m05:43:20.269202 [debug] [Thread-1 (]: Using duckdb connection "model.plain_analytics.gold_thread_metrics"
+[0m05:43:20.269587 [debug] [Thread-1 (]: On model.plain_analytics.gold_thread_metrics: BEGIN
+[0m05:43:20.269926 [debug] [Thread-1 (]: Opening a new connection, currently in state closed
+[0m05:43:20.270549 [debug] [Thread-1 (]: SQL status: OK in 0.001 seconds
+[0m05:43:20.270885 [debug] [Thread-1 (]: Using duckdb connection "model.plain_analytics.gold_thread_metrics"
+[0m05:43:20.273284 [debug] [Thread-1 (]: On model.plain_analytics.gold_thread_metrics: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "plain_analytics", "target_name": "dev", "node_id": "model.plain_analytics.gold_thread_metrics"} */
+
+  
+    
+    
+
+    create  table
+      "plain_analytics"."main_gold"."gold_thread_metrics__dbt_tmp"
+  
+    as (
+      -- gold_thread_metrics.sql
+-- ============================================================
+-- THREAD METRICS
+-- ============================================================
+-- Weekly operational metrics for support leaders.
+-- Answers: how fast are we resolving? where are bottlenecks?
+--
+-- Grain: one row per (created_week, channel, priority, company_tier)
+-- ============================================================
+
+with threads as (
+    select * from "plain_analytics"."main_staging"."stg_threads"
+),
+
+weekly as (
+    select
+        created_week,
+        channel,
+        priority,
+        company_tier,
+
+        -- Volume
+        count(*)                                        as total_threads,
+        countif(is_resolved)                            as resolved_threads,
+        countif(not is_resolved)                        as open_threads,
+        countif(is_escalated)                           as escalated_threads,
+        countif(is_high_priority)                       as high_priority_threads,
+
+        -- Speed (first response)
+        round(avg(first_response_time_mins), 1)         as avg_frt_mins,
+        round(median(first_response_time_mins), 1)      as median_frt_mins,
+        round(percentile_cont(0.90) within group
+            (order by first_response_time_mins), 1)     as p90_frt_mins,
+
+        -- Speed (resolution)
+        round(avg(resolution_time_mins), 1)             as avg_ttr_mins,
+        round(median(resolution_time_mins), 1)          as median_ttr_mins,
+        round(percentile_cont(0.90) within group
+            (order by resolution_time_mins), 1)         as p90_ttr_mins,
+
+        -- Throughput
+        round(avg(message_count), 1)                    as avg_messages_per_thread,
+
+        -- Resolution rate
+        round(
+            100.0 * countif(is_resolved) / nullif(count(*), 0),
+            1
+        )                                               as resolution_rate_pct
+
+    from threads
+    group by 1, 2, 3, 4
+)
+
+select * from weekly
+order by created_week desc, total_threads desc
+    );
+  
+  
+[0m05:43:20.307798 [debug] [Thread-1 (]: SQL status: OK in 0.034 seconds
+[0m05:43:20.313542 [debug] [Thread-1 (]: Using duckdb connection "model.plain_analytics.gold_thread_metrics"
+[0m05:43:20.323207 [debug] [Thread-1 (]: On model.plain_analytics.gold_thread_metrics: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "plain_analytics", "target_name": "dev", "node_id": "model.plain_analytics.gold_thread_metrics"} */
+alter table "plain_analytics"."main_gold"."gold_thread_metrics__dbt_tmp" rename to "gold_thread_metrics"
+[0m05:43:20.324040 [debug] [Thread-1 (]: SQL status: OK in 0.000 seconds
+[0m05:43:20.315594 [debug] [Thread-3 (]: SQL status: OK in 0.056 seconds
+[0m05:43:20.331612 [debug] [Thread-2 (]: SQL status: OK in 0.065 seconds
+[0m05:43:20.335725 [debug] [Thread-1 (]: On model.plain_analytics.gold_thread_metrics: COMMIT
+[0m05:43:20.341069 [debug] [Thread-1 (]: Using duckdb connection "model.plain_analytics.gold_thread_metrics"
+[0m05:43:20.341533 [debug] [Thread-1 (]: On model.plain_analytics.gold_thread_metrics: COMMIT
+[0m05:43:20.334849 [debug] [Thread-3 (]: Using duckdb connection "model.plain_analytics.gold_agent_workload"
+[0m05:43:20.342628 [debug] [Thread-3 (]: On model.plain_analytics.gold_agent_workload: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "plain_analytics", "target_name": "dev", "node_id": "model.plain_analytics.gold_agent_workload"} */
+alter table "plain_analytics"."main_gold"."gold_agent_workload__dbt_tmp" rename to "gold_agent_workload"
+[0m05:43:20.343325 [debug] [Thread-3 (]: SQL status: OK in 0.000 seconds
+[0m05:43:20.338669 [debug] [Thread-2 (]: Using duckdb connection "model.plain_analytics.gold_sla_performance"
+[0m05:43:20.347972 [debug] [Thread-2 (]: On model.plain_analytics.gold_sla_performance: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "plain_analytics", "target_name": "dev", "node_id": "model.plain_analytics.gold_sla_performance"} */
+alter table "plain_analytics"."main_gold"."gold_sla_performance__dbt_tmp" rename to "gold_sla_performance"
+[0m05:43:20.347593 [debug] [Thread-3 (]: On model.plain_analytics.gold_agent_workload: COMMIT
+[0m05:43:20.349075 [debug] [Thread-3 (]: Using duckdb connection "model.plain_analytics.gold_agent_workload"
+[0m05:43:20.349398 [debug] [Thread-3 (]: On model.plain_analytics.gold_agent_workload: COMMIT
+[0m05:43:20.349978 [debug] [Thread-1 (]: SQL status: OK in 0.008 seconds
+[0m05:43:20.352162 [debug] [Thread-1 (]: Using duckdb connection "model.plain_analytics.gold_thread_metrics"
+[0m05:43:20.352548 [debug] [Thread-1 (]: On model.plain_analytics.gold_thread_metrics: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "plain_analytics", "target_name": "dev", "node_id": "model.plain_analytics.gold_thread_metrics"} */
+
+      drop table if exists "plain_analytics"."main_gold"."gold_thread_metrics__dbt_backup" cascade
+    
+[0m05:43:20.348655 [debug] [Thread-2 (]: SQL status: OK in 0.000 seconds
+[0m05:43:20.354128 [debug] [Thread-2 (]: On model.plain_analytics.gold_sla_performance: COMMIT
+[0m05:43:20.354513 [debug] [Thread-2 (]: Using duckdb connection "model.plain_analytics.gold_sla_performance"
+[0m05:43:20.354834 [debug] [Thread-2 (]: On model.plain_analytics.gold_sla_performance: COMMIT
+[0m05:43:20.358049 [debug] [Thread-4 (]: SQL status: OK in 0.094 seconds
+[0m05:43:20.361192 [debug] [Thread-4 (]: Using duckdb connection "model.plain_analytics.gold_customer_spine"
+[0m05:43:20.362510 [debug] [Thread-4 (]: On model.plain_analytics.gold_customer_spine: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "plain_analytics", "target_name": "dev", "node_id": "model.plain_analytics.gold_customer_spine"} */
+alter table "plain_analytics"."main_gold"."gold_customer_spine__dbt_tmp" rename to "gold_customer_spine"
+[0m05:43:20.363207 [debug] [Thread-4 (]: SQL status: OK in 0.000 seconds
+[0m05:43:20.364618 [debug] [Thread-4 (]: On model.plain_analytics.gold_customer_spine: COMMIT
+[0m05:43:20.362063 [debug] [Thread-2 (]: SQL status: OK in 0.007 seconds
+[0m05:43:20.368000 [debug] [Thread-2 (]: Using duckdb connection "model.plain_analytics.gold_sla_performance"
+[0m05:43:20.365453 [debug] [Thread-1 (]: SQL status: OK in 0.013 seconds
+[0m05:43:20.369838 [debug] [Thread-1 (]: On model.plain_analytics.gold_thread_metrics: Close
+[0m05:43:20.365102 [debug] [Thread-3 (]: SQL status: OK in 0.015 seconds
+[0m05:43:20.365845 [debug] [Thread-4 (]: Using duckdb connection "model.plain_analytics.gold_customer_spine"
+[0m05:43:20.372573 [debug] [Thread-4 (]: On model.plain_analytics.gold_customer_spine: COMMIT
+[0m05:43:20.373973 [debug] [Thread-1 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': '0b7c8e2c-c201-462e-8b34-ad42d2bc0e3f', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f879d3735f0>]}
+[0m05:43:20.368364 [debug] [Thread-2 (]: On model.plain_analytics.gold_sla_performance: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "plain_analytics", "target_name": "dev", "node_id": "model.plain_analytics.gold_sla_performance"} */
+
+      drop table if exists "plain_analytics"."main_gold"."gold_sla_performance__dbt_backup" cascade
+    
+[0m05:43:20.374701 [info ] [Thread-1 (]: 10 of 10 OK created sql table model main_gold.gold_thread_metrics .............. [[32mOK[0m in 0.19s]
+[0m05:43:20.375606 [debug] [Thread-1 (]: Finished running node model.plain_analytics.gold_thread_metrics
+[0m05:43:20.372158 [debug] [Thread-3 (]: Using duckdb connection "model.plain_analytics.gold_agent_workload"
+[0m05:43:20.376153 [debug] [Thread-3 (]: On model.plain_analytics.gold_agent_workload: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "plain_analytics", "target_name": "dev", "node_id": "model.plain_analytics.gold_agent_workload"} */
+
+      drop table if exists "plain_analytics"."main_gold"."gold_agent_workload__dbt_backup" cascade
+    
+[0m05:43:20.376816 [debug] [Thread-4 (]: SQL status: OK in 0.004 seconds
+[0m05:43:20.380128 [debug] [Thread-4 (]: Using duckdb connection "model.plain_analytics.gold_customer_spine"
+[0m05:43:20.377569 [debug] [Thread-2 (]: SQL status: OK in 0.002 seconds
+[0m05:43:20.381944 [debug] [Thread-2 (]: On model.plain_analytics.gold_sla_performance: Close
+[0m05:43:20.382507 [debug] [Thread-2 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': '0b7c8e2c-c201-462e-8b34-ad42d2bc0e3f', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f879d2ae480>]}
+[0m05:43:20.377967 [debug] [Thread-3 (]: SQL status: OK in 0.001 seconds
+[0m05:43:20.384501 [debug] [Thread-3 (]: On model.plain_analytics.gold_agent_workload: Close
+[0m05:43:20.380539 [debug] [Thread-4 (]: On model.plain_analytics.gold_customer_spine: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "plain_analytics", "target_name": "dev", "node_id": "model.plain_analytics.gold_customer_spine"} */
+
+      drop table if exists "plain_analytics"."main_gold"."gold_customer_spine__dbt_backup" cascade
+    
+[0m05:43:20.385684 [debug] [Thread-4 (]: SQL status: OK in 0.000 seconds
+[0m05:43:20.386936 [debug] [Thread-4 (]: On model.plain_analytics.gold_customer_spine: Close
+[0m05:43:20.387447 [debug] [Thread-4 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': '0b7c8e2c-c201-462e-8b34-ad42d2bc0e3f', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f87a423a780>]}
+[0m05:43:20.385059 [debug] [Thread-3 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': '0b7c8e2c-c201-462e-8b34-ad42d2bc0e3f', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f879d270ef0>]}
+[0m05:43:20.383184 [info ] [Thread-2 (]: 9 of 10 OK created sql table model main_gold.gold_sla_performance .............. [[32mOK[0m in 0.20s]
+[0m05:43:20.389152 [debug] [Thread-2 (]: Finished running node model.plain_analytics.gold_sla_performance
+[0m05:43:20.388013 [info ] [Thread-4 (]: 8 of 10 OK created sql table model main_gold.gold_customer_spine ............... [[32mOK[0m in 0.21s]
+[0m05:43:20.390021 [debug] [Thread-4 (]: Finished running node model.plain_analytics.gold_customer_spine
+[0m05:43:20.388551 [info ] [Thread-3 (]: 7 of 10 OK created sql table model main_gold.gold_agent_workload ............... [[32mOK[0m in 0.22s]
+[0m05:43:20.390636 [debug] [Thread-3 (]: Finished running node model.plain_analytics.gold_agent_workload
+[0m05:43:20.392608 [debug] [MainThread]: Using duckdb connection "master"
+[0m05:43:20.393005 [debug] [MainThread]: On master: BEGIN
+[0m05:43:20.393286 [debug] [MainThread]: Opening a new connection, currently in state closed
+[0m05:43:20.393890 [debug] [MainThread]: SQL status: OK in 0.001 seconds
+[0m05:43:20.394193 [debug] [MainThread]: On master: COMMIT
+[0m05:43:20.394502 [debug] [MainThread]: Using duckdb connection "master"
+[0m05:43:20.394772 [debug] [MainThread]: On master: COMMIT
+[0m05:43:20.395218 [debug] [MainThread]: SQL status: OK in 0.000 seconds
+[0m05:43:20.395882 [debug] [MainThread]: On master: Close
+[0m05:43:20.396262 [debug] [MainThread]: Connection 'master' was properly closed.
+[0m05:43:20.396579 [debug] [MainThread]: Connection 'model.plain_analytics.gold_agent_workload' was properly closed.
+[0m05:43:20.396818 [debug] [MainThread]: Connection 'model.plain_analytics.gold_customer_spine' was properly closed.
+[0m05:43:20.397132 [debug] [MainThread]: Connection 'model.plain_analytics.gold_sla_performance' was properly closed.
+[0m05:43:20.397359 [debug] [MainThread]: Connection 'model.plain_analytics.gold_thread_metrics' was properly closed.
+[0m05:43:20.397779 [info ] [MainThread]: 
+[0m05:43:20.398118 [info ] [MainThread]: Finished running 4 table models, 6 view models in 0 hours 0 minutes and 0.78 seconds (0.78s).
+[0m05:43:20.399983 [debug] [MainThread]: Command end result
+[0m05:43:20.436466 [debug] [MainThread]: Wrote artifact WritableManifest to /home/claude/plain-analytics/target/manifest.json
+[0m05:43:20.438970 [debug] [MainThread]: Wrote artifact SemanticManifest to /home/claude/plain-analytics/target/semantic_manifest.json
+[0m05:43:20.446384 [debug] [MainThread]: Wrote artifact RunExecutionResult to /home/claude/plain-analytics/target/run_results.json
+[0m05:43:20.446759 [info ] [MainThread]: 
+[0m05:43:20.447142 [info ] [MainThread]: [32mCompleted successfully[0m
+[0m05:43:20.447584 [info ] [MainThread]: 
+[0m05:43:20.448119 [info ] [MainThread]: Done. PASS=10 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=10
+[0m05:43:20.449102 [warn ] [MainThread]: [[33mWARNING[0m][DeprecationsSummary]: Deprecated functionality
+Summary of encountered deprecations:
+- DuplicateNameDistinctNodeTypesDeprecation: 2 occurrences
+To see all deprecation instances instead of just the first occurrence of each,
+run command again with the `--show-all-deprecations` flag. You may also need to
+run with `--no-partial-parse` as some deprecations are only encountered during
+parsing.
+[0m05:43:20.450270 [debug] [MainThread]: Resource report: {"command_name": "run", "command_success": true, "command_wall_clock_time": 1.745304, "process_in_blocks": "0", "process_kernel_time": 0.195148, "process_mem_max_rss": "198396", "process_out_blocks": "3432", "process_user_time": 3.238022}
+[0m05:43:20.450855 [debug] [MainThread]: Command `dbt run` succeeded at 05:43:20.450744 after 1.75 seconds
+[0m05:43:20.451244 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f87a4416060>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f87a52f90a0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f87a52f9910>]}
+[0m05:43:20.451728 [debug] [MainThread]: Flushing usage events
+[0m05:43:20.501461 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m05:43:35.269697 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f0445c45850>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f0444bb9790>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f0445a6bce0>]}
+
+
+============================== 05:43:35.273687 | 0e3bab40-bbf9-4423-b5a3-a9bf3ba6381e ==============================
+[0m05:43:35.273687 [info ] [MainThread]: Running with dbt=1.11.11
+[0m05:43:35.274305 [debug] [MainThread]: running dbt with arguments {'log_path': '/home/claude/plain-analytics/logs', 'target_path': 'None', 'invocation_command': 'dbt test', 'profiles_dir': '.', 'fail_fast': 'False', 'empty': 'None', 'send_anonymous_usage_stats': 'True', 'indirect_selection': 'eager', 'introspect': 'True', 'debug': 'False', 'printer_width': '80', 'static_parser': 'True', 'partial_parse': 'True', 'log_format': 'default', 'cache_selected_only': 'False', 'use_colors': 'True', 'log_cache_events': 'False', 'version_check': 'True', 'use_experimental_parser': 'False', 'warn_error': 'None', 'no_print': 'None', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'quiet': 'False', 'write_json': 'True'}
+[0m05:43:35.563401 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'project_id', 'label': '0e3bab40-bbf9-4423-b5a3-a9bf3ba6381e', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f044035c1d0>]}
+[0m05:43:35.646134 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'adapter_info', 'label': '0e3bab40-bbf9-4423-b5a3-a9bf3ba6381e', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f0444c0d1c0>]}
+[0m05:43:35.648826 [info ] [MainThread]: Registered adapter: duckdb=1.10.1
+[0m05:43:35.797073 [debug] [MainThread]: checksum: 30a8cc8fdcbf66701b0944d4ccce3fa46dd04b61e5df68b9f16d57b2e0e3f0be, vars: {}, profile: , target: , version: 1.11.11
+[0m05:43:35.986699 [debug] [MainThread]: Partial parsing enabled: 0 files deleted, 0 files added, 0 files changed.
+[0m05:43:35.987203 [debug] [MainThread]: Nothing changed, skipping partial parsing.
+[0m05:43:35.987581 [debug] [MainThread]: Partial parsing enabled, no changes found, skipping parsing
+[0m05:43:35.995436 [warn ] [MainThread]: [[33mWARNING[0m]: Deprecated functionality
+Found resources with the same name 'raw_customers' in package 'plain_analytics':
+'model.plain_analytics.raw_customers' and 'seed.plain_analytics.raw_customers'.
+Please update one of the resources to have a unique name.
+[0m05:43:35.996135 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'deprecation', 'label': '0e3bab40-bbf9-4423-b5a3-a9bf3ba6381e', 'property_': 'warn', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f04402209b0>]}
+[0m05:43:36.055413 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'load_project', 'label': '0e3bab40-bbf9-4423-b5a3-a9bf3ba6381e', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f04448bca70>]}
+[0m05:43:36.179597 [debug] [MainThread]: Wrote artifact WritableManifest to /home/claude/plain-analytics/target/manifest.json
+[0m05:43:36.182019 [debug] [MainThread]: Wrote artifact SemanticManifest to /home/claude/plain-analytics/target/semantic_manifest.json
+[0m05:43:36.204137 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'resource_counts', 'label': '0e3bab40-bbf9-4423-b5a3-a9bf3ba6381e', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f043fd45e50>]}
+[0m05:43:36.204668 [info ] [MainThread]: Found 10 models, 6 seeds, 13 data tests, 6 sources, 485 macros
+[0m05:43:36.205079 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': '0e3bab40-bbf9-4423-b5a3-a9bf3ba6381e', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f04401034a0>]}
+[0m05:43:36.207916 [info ] [MainThread]: 
+[0m05:43:36.208313 [info ] [MainThread]: Concurrency: 4 threads (target='dev')
+[0m05:43:36.208684 [info ] [MainThread]: 
+[0m05:43:36.209265 [debug] [MainThread]: Acquiring new duckdb connection 'master'
+[0m05:43:36.216052 [debug] [ThreadPool]: Acquiring new duckdb connection 'list_plain_analytics_main_staging'
+[0m05:43:36.219602 [debug] [ThreadPool]: Acquiring new duckdb connection 'list_plain_analytics_main_seeds'
+[0m05:43:36.230483 [debug] [ThreadPool]: Acquiring new duckdb connection 'list_plain_analytics_main_gold'
+[0m05:43:36.257041 [debug] [ThreadPool]: Acquiring new duckdb connection 'list_plain_analytics_main_raw'
+[0m05:43:36.396575 [debug] [ThreadPool]: Using duckdb connection "list_plain_analytics_main_seeds"
+[0m05:43:36.397533 [debug] [ThreadPool]: Using duckdb connection "list_plain_analytics_main_staging"
+[0m05:43:36.398580 [debug] [ThreadPool]: On list_plain_analytics_main_staging: BEGIN
+[0m05:43:36.398846 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m05:43:36.397857 [debug] [ThreadPool]: Using duckdb connection "list_plain_analytics_main_raw"
+[0m05:43:36.401026 [debug] [ThreadPool]: On list_plain_analytics_main_raw: BEGIN
+[0m05:43:36.401382 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m05:43:36.397167 [debug] [ThreadPool]: Using duckdb connection "list_plain_analytics_main_gold"
+[0m05:43:36.401694 [debug] [ThreadPool]: On list_plain_analytics_main_gold: BEGIN
+[0m05:43:36.401955 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m05:43:36.398221 [debug] [ThreadPool]: On list_plain_analytics_main_seeds: BEGIN
+[0m05:43:36.402235 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m05:43:36.440932 [debug] [ThreadPool]: SQL status: OK in 0.039 seconds
+[0m05:43:36.443816 [debug] [ThreadPool]: Using duckdb connection "list_plain_analytics_main_gold"
+[0m05:43:36.441744 [debug] [ThreadPool]: SQL status: OK in 0.043 seconds
+[0m05:43:36.444582 [debug] [ThreadPool]: Using duckdb connection "list_plain_analytics_main_staging"
+[0m05:43:36.442547 [debug] [ThreadPool]: SQL status: OK in 0.040 seconds
+[0m05:43:36.445310 [debug] [ThreadPool]: Using duckdb connection "list_plain_analytics_main_seeds"
+[0m05:43:36.443396 [debug] [ThreadPool]: SQL status: OK in 0.042 seconds
+[0m05:43:36.445967 [debug] [ThreadPool]: Using duckdb connection "list_plain_analytics_main_raw"
+[0m05:43:36.446328 [debug] [ThreadPool]: On list_plain_analytics_main_raw: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "plain_analytics", "target_name": "dev", "connection_name": "list_plain_analytics_main_raw"} */
+select
+      'plain_analytics' as database,
+      table_name as name,
+      table_schema as schema,
+      CASE table_type
+        WHEN 'BASE TABLE' THEN 'table'
+        WHEN 'VIEW' THEN 'view'
+        WHEN 'LOCAL TEMPORARY' THEN 'table'
+        END as type
+    from system.information_schema.tables
+    where lower(table_schema) = 'main_raw'
+    and lower(table_catalog) = 'plain_analytics'
+  
+[0m05:43:36.445617 [debug] [ThreadPool]: On list_plain_analytics_main_seeds: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "plain_analytics", "target_name": "dev", "connection_name": "list_plain_analytics_main_seeds"} */
+select
+      'plain_analytics' as database,
+      table_name as name,
+      table_schema as schema,
+      CASE table_type
+        WHEN 'BASE TABLE' THEN 'table'
+        WHEN 'VIEW' THEN 'view'
+        WHEN 'LOCAL TEMPORARY' THEN 'table'
+        END as type
+    from system.information_schema.tables
+    where lower(table_schema) = 'main_seeds'
+    and lower(table_catalog) = 'plain_analytics'
+  
+[0m05:43:36.444214 [debug] [ThreadPool]: On list_plain_analytics_main_gold: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "plain_analytics", "target_name": "dev", "connection_name": "list_plain_analytics_main_gold"} */
+select
+      'plain_analytics' as database,
+      table_name as name,
+      table_schema as schema,
+      CASE table_type
+        WHEN 'BASE TABLE' THEN 'table'
+        WHEN 'VIEW' THEN 'view'
+        WHEN 'LOCAL TEMPORARY' THEN 'table'
+        END as type
+    from system.information_schema.tables
+    where lower(table_schema) = 'main_gold'
+    and lower(table_catalog) = 'plain_analytics'
+  
+[0m05:43:36.444959 [debug] [ThreadPool]: On list_plain_analytics_main_staging: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "plain_analytics", "target_name": "dev", "connection_name": "list_plain_analytics_main_staging"} */
+select
+      'plain_analytics' as database,
+      table_name as name,
+      table_schema as schema,
+      CASE table_type
+        WHEN 'BASE TABLE' THEN 'table'
+        WHEN 'VIEW' THEN 'view'
+        WHEN 'LOCAL TEMPORARY' THEN 'table'
+        END as type
+    from system.information_schema.tables
+    where lower(table_schema) = 'main_staging'
+    and lower(table_catalog) = 'plain_analytics'
+  
+[0m05:43:36.458971 [debug] [ThreadPool]: SQL status: OK in 0.006 seconds
+[0m05:43:36.462484 [debug] [ThreadPool]: On list_plain_analytics_main_staging: ROLLBACK
+[0m05:43:36.464569 [debug] [ThreadPool]: SQL status: OK in 0.018 seconds
+[0m05:43:36.464950 [debug] [ThreadPool]: SQL status: OK in 0.018 seconds
+[0m05:43:36.467179 [debug] [ThreadPool]: On list_plain_analytics_main_raw: ROLLBACK
+[0m05:43:36.465473 [debug] [ThreadPool]: SQL status: OK in 0.016 seconds
+[0m05:43:36.470523 [debug] [ThreadPool]: On list_plain_analytics_main_gold: ROLLBACK
+[0m05:43:36.471576 [debug] [ThreadPool]: Failed to rollback 'list_plain_analytics_main_gold'
+[0m05:43:36.471874 [debug] [ThreadPool]: On list_plain_analytics_main_gold: Close
+[0m05:43:36.468912 [debug] [ThreadPool]: Failed to rollback 'list_plain_analytics_main_raw'
+[0m05:43:36.475088 [debug] [ThreadPool]: On list_plain_analytics_main_raw: Close
+[0m05:43:36.474752 [debug] [ThreadPool]: Failed to rollback 'list_plain_analytics_main_staging'
+[0m05:43:36.476682 [debug] [ThreadPool]: On list_plain_analytics_main_staging: Close
+[0m05:43:36.473537 [debug] [ThreadPool]: On list_plain_analytics_main_seeds: ROLLBACK
+[0m05:43:36.478474 [debug] [ThreadPool]: Failed to rollback 'list_plain_analytics_main_seeds'
+[0m05:43:36.478753 [debug] [ThreadPool]: On list_plain_analytics_main_seeds: Close
+[0m05:43:36.480594 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': '0e3bab40-bbf9-4423-b5a3-a9bf3ba6381e', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f043fdef830>]}
+[0m05:43:36.481380 [debug] [MainThread]: Using duckdb connection "master"
+[0m05:43:36.481679 [debug] [MainThread]: On master: BEGIN
+[0m05:43:36.481935 [debug] [MainThread]: Opening a new connection, currently in state init
+[0m05:43:36.482602 [debug] [MainThread]: SQL status: OK in 0.001 seconds
+[0m05:43:36.482896 [debug] [MainThread]: On master: COMMIT
+[0m05:43:36.483165 [debug] [MainThread]: Using duckdb connection "master"
+[0m05:43:36.483484 [debug] [MainThread]: On master: COMMIT
+[0m05:43:36.483943 [debug] [MainThread]: SQL status: OK in 0.000 seconds
+[0m05:43:36.484246 [debug] [MainThread]: On master: Close
+[0m05:43:36.488658 [debug] [Thread-1 (]: Began running node test.plain_analytics.accepted_values_gold_agent_workload_workload_status__overloaded__busy__normal__light.4fc01b1ada
+[0m05:43:36.489140 [debug] [Thread-2 (]: Began running node test.plain_analytics.accepted_values_gold_customer_spine_company_tier__enterprise__pro__starter__free.abbf31edbc
+[0m05:43:36.490762 [debug] [Thread-4 (]: Began running node test.plain_analytics.accepted_values_gold_sla_performance_risk_flag__critical__warning__ok.eda117693f
+[0m05:43:36.489551 [debug] [Thread-3 (]: Began running node test.plain_analytics.accepted_values_gold_customer_spine_customer_status__active__idle__churned.2998fe5031
+[0m05:43:36.489961 [info ] [Thread-1 (]: 1 of 13 START test accepted_values_gold_agent_workload_workload_status__overloaded__busy__normal__light  [RUN]
+[0m05:43:36.491923 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly list_plain_analytics_main_seeds, now test.plain_analytics.accepted_values_gold_agent_workload_workload_status__overloaded__busy__normal__light.4fc01b1ada)
+[0m05:43:36.492327 [debug] [Thread-1 (]: Began compiling node test.plain_analytics.accepted_values_gold_agent_workload_workload_status__overloaded__busy__normal__light.4fc01b1ada
+[0m05:43:36.490397 [info ] [Thread-2 (]: 2 of 13 START test accepted_values_gold_customer_spine_company_tier__enterprise__pro__starter__free  [RUN]
+[0m05:43:36.498340 [debug] [Thread-2 (]: Re-using an available connection from the pool (formerly list_plain_analytics_main_gold, now test.plain_analytics.accepted_values_gold_customer_spine_company_tier__enterprise__pro__starter__free.abbf31edbc)
+[0m05:43:36.498721 [debug] [Thread-2 (]: Began compiling node test.plain_analytics.accepted_values_gold_customer_spine_company_tier__enterprise__pro__starter__free.abbf31edbc
+[0m05:43:36.491118 [info ] [Thread-4 (]: 4 of 13 START test accepted_values_gold_sla_performance_risk_flag__critical__warning__ok  [RUN]
+[0m05:43:36.499237 [debug] [Thread-4 (]: Re-using an available connection from the pool (formerly list_plain_analytics_main_raw, now test.plain_analytics.accepted_values_gold_sla_performance_risk_flag__critical__warning__ok.eda117693f)
+[0m05:43:36.499727 [debug] [Thread-4 (]: Began compiling node test.plain_analytics.accepted_values_gold_sla_performance_risk_flag__critical__warning__ok.eda117693f
+[0m05:43:36.491478 [info ] [Thread-3 (]: 3 of 13 START test accepted_values_gold_customer_spine_customer_status__active__idle__churned  [RUN]
+[0m05:43:36.500204 [debug] [Thread-3 (]: Re-using an available connection from the pool (formerly list_plain_analytics_main_staging, now test.plain_analytics.accepted_values_gold_customer_spine_customer_status__active__idle__churned.2998fe5031)
+[0m05:43:36.500645 [debug] [Thread-3 (]: Began compiling node test.plain_analytics.accepted_values_gold_customer_spine_customer_status__active__idle__churned.2998fe5031
+[0m05:43:36.530989 [debug] [Thread-2 (]: Writing injected SQL for node "test.plain_analytics.accepted_values_gold_customer_spine_company_tier__enterprise__pro__starter__free.abbf31edbc"
+[0m05:43:36.533035 [debug] [Thread-1 (]: Writing injected SQL for node "test.plain_analytics.accepted_values_gold_agent_workload_workload_status__overloaded__busy__normal__light.4fc01b1ada"
+[0m05:43:36.544082 [debug] [Thread-1 (]: Began executing node test.plain_analytics.accepted_values_gold_agent_workload_workload_status__overloaded__busy__normal__light.4fc01b1ada
+[0m05:43:36.536893 [debug] [Thread-4 (]: Writing injected SQL for node "test.plain_analytics.accepted_values_gold_sla_performance_risk_flag__critical__warning__ok.eda117693f"
+[0m05:43:36.550420 [debug] [Thread-4 (]: Began executing node test.plain_analytics.accepted_values_gold_sla_performance_risk_flag__critical__warning__ok.eda117693f
+[0m05:43:36.551040 [debug] [Thread-2 (]: Began executing node test.plain_analytics.accepted_values_gold_customer_spine_company_tier__enterprise__pro__starter__free.abbf31edbc
+[0m05:43:36.552517 [debug] [Thread-3 (]: Writing injected SQL for node "test.plain_analytics.accepted_values_gold_customer_spine_customer_status__active__idle__churned.2998fe5031"
+[0m05:43:36.602164 [debug] [Thread-3 (]: Began executing node test.plain_analytics.accepted_values_gold_customer_spine_customer_status__active__idle__churned.2998fe5031
+[0m05:43:36.605395 [debug] [Thread-3 (]: Writing runtime sql for node "test.plain_analytics.accepted_values_gold_customer_spine_customer_status__active__idle__churned.2998fe5031"
+[0m05:43:36.621720 [debug] [Thread-3 (]: Using duckdb connection "test.plain_analytics.accepted_values_gold_customer_spine_customer_status__active__idle__churned.2998fe5031"
+[0m05:43:36.622164 [debug] [Thread-3 (]: On test.plain_analytics.accepted_values_gold_customer_spine_customer_status__active__idle__churned.2998fe5031: BEGIN
+[0m05:43:36.622572 [debug] [Thread-3 (]: Opening a new connection, currently in state closed
+[0m05:43:36.623731 [debug] [Thread-3 (]: SQL status: OK in 0.001 seconds
+[0m05:43:36.624097 [debug] [Thread-3 (]: Using duckdb connection "test.plain_analytics.accepted_values_gold_customer_spine_customer_status__active__idle__churned.2998fe5031"
+[0m05:43:36.624509 [debug] [Thread-3 (]: On test.plain_analytics.accepted_values_gold_customer_spine_customer_status__active__idle__churned.2998fe5031: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "plain_analytics", "target_name": "dev", "node_id": "test.plain_analytics.accepted_values_gold_customer_spine_customer_status__active__idle__churned.2998fe5031"} */
+
+    
+    select
+      count(*) as failures,
+      count(*) != 0 as should_warn,
+      count(*) != 0 as should_error
+    from (
+      
+    
+  
+    
+    
+
+with all_values as (
+
+    select
+        customer_status as value_field,
+        count(*) as n_records
+
+    from "plain_analytics"."main_gold"."gold_customer_spine"
+    group by customer_status
+
+)
+
+select *
+from all_values
+where value_field not in (
+    'active','idle','churned'
+)
+
+
+
+  
+  
+      
+    ) dbt_internal_test
+[0m05:43:36.620633 [debug] [Thread-2 (]: Writing runtime sql for node "test.plain_analytics.accepted_values_gold_customer_spine_company_tier__enterprise__pro__starter__free.abbf31edbc"
+[0m05:43:36.625833 [debug] [Thread-2 (]: Using duckdb connection "test.plain_analytics.accepted_values_gold_customer_spine_company_tier__enterprise__pro__starter__free.abbf31edbc"
+[0m05:43:36.626183 [debug] [Thread-2 (]: On test.plain_analytics.accepted_values_gold_customer_spine_company_tier__enterprise__pro__starter__free.abbf31edbc: BEGIN
+[0m05:43:36.626551 [debug] [Thread-2 (]: Opening a new connection, currently in state closed
+[0m05:43:36.625155 [debug] [Thread-4 (]: Writing runtime sql for node "test.plain_analytics.accepted_values_gold_sla_performance_risk_flag__critical__warning__ok.eda117693f"
+[0m05:43:36.629031 [debug] [Thread-4 (]: Using duckdb connection "test.plain_analytics.accepted_values_gold_sla_performance_risk_flag__critical__warning__ok.eda117693f"
+[0m05:43:36.629435 [debug] [Thread-4 (]: On test.plain_analytics.accepted_values_gold_sla_performance_risk_flag__critical__warning__ok.eda117693f: BEGIN
+[0m05:43:36.629763 [debug] [Thread-4 (]: Opening a new connection, currently in state closed
+[0m05:43:36.630626 [debug] [Thread-4 (]: SQL status: OK in 0.001 seconds
+[0m05:43:36.628387 [debug] [Thread-1 (]: Writing runtime sql for node "test.plain_analytics.accepted_values_gold_agent_workload_workload_status__overloaded__busy__normal__light.4fc01b1ada"
+[0m05:43:36.631723 [debug] [Thread-1 (]: Using duckdb connection "test.plain_analytics.accepted_values_gold_agent_workload_workload_status__overloaded__busy__normal__light.4fc01b1ada"
+[0m05:43:36.632130 [debug] [Thread-1 (]: On test.plain_analytics.accepted_values_gold_agent_workload_workload_status__overloaded__busy__normal__light.4fc01b1ada: BEGIN
+[0m05:43:36.632550 [debug] [Thread-1 (]: Opening a new connection, currently in state closed
+[0m05:43:36.627517 [debug] [Thread-2 (]: SQL status: OK in 0.001 seconds
+[0m05:43:36.633107 [debug] [Thread-2 (]: Using duckdb connection "test.plain_analytics.accepted_values_gold_customer_spine_company_tier__enterprise__pro__starter__free.abbf31edbc"
+[0m05:43:36.633569 [debug] [Thread-2 (]: On test.plain_analytics.accepted_values_gold_customer_spine_company_tier__enterprise__pro__starter__free.abbf31edbc: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "plain_analytics", "target_name": "dev", "node_id": "test.plain_analytics.accepted_values_gold_customer_spine_company_tier__enterprise__pro__starter__free.abbf31edbc"} */
+
+    
+    select
+      count(*) as failures,
+      count(*) != 0 as should_warn,
+      count(*) != 0 as should_error
+    from (
+      
+    
+  
+    
+    
+
+with all_values as (
+
+    select
+        company_tier as value_field,
+        count(*) as n_records
+
+    from "plain_analytics"."main_gold"."gold_customer_spine"
+    group by company_tier
+
+)
+
+select *
+from all_values
+where value_field not in (
+    'enterprise','pro','starter','free'
+)
+
+
+
+  
+  
+      
+    ) dbt_internal_test
+[0m05:43:36.630994 [debug] [Thread-4 (]: Using duckdb connection "test.plain_analytics.accepted_values_gold_sla_performance_risk_flag__critical__warning__ok.eda117693f"
+[0m05:43:36.637475 [debug] [Thread-4 (]: On test.plain_analytics.accepted_values_gold_sla_performance_risk_flag__critical__warning__ok.eda117693f: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "plain_analytics", "target_name": "dev", "node_id": "test.plain_analytics.accepted_values_gold_sla_performance_risk_flag__critical__warning__ok.eda117693f"} */
+
+    
+    select
+      count(*) as failures,
+      count(*) != 0 as should_warn,
+      count(*) != 0 as should_error
+    from (
+      
+    
+  
+    
+    
+
+with all_values as (
+
+    select
+        risk_flag as value_field,
+        count(*) as n_records
+
+    from "plain_analytics"."main_gold"."gold_sla_performance"
+    group by risk_flag
+
+)
+
+select *
+from all_values
+where value_field not in (
+    'critical','warning','ok'
+)
+
+
+
+  
+  
+      
+    ) dbt_internal_test
+[0m05:43:36.640497 [debug] [Thread-4 (]: SQL status: OK in 0.003 seconds
+[0m05:43:36.641382 [debug] [Thread-1 (]: SQL status: OK in 0.009 seconds
+[0m05:43:36.641745 [debug] [Thread-1 (]: Using duckdb connection "test.plain_analytics.accepted_values_gold_agent_workload_workload_status__overloaded__busy__normal__light.4fc01b1ada"
+[0m05:43:36.642183 [debug] [Thread-1 (]: On test.plain_analytics.accepted_values_gold_agent_workload_workload_status__overloaded__busy__normal__light.4fc01b1ada: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "plain_analytics", "target_name": "dev", "node_id": "test.plain_analytics.accepted_values_gold_agent_workload_workload_status__overloaded__busy__normal__light.4fc01b1ada"} */
+
+    
+    select
+      count(*) as failures,
+      count(*) != 0 as should_warn,
+      count(*) != 0 as should_error
+    from (
+      
+    
+  
+    
+    
+
+with all_values as (
+
+    select
+        workload_status as value_field,
+        count(*) as n_records
+
+    from "plain_analytics"."main_gold"."gold_agent_workload"
+    group by workload_status
+
+)
+
+select *
+from all_values
+where value_field not in (
+    'overloaded','busy','normal','light'
+)
+
+
+
+  
+  
+      
+    ) dbt_internal_test
+[0m05:43:36.644231 [debug] [Thread-3 (]: SQL status: OK in 0.019 seconds
+[0m05:43:36.636992 [debug] [Thread-2 (]: SQL status: OK in 0.003 seconds
+[0m05:43:36.654890 [debug] [Thread-4 (]: On test.plain_analytics.accepted_values_gold_sla_performance_risk_flag__critical__warning__ok.eda117693f: ROLLBACK
+[0m05:43:36.657614 [debug] [Thread-3 (]: On test.plain_analytics.accepted_values_gold_customer_spine_customer_status__active__idle__churned.2998fe5031: ROLLBACK
+[0m05:43:36.659038 [debug] [Thread-2 (]: On test.plain_analytics.accepted_values_gold_customer_spine_company_tier__enterprise__pro__starter__free.abbf31edbc: ROLLBACK
+[0m05:43:36.662793 [debug] [Thread-2 (]: Failed to rollback 'test.plain_analytics.accepted_values_gold_customer_spine_company_tier__enterprise__pro__starter__free.abbf31edbc'
+[0m05:43:36.659645 [debug] [Thread-1 (]: SQL status: OK in 0.017 seconds
+[0m05:43:36.660609 [debug] [Thread-4 (]: Failed to rollback 'test.plain_analytics.accepted_values_gold_sla_performance_risk_flag__critical__warning__ok.eda117693f'
+[0m05:43:36.665546 [debug] [Thread-4 (]: On test.plain_analytics.accepted_values_gold_sla_performance_risk_flag__critical__warning__ok.eda117693f: Close
+[0m05:43:36.661785 [debug] [Thread-3 (]: Failed to rollback 'test.plain_analytics.accepted_values_gold_customer_spine_customer_status__active__idle__churned.2998fe5031'
+[0m05:43:36.666660 [debug] [Thread-3 (]: On test.plain_analytics.accepted_values_gold_customer_spine_customer_status__active__idle__churned.2998fe5031: Close
+[0m05:43:36.663171 [debug] [Thread-2 (]: On test.plain_analytics.accepted_values_gold_customer_spine_company_tier__enterprise__pro__starter__free.abbf31edbc: Close
+[0m05:43:36.666241 [info ] [Thread-4 (]: 4 of 13 PASS accepted_values_gold_sla_performance_risk_flag__critical__warning__ok  [[32mPASS[0m in 0.17s]
+[0m05:43:36.668547 [debug] [Thread-4 (]: Finished running node test.plain_analytics.accepted_values_gold_sla_performance_risk_flag__critical__warning__ok.eda117693f
+[0m05:43:36.669020 [debug] [Thread-4 (]: Began running node test.plain_analytics.not_null_gold_agent_workload_agent_id.e7534286bc
+[0m05:43:36.665112 [debug] [Thread-1 (]: On test.plain_analytics.accepted_values_gold_agent_workload_workload_status__overloaded__busy__normal__light.4fc01b1ada: ROLLBACK
+[0m05:43:36.670351 [debug] [Thread-1 (]: Failed to rollback 'test.plain_analytics.accepted_values_gold_agent_workload_workload_status__overloaded__busy__normal__light.4fc01b1ada'
+[0m05:43:36.670705 [debug] [Thread-1 (]: On test.plain_analytics.accepted_values_gold_agent_workload_workload_status__overloaded__busy__normal__light.4fc01b1ada: Close
+[0m05:43:36.667292 [info ] [Thread-3 (]: 3 of 13 PASS accepted_values_gold_customer_spine_customer_status__active__idle__churned  [[32mPASS[0m in 0.17s]
+[0m05:43:36.671893 [debug] [Thread-3 (]: Finished running node test.plain_analytics.accepted_values_gold_customer_spine_customer_status__active__idle__churned.2998fe5031
+[0m05:43:36.672310 [debug] [Thread-3 (]: Began running node test.plain_analytics.not_null_gold_customer_spine_company_id.7d8aa8b2ec
+[0m05:43:36.667902 [info ] [Thread-2 (]: 2 of 13 PASS accepted_values_gold_customer_spine_company_tier__enterprise__pro__starter__free  [[32mPASS[0m in 0.17s]
+[0m05:43:36.673548 [debug] [Thread-2 (]: Finished running node test.plain_analytics.accepted_values_gold_customer_spine_company_tier__enterprise__pro__starter__free.abbf31edbc
+[0m05:43:36.673955 [debug] [Thread-2 (]: Began running node test.plain_analytics.not_null_gold_customer_spine_customer_id.69052a4a52
+[0m05:43:36.669435 [info ] [Thread-4 (]: 5 of 13 START test not_null_gold_agent_workload_agent_id ....................... [RUN]
+[0m05:43:36.675178 [debug] [Thread-4 (]: Re-using an available connection from the pool (formerly test.plain_analytics.accepted_values_gold_sla_performance_risk_flag__critical__warning__ok.eda117693f, now test.plain_analytics.not_null_gold_agent_workload_agent_id.e7534286bc)
+[0m05:43:36.675606 [debug] [Thread-4 (]: Began compiling node test.plain_analytics.not_null_gold_agent_workload_agent_id.e7534286bc
+[0m05:43:36.672722 [info ] [Thread-3 (]: 6 of 13 START test not_null_gold_customer_spine_company_id ..................... [RUN]
+[0m05:43:36.682431 [debug] [Thread-3 (]: Re-using an available connection from the pool (formerly test.plain_analytics.accepted_values_gold_customer_spine_customer_status__active__idle__churned.2998fe5031, now test.plain_analytics.not_null_gold_customer_spine_company_id.7d8aa8b2ec)
+[0m05:43:36.682862 [debug] [Thread-3 (]: Began compiling node test.plain_analytics.not_null_gold_customer_spine_company_id.7d8aa8b2ec
+[0m05:43:36.688582 [debug] [Thread-3 (]: Writing injected SQL for node "test.plain_analytics.not_null_gold_customer_spine_company_id.7d8aa8b2ec"
+[0m05:43:36.691411 [debug] [Thread-3 (]: Began executing node test.plain_analytics.not_null_gold_customer_spine_company_id.7d8aa8b2ec
+[0m05:43:36.671228 [info ] [Thread-1 (]: 1 of 13 PASS accepted_values_gold_agent_workload_workload_status__overloaded__busy__normal__light  [[32mPASS[0m in 0.18s]
+[0m05:43:36.694829 [debug] [Thread-1 (]: Finished running node test.plain_analytics.accepted_values_gold_agent_workload_workload_status__overloaded__busy__normal__light.4fc01b1ada
+[0m05:43:36.695223 [debug] [Thread-1 (]: Began running node test.plain_analytics.not_null_gold_customer_spine_health_status.e7b81c26c3
+[0m05:43:36.674420 [info ] [Thread-2 (]: 7 of 13 START test not_null_gold_customer_spine_customer_id .................... [RUN]
+[0m05:43:36.696180 [debug] [Thread-2 (]: Re-using an available connection from the pool (formerly test.plain_analytics.accepted_values_gold_customer_spine_company_tier__enterprise__pro__starter__free.abbf31edbc, now test.plain_analytics.not_null_gold_customer_spine_customer_id.69052a4a52)
+[0m05:43:36.690783 [debug] [Thread-4 (]: Writing injected SQL for node "test.plain_analytics.not_null_gold_agent_workload_agent_id.e7534286bc"
+[0m05:43:36.697309 [debug] [Thread-4 (]: Began executing node test.plain_analytics.not_null_gold_agent_workload_agent_id.e7534286bc
+[0m05:43:36.694188 [debug] [Thread-3 (]: Writing runtime sql for node "test.plain_analytics.not_null_gold_customer_spine_company_id.7d8aa8b2ec"
+[0m05:43:36.700777 [debug] [Thread-3 (]: Using duckdb connection "test.plain_analytics.not_null_gold_customer_spine_company_id.7d8aa8b2ec"
+[0m05:43:36.701184 [debug] [Thread-3 (]: On test.plain_analytics.not_null_gold_customer_spine_company_id.7d8aa8b2ec: BEGIN
+[0m05:43:36.701551 [debug] [Thread-3 (]: Opening a new connection, currently in state closed
+[0m05:43:36.702435 [debug] [Thread-3 (]: SQL status: OK in 0.001 seconds
+[0m05:43:36.702801 [debug] [Thread-3 (]: Using duckdb connection "test.plain_analytics.not_null_gold_customer_spine_company_id.7d8aa8b2ec"
+[0m05:43:36.703134 [debug] [Thread-3 (]: On test.plain_analytics.not_null_gold_customer_spine_company_id.7d8aa8b2ec: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "plain_analytics", "target_name": "dev", "node_id": "test.plain_analytics.not_null_gold_customer_spine_company_id.7d8aa8b2ec"} */
+
+    
+    select
+      count(*) as failures,
+      count(*) != 0 as should_warn,
+      count(*) != 0 as should_error
+    from (
+      
+    
+  
+    
+    
+
+
+
+select company_id
+from "plain_analytics"."main_gold"."gold_customer_spine"
+where company_id is null
+
+
+
+  
+  
+      
+    ) dbt_internal_test
+[0m05:43:36.696645 [debug] [Thread-2 (]: Began compiling node test.plain_analytics.not_null_gold_customer_spine_customer_id.69052a4a52
+[0m05:43:36.700125 [debug] [Thread-4 (]: Writing runtime sql for node "test.plain_analytics.not_null_gold_agent_workload_agent_id.e7534286bc"
+[0m05:43:36.710297 [debug] [Thread-4 (]: Using duckdb connection "test.plain_analytics.not_null_gold_agent_workload_agent_id.e7534286bc"
+[0m05:43:36.710657 [debug] [Thread-4 (]: On test.plain_analytics.not_null_gold_agent_workload_agent_id.e7534286bc: BEGIN
+[0m05:43:36.711051 [debug] [Thread-4 (]: Opening a new connection, currently in state closed
+[0m05:43:36.711767 [debug] [Thread-4 (]: SQL status: OK in 0.001 seconds
+[0m05:43:36.712106 [debug] [Thread-4 (]: Using duckdb connection "test.plain_analytics.not_null_gold_agent_workload_agent_id.e7534286bc"
+[0m05:43:36.712540 [debug] [Thread-4 (]: On test.plain_analytics.not_null_gold_agent_workload_agent_id.e7534286bc: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "plain_analytics", "target_name": "dev", "node_id": "test.plain_analytics.not_null_gold_agent_workload_agent_id.e7534286bc"} */
+
+    
+    select
+      count(*) as failures,
+      count(*) != 0 as should_warn,
+      count(*) != 0 as should_error
+    from (
+      
+    
+  
+    
+    
+
+
+
+select agent_id
+from "plain_analytics"."main_gold"."gold_agent_workload"
+where agent_id is null
+
+
+
+  
+  
+      
+    ) dbt_internal_test
+[0m05:43:36.695794 [info ] [Thread-1 (]: 8 of 13 START test not_null_gold_customer_spine_health_status .................. [RUN]
+[0m05:43:36.714174 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly test.plain_analytics.accepted_values_gold_agent_workload_workload_status__overloaded__busy__normal__light.4fc01b1ada, now test.plain_analytics.not_null_gold_customer_spine_health_status.e7b81c26c3)
+[0m05:43:36.714595 [debug] [Thread-1 (]: Began compiling node test.plain_analytics.not_null_gold_customer_spine_health_status.e7b81c26c3
+[0m05:43:36.704672 [debug] [Thread-3 (]: SQL status: OK in 0.001 seconds
+[0m05:43:36.713749 [debug] [Thread-4 (]: SQL status: OK in 0.001 seconds
+[0m05:43:36.722757 [debug] [Thread-4 (]: On test.plain_analytics.not_null_gold_agent_workload_agent_id.e7534286bc: ROLLBACK
+[0m05:43:36.709653 [debug] [Thread-2 (]: Writing injected SQL for node "test.plain_analytics.not_null_gold_customer_spine_customer_id.69052a4a52"
+[0m05:43:36.723421 [debug] [Thread-2 (]: Began executing node test.plain_analytics.not_null_gold_customer_spine_customer_id.69052a4a52
+[0m05:43:36.721134 [debug] [Thread-3 (]: On test.plain_analytics.not_null_gold_customer_spine_company_id.7d8aa8b2ec: ROLLBACK
+[0m05:43:36.727032 [debug] [Thread-3 (]: Failed to rollback 'test.plain_analytics.not_null_gold_customer_spine_company_id.7d8aa8b2ec'
+[0m05:43:36.727427 [debug] [Thread-3 (]: On test.plain_analytics.not_null_gold_customer_spine_company_id.7d8aa8b2ec: Close
+[0m05:43:36.728980 [debug] [Thread-4 (]: Failed to rollback 'test.plain_analytics.not_null_gold_agent_workload_agent_id.e7534286bc'
+[0m05:43:36.729361 [debug] [Thread-4 (]: On test.plain_analytics.not_null_gold_agent_workload_agent_id.e7534286bc: Close
+[0m05:43:36.719219 [debug] [Thread-1 (]: Writing injected SQL for node "test.plain_analytics.not_null_gold_customer_spine_health_status.e7b81c26c3"
+[0m05:43:36.730388 [debug] [Thread-1 (]: Began executing node test.plain_analytics.not_null_gold_customer_spine_health_status.e7b81c26c3
+[0m05:43:36.726005 [debug] [Thread-2 (]: Writing runtime sql for node "test.plain_analytics.not_null_gold_customer_spine_customer_id.69052a4a52"
+[0m05:43:36.735694 [debug] [Thread-2 (]: Using duckdb connection "test.plain_analytics.not_null_gold_customer_spine_customer_id.69052a4a52"
+[0m05:43:36.736045 [debug] [Thread-2 (]: On test.plain_analytics.not_null_gold_customer_spine_customer_id.69052a4a52: BEGIN
+[0m05:43:36.736395 [debug] [Thread-2 (]: Opening a new connection, currently in state closed
+[0m05:43:36.728008 [info ] [Thread-3 (]: 6 of 13 PASS not_null_gold_customer_spine_company_id ........................... [[32mPASS[0m in 0.05s]
+[0m05:43:36.737292 [debug] [Thread-3 (]: Finished running node test.plain_analytics.not_null_gold_customer_spine_company_id.7d8aa8b2ec
+[0m05:43:36.737694 [debug] [Thread-3 (]: Began running node test.plain_analytics.not_null_gold_sla_performance_company_id.e060f4e9b5
+[0m05:43:36.734992 [debug] [Thread-1 (]: Writing runtime sql for node "test.plain_analytics.not_null_gold_customer_spine_health_status.e7b81c26c3"
+[0m05:43:36.738639 [debug] [Thread-1 (]: Using duckdb connection "test.plain_analytics.not_null_gold_customer_spine_health_status.e7b81c26c3"
+[0m05:43:36.738981 [debug] [Thread-1 (]: On test.plain_analytics.not_null_gold_customer_spine_health_status.e7b81c26c3: BEGIN
+[0m05:43:36.739341 [debug] [Thread-1 (]: Opening a new connection, currently in state closed
+[0m05:43:36.739978 [debug] [Thread-1 (]: SQL status: OK in 0.001 seconds
+[0m05:43:36.740398 [debug] [Thread-1 (]: Using duckdb connection "test.plain_analytics.not_null_gold_customer_spine_health_status.e7b81c26c3"
+[0m05:43:36.740746 [debug] [Thread-1 (]: On test.plain_analytics.not_null_gold_customer_spine_health_status.e7b81c26c3: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "plain_analytics", "target_name": "dev", "node_id": "test.plain_analytics.not_null_gold_customer_spine_health_status.e7b81c26c3"} */
+
+    
+    select
+      count(*) as failures,
+      count(*) != 0 as should_warn,
+      count(*) != 0 as should_error
+    from (
+      
+    
+  
+    
+    
+
+
+
+select health_status
+from "plain_analytics"."main_gold"."gold_customer_spine"
+where health_status is null
+
+
+
+  
+  
+      
+    ) dbt_internal_test
+[0m05:43:36.738039 [info ] [Thread-3 (]: 9 of 13 START test not_null_gold_sla_performance_company_id .................... [RUN]
+[0m05:43:36.741337 [debug] [Thread-2 (]: SQL status: OK in 0.005 seconds
+[0m05:43:36.741975 [debug] [Thread-2 (]: Using duckdb connection "test.plain_analytics.not_null_gold_customer_spine_customer_id.69052a4a52"
+[0m05:43:36.742406 [debug] [Thread-2 (]: On test.plain_analytics.not_null_gold_customer_spine_customer_id.69052a4a52: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "plain_analytics", "target_name": "dev", "node_id": "test.plain_analytics.not_null_gold_customer_spine_customer_id.69052a4a52"} */
+
+    
+    select
+      count(*) as failures,
+      count(*) != 0 as should_warn,
+      count(*) != 0 as should_error
+    from (
+      
+    
+  
+    
+    
+
+
+
+select customer_id
+from "plain_analytics"."main_gold"."gold_customer_spine"
+where customer_id is null
+
+
+
+  
+  
+      
+    ) dbt_internal_test
+[0m05:43:36.743644 [debug] [Thread-2 (]: SQL status: OK in 0.001 seconds
+[0m05:43:36.729903 [info ] [Thread-4 (]: 5 of 13 PASS not_null_gold_agent_workload_agent_id ............................. [[32mPASS[0m in 0.05s]
+[0m05:43:36.745887 [debug] [Thread-4 (]: Finished running node test.plain_analytics.not_null_gold_agent_workload_agent_id.e7534286bc
+[0m05:43:36.746316 [debug] [Thread-4 (]: Began running node test.plain_analytics.not_null_gold_thread_metrics_created_week.359f6598cf
+[0m05:43:36.747553 [debug] [Thread-1 (]: SQL status: OK in 0.006 seconds
+[0m05:43:36.747846 [debug] [Thread-3 (]: Re-using an available connection from the pool (formerly test.plain_analytics.not_null_gold_customer_spine_company_id.7d8aa8b2ec, now test.plain_analytics.not_null_gold_sla_performance_company_id.e060f4e9b5)
+[0m05:43:36.748639 [debug] [Thread-3 (]: Began compiling node test.plain_analytics.not_null_gold_sla_performance_company_id.e060f4e9b5
+[0m05:43:36.745347 [debug] [Thread-2 (]: On test.plain_analytics.not_null_gold_customer_spine_customer_id.69052a4a52: ROLLBACK
+[0m05:43:36.757067 [debug] [Thread-2 (]: Failed to rollback 'test.plain_analytics.not_null_gold_customer_spine_customer_id.69052a4a52'
+[0m05:43:36.757467 [debug] [Thread-2 (]: On test.plain_analytics.not_null_gold_customer_spine_customer_id.69052a4a52: Close
+[0m05:43:36.748214 [info ] [Thread-4 (]: 10 of 13 START test not_null_gold_thread_metrics_created_week .................. [RUN]
+[0m05:43:36.758436 [debug] [Thread-4 (]: Re-using an available connection from the pool (formerly test.plain_analytics.not_null_gold_agent_workload_agent_id.e7534286bc, now test.plain_analytics.not_null_gold_thread_metrics_created_week.359f6598cf)
+[0m05:43:36.758790 [debug] [Thread-4 (]: Began compiling node test.plain_analytics.not_null_gold_thread_metrics_created_week.359f6598cf
+[0m05:43:36.754053 [debug] [Thread-3 (]: Writing injected SQL for node "test.plain_analytics.not_null_gold_sla_performance_company_id.e060f4e9b5"
+[0m05:43:36.763423 [debug] [Thread-3 (]: Began executing node test.plain_analytics.not_null_gold_sla_performance_company_id.e060f4e9b5
+[0m05:43:36.755885 [debug] [Thread-1 (]: On test.plain_analytics.not_null_gold_customer_spine_health_status.e7b81c26c3: ROLLBACK
+[0m05:43:36.766923 [debug] [Thread-1 (]: Failed to rollback 'test.plain_analytics.not_null_gold_customer_spine_health_status.e7b81c26c3'
+[0m05:43:36.762763 [debug] [Thread-4 (]: Writing injected SQL for node "test.plain_analytics.not_null_gold_thread_metrics_created_week.359f6598cf"
+[0m05:43:36.767855 [debug] [Thread-4 (]: Began executing node test.plain_analytics.not_null_gold_thread_metrics_created_week.359f6598cf
+[0m05:43:36.758025 [info ] [Thread-2 (]: 7 of 13 PASS not_null_gold_customer_spine_customer_id .......................... [[32mPASS[0m in 0.06s]
+[0m05:43:36.770767 [debug] [Thread-2 (]: Finished running node test.plain_analytics.not_null_gold_customer_spine_customer_id.69052a4a52
+[0m05:43:36.771139 [debug] [Thread-2 (]: Began running node test.plain_analytics.not_null_gold_thread_metrics_total_threads.855ec36482
+[0m05:43:36.767361 [debug] [Thread-1 (]: On test.plain_analytics.not_null_gold_customer_spine_health_status.e7b81c26c3: Close
+[0m05:43:36.765848 [debug] [Thread-3 (]: Writing runtime sql for node "test.plain_analytics.not_null_gold_sla_performance_company_id.e060f4e9b5"
+[0m05:43:36.772742 [debug] [Thread-3 (]: Using duckdb connection "test.plain_analytics.not_null_gold_sla_performance_company_id.e060f4e9b5"
+[0m05:43:36.773164 [debug] [Thread-3 (]: On test.plain_analytics.not_null_gold_sla_performance_company_id.e060f4e9b5: BEGIN
+[0m05:43:36.773550 [debug] [Thread-3 (]: Opening a new connection, currently in state closed
+[0m05:43:36.774271 [debug] [Thread-3 (]: SQL status: OK in 0.001 seconds
+[0m05:43:36.774646 [debug] [Thread-3 (]: Using duckdb connection "test.plain_analytics.not_null_gold_sla_performance_company_id.e060f4e9b5"
+[0m05:43:36.770153 [debug] [Thread-4 (]: Writing runtime sql for node "test.plain_analytics.not_null_gold_thread_metrics_created_week.359f6598cf"
+[0m05:43:36.775810 [debug] [Thread-4 (]: Using duckdb connection "test.plain_analytics.not_null_gold_thread_metrics_created_week.359f6598cf"
+[0m05:43:36.776145 [debug] [Thread-4 (]: On test.plain_analytics.not_null_gold_thread_metrics_created_week.359f6598cf: BEGIN
+[0m05:43:36.776520 [debug] [Thread-4 (]: Opening a new connection, currently in state closed
+[0m05:43:36.771528 [info ] [Thread-2 (]: 11 of 13 START test not_null_gold_thread_metrics_total_threads ................. [RUN]
+[0m05:43:36.777087 [debug] [Thread-2 (]: Re-using an available connection from the pool (formerly test.plain_analytics.not_null_gold_customer_spine_customer_id.69052a4a52, now test.plain_analytics.not_null_gold_thread_metrics_total_threads.855ec36482)
+[0m05:43:36.777483 [debug] [Thread-2 (]: Began compiling node test.plain_analytics.not_null_gold_thread_metrics_total_threads.855ec36482
+[0m05:43:36.775115 [debug] [Thread-3 (]: On test.plain_analytics.not_null_gold_sla_performance_company_id.e060f4e9b5: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "plain_analytics", "target_name": "dev", "node_id": "test.plain_analytics.not_null_gold_sla_performance_company_id.e060f4e9b5"} */
+
+    
+    select
+      count(*) as failures,
+      count(*) != 0 as should_warn,
+      count(*) != 0 as should_error
+    from (
+      
+    
+  
+    
+    
+
+
+
+select company_id
+from "plain_analytics"."main_gold"."gold_sla_performance"
+where company_id is null
+
+
+
+  
+  
+      
+    ) dbt_internal_test
+[0m05:43:36.782603 [debug] [Thread-3 (]: SQL status: OK in 0.001 seconds
+[0m05:43:36.784477 [debug] [Thread-3 (]: On test.plain_analytics.not_null_gold_sla_performance_company_id.e060f4e9b5: ROLLBACK
+[0m05:43:36.772153 [info ] [Thread-1 (]: 8 of 13 PASS not_null_gold_customer_spine_health_status ........................ [[32mPASS[0m in 0.06s]
+[0m05:43:36.786064 [debug] [Thread-1 (]: Finished running node test.plain_analytics.not_null_gold_customer_spine_health_status.e7b81c26c3
+[0m05:43:36.785352 [debug] [Thread-4 (]: SQL status: OK in 0.009 seconds
+[0m05:43:36.786998 [debug] [Thread-4 (]: Using duckdb connection "test.plain_analytics.not_null_gold_thread_metrics_created_week.359f6598cf"
+[0m05:43:36.787462 [debug] [Thread-4 (]: On test.plain_analytics.not_null_gold_thread_metrics_created_week.359f6598cf: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "plain_analytics", "target_name": "dev", "node_id": "test.plain_analytics.not_null_gold_thread_metrics_created_week.359f6598cf"} */
+
+    
+    select
+      count(*) as failures,
+      count(*) != 0 as should_warn,
+      count(*) != 0 as should_error
+    from (
+      
+    
+  
+    
+    
+
+
+
+select created_week
+from "plain_analytics"."main_gold"."gold_thread_metrics"
+where created_week is null
+
+
+
+  
+  
+      
+    ) dbt_internal_test
+[0m05:43:36.786625 [debug] [Thread-1 (]: Began running node test.plain_analytics.unique_gold_agent_workload_agent_id.7fd1a6dcad
+[0m05:43:36.789159 [info ] [Thread-1 (]: 12 of 13 START test unique_gold_agent_workload_agent_id ........................ [RUN]
+[0m05:43:36.789656 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly test.plain_analytics.not_null_gold_customer_spine_health_status.e7b81c26c3, now test.plain_analytics.unique_gold_agent_workload_agent_id.7fd1a6dcad)
+[0m05:43:36.790024 [debug] [Thread-1 (]: Began compiling node test.plain_analytics.unique_gold_agent_workload_agent_id.7fd1a6dcad
+[0m05:43:36.781341 [debug] [Thread-2 (]: Writing injected SQL for node "test.plain_analytics.not_null_gold_thread_metrics_total_threads.855ec36482"
+[0m05:43:36.798386 [debug] [Thread-2 (]: Began executing node test.plain_analytics.not_null_gold_thread_metrics_total_threads.855ec36482
+[0m05:43:36.797706 [debug] [Thread-3 (]: Failed to rollback 'test.plain_analytics.not_null_gold_sla_performance_company_id.e060f4e9b5'
+[0m05:43:36.788639 [debug] [Thread-4 (]: SQL status: OK in 0.001 seconds
+[0m05:43:36.802920 [debug] [Thread-4 (]: On test.plain_analytics.not_null_gold_thread_metrics_created_week.359f6598cf: ROLLBACK
+[0m05:43:36.796688 [debug] [Thread-1 (]: Writing injected SQL for node "test.plain_analytics.unique_gold_agent_workload_agent_id.7fd1a6dcad"
+[0m05:43:36.803530 [debug] [Thread-1 (]: Began executing node test.plain_analytics.unique_gold_agent_workload_agent_id.7fd1a6dcad
+[0m05:43:36.801315 [debug] [Thread-3 (]: On test.plain_analytics.not_null_gold_sla_performance_company_id.e060f4e9b5: Close
+[0m05:43:36.806586 [info ] [Thread-3 (]: 9 of 13 PASS not_null_gold_sla_performance_company_id .......................... [[32mPASS[0m in 0.06s]
+[0m05:43:36.800710 [debug] [Thread-2 (]: Writing runtime sql for node "test.plain_analytics.not_null_gold_thread_metrics_total_threads.855ec36482"
+[0m05:43:36.807814 [debug] [Thread-2 (]: Using duckdb connection "test.plain_analytics.not_null_gold_thread_metrics_total_threads.855ec36482"
+[0m05:43:36.808152 [debug] [Thread-2 (]: On test.plain_analytics.not_null_gold_thread_metrics_total_threads.855ec36482: BEGIN
+[0m05:43:36.808581 [debug] [Thread-2 (]: Opening a new connection, currently in state closed
+[0m05:43:36.807201 [debug] [Thread-3 (]: Finished running node test.plain_analytics.not_null_gold_sla_performance_company_id.e060f4e9b5
+[0m05:43:36.810095 [debug] [Thread-3 (]: Began running node test.plain_analytics.unique_gold_customer_spine_customer_id.c9edf0565c
+[0m05:43:36.809671 [debug] [Thread-4 (]: Failed to rollback 'test.plain_analytics.not_null_gold_thread_metrics_created_week.359f6598cf'
+[0m05:43:36.810902 [debug] [Thread-4 (]: On test.plain_analytics.not_null_gold_thread_metrics_created_week.359f6598cf: Close
+[0m05:43:36.810512 [info ] [Thread-3 (]: 13 of 13 START test unique_gold_customer_spine_customer_id ..................... [RUN]
+[0m05:43:36.811920 [debug] [Thread-3 (]: Re-using an available connection from the pool (formerly test.plain_analytics.not_null_gold_sla_performance_company_id.e060f4e9b5, now test.plain_analytics.unique_gold_customer_spine_customer_id.c9edf0565c)
+[0m05:43:36.812318 [debug] [Thread-3 (]: Began compiling node test.plain_analytics.unique_gold_customer_spine_customer_id.c9edf0565c
+[0m05:43:36.805920 [debug] [Thread-1 (]: Writing runtime sql for node "test.plain_analytics.unique_gold_agent_workload_agent_id.7fd1a6dcad"
+[0m05:43:36.817636 [debug] [Thread-1 (]: Using duckdb connection "test.plain_analytics.unique_gold_agent_workload_agent_id.7fd1a6dcad"
+[0m05:43:36.818107 [debug] [Thread-1 (]: On test.plain_analytics.unique_gold_agent_workload_agent_id.7fd1a6dcad: BEGIN
+[0m05:43:36.818472 [debug] [Thread-1 (]: Opening a new connection, currently in state closed
+[0m05:43:36.816981 [debug] [Thread-3 (]: Writing injected SQL for node "test.plain_analytics.unique_gold_customer_spine_customer_id.c9edf0565c"
+[0m05:43:36.820405 [debug] [Thread-3 (]: Began executing node test.plain_analytics.unique_gold_customer_spine_customer_id.c9edf0565c
+[0m05:43:36.819778 [debug] [Thread-2 (]: SQL status: OK in 0.011 seconds
+[0m05:43:36.819123 [debug] [Thread-1 (]: SQL status: OK in 0.001 seconds
+[0m05:43:36.825845 [debug] [Thread-1 (]: Using duckdb connection "test.plain_analytics.unique_gold_agent_workload_agent_id.7fd1a6dcad"
+[0m05:43:36.826178 [debug] [Thread-1 (]: On test.plain_analytics.unique_gold_agent_workload_agent_id.7fd1a6dcad: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "plain_analytics", "target_name": "dev", "node_id": "test.plain_analytics.unique_gold_agent_workload_agent_id.7fd1a6dcad"} */
+
+    
+    select
+      count(*) as failures,
+      count(*) != 0 as should_warn,
+      count(*) != 0 as should_error
+    from (
+      
+    
+  
+    
+    
+
+select
+    agent_id as unique_field,
+    count(*) as n_records
+
+from "plain_analytics"."main_gold"."gold_agent_workload"
+where agent_id is not null
+group by agent_id
+having count(*) > 1
+
+
+
+  
+  
+      
+    ) dbt_internal_test
+[0m05:43:36.811484 [info ] [Thread-4 (]: 10 of 13 PASS not_null_gold_thread_metrics_created_week ........................ [[32mPASS[0m in 0.05s]
+[0m05:43:36.829213 [debug] [Thread-4 (]: Finished running node test.plain_analytics.not_null_gold_thread_metrics_created_week.359f6598cf
+[0m05:43:36.825433 [debug] [Thread-2 (]: Using duckdb connection "test.plain_analytics.not_null_gold_thread_metrics_total_threads.855ec36482"
+[0m05:43:36.829715 [debug] [Thread-2 (]: On test.plain_analytics.not_null_gold_thread_metrics_total_threads.855ec36482: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "plain_analytics", "target_name": "dev", "node_id": "test.plain_analytics.not_null_gold_thread_metrics_total_threads.855ec36482"} */
+
+    
+    select
+      count(*) as failures,
+      count(*) != 0 as should_warn,
+      count(*) != 0 as should_error
+    from (
+      
+    
+  
+    
+    
+
+
+
+select total_threads
+from "plain_analytics"."main_gold"."gold_thread_metrics"
+where total_threads is null
+
+
+
+  
+  
+      
+    ) dbt_internal_test
+[0m05:43:36.830799 [debug] [Thread-2 (]: SQL status: OK in 0.001 seconds
+[0m05:43:36.824965 [debug] [Thread-3 (]: Writing runtime sql for node "test.plain_analytics.unique_gold_customer_spine_customer_id.c9edf0565c"
+[0m05:43:36.837313 [debug] [Thread-3 (]: Using duckdb connection "test.plain_analytics.unique_gold_customer_spine_customer_id.c9edf0565c"
+[0m05:43:36.832580 [debug] [Thread-2 (]: On test.plain_analytics.not_null_gold_thread_metrics_total_threads.855ec36482: ROLLBACK
+[0m05:43:36.838745 [debug] [Thread-2 (]: Failed to rollback 'test.plain_analytics.not_null_gold_thread_metrics_total_threads.855ec36482'
+[0m05:43:36.839101 [debug] [Thread-2 (]: On test.plain_analytics.not_null_gold_thread_metrics_total_threads.855ec36482: Close
+[0m05:43:36.837658 [debug] [Thread-3 (]: On test.plain_analytics.unique_gold_customer_spine_customer_id.c9edf0565c: BEGIN
+[0m05:43:36.840047 [debug] [Thread-3 (]: Opening a new connection, currently in state closed
+[0m05:43:36.840694 [debug] [Thread-3 (]: SQL status: OK in 0.001 seconds
+[0m05:43:36.841096 [debug] [Thread-3 (]: Using duckdb connection "test.plain_analytics.unique_gold_customer_spine_customer_id.c9edf0565c"
+[0m05:43:36.841503 [debug] [Thread-3 (]: On test.plain_analytics.unique_gold_customer_spine_customer_id.c9edf0565c: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "plain_analytics", "target_name": "dev", "node_id": "test.plain_analytics.unique_gold_customer_spine_customer_id.c9edf0565c"} */
+
+    
+    select
+      count(*) as failures,
+      count(*) != 0 as should_warn,
+      count(*) != 0 as should_error
+    from (
+      
+    
+  
+    
+    
+
+select
+    customer_id as unique_field,
+    count(*) as n_records
+
+from "plain_analytics"."main_gold"."gold_customer_spine"
+where customer_id is not null
+group by customer_id
+having count(*) > 1
+
+
+
+  
+  
+      
+    ) dbt_internal_test
+[0m05:43:36.839718 [info ] [Thread-2 (]: 11 of 13 PASS not_null_gold_thread_metrics_total_threads ....................... [[32mPASS[0m in 0.06s]
+[0m05:43:36.844368 [debug] [Thread-2 (]: Finished running node test.plain_analytics.not_null_gold_thread_metrics_total_threads.855ec36482
+[0m05:43:36.855970 [debug] [Thread-1 (]: SQL status: OK in 0.029 seconds
+[0m05:43:36.862595 [debug] [Thread-1 (]: On test.plain_analytics.unique_gold_agent_workload_agent_id.7fd1a6dcad: ROLLBACK
+[0m05:43:36.863614 [debug] [Thread-1 (]: Failed to rollback 'test.plain_analytics.unique_gold_agent_workload_agent_id.7fd1a6dcad'
+[0m05:43:36.863964 [debug] [Thread-1 (]: On test.plain_analytics.unique_gold_agent_workload_agent_id.7fd1a6dcad: Close
+[0m05:43:36.867592 [debug] [Thread-3 (]: SQL status: OK in 0.026 seconds
+[0m05:43:36.869330 [debug] [Thread-3 (]: On test.plain_analytics.unique_gold_customer_spine_customer_id.c9edf0565c: ROLLBACK
+[0m05:43:36.864603 [info ] [Thread-1 (]: 12 of 13 PASS unique_gold_agent_workload_agent_id .............................. [[32mPASS[0m in 0.07s]
+[0m05:43:36.870019 [debug] [Thread-1 (]: Finished running node test.plain_analytics.unique_gold_agent_workload_agent_id.7fd1a6dcad
+[0m05:43:36.871076 [debug] [Thread-3 (]: Failed to rollback 'test.plain_analytics.unique_gold_customer_spine_customer_id.c9edf0565c'
+[0m05:43:36.871583 [debug] [Thread-3 (]: On test.plain_analytics.unique_gold_customer_spine_customer_id.c9edf0565c: Close
+[0m05:43:36.872514 [info ] [Thread-3 (]: 13 of 13 PASS unique_gold_customer_spine_customer_id ........................... [[32mPASS[0m in 0.06s]
+[0m05:43:36.873767 [debug] [Thread-3 (]: Finished running node test.plain_analytics.unique_gold_customer_spine_customer_id.c9edf0565c
+[0m05:43:36.876565 [debug] [MainThread]: Using duckdb connection "master"
+[0m05:43:36.876945 [debug] [MainThread]: On master: BEGIN
+[0m05:43:36.877227 [debug] [MainThread]: Opening a new connection, currently in state closed
+[0m05:43:36.877974 [debug] [MainThread]: SQL status: OK in 0.001 seconds
+[0m05:43:36.878330 [debug] [MainThread]: On master: COMMIT
+[0m05:43:36.878624 [debug] [MainThread]: Using duckdb connection "master"
+[0m05:43:36.878898 [debug] [MainThread]: On master: COMMIT
+[0m05:43:36.879416 [debug] [MainThread]: SQL status: OK in 0.000 seconds
+[0m05:43:36.879727 [debug] [MainThread]: On master: Close
+[0m05:43:36.880131 [debug] [MainThread]: Connection 'master' was properly closed.
+[0m05:43:36.880442 [debug] [MainThread]: Connection 'test.plain_analytics.unique_gold_customer_spine_customer_id.c9edf0565c' was properly closed.
+[0m05:43:36.880889 [debug] [MainThread]: Connection 'test.plain_analytics.unique_gold_agent_workload_agent_id.7fd1a6dcad' was properly closed.
+[0m05:43:36.881200 [debug] [MainThread]: Connection 'test.plain_analytics.not_null_gold_thread_metrics_total_threads.855ec36482' was properly closed.
+[0m05:43:36.881493 [debug] [MainThread]: Connection 'test.plain_analytics.not_null_gold_thread_metrics_created_week.359f6598cf' was properly closed.
+[0m05:43:36.881822 [info ] [MainThread]: 
+[0m05:43:36.882145 [info ] [MainThread]: Finished running 13 data tests in 0 hours 0 minutes and 0.67 seconds (0.67s).
+[0m05:43:36.884537 [debug] [MainThread]: Command end result
+[0m05:43:36.920598 [debug] [MainThread]: Wrote artifact WritableManifest to /home/claude/plain-analytics/target/manifest.json
+[0m05:43:36.923139 [debug] [MainThread]: Wrote artifact SemanticManifest to /home/claude/plain-analytics/target/semantic_manifest.json
+[0m05:43:36.931385 [debug] [MainThread]: Wrote artifact RunExecutionResult to /home/claude/plain-analytics/target/run_results.json
+[0m05:43:36.931730 [info ] [MainThread]: 
+[0m05:43:36.932174 [info ] [MainThread]: [32mCompleted successfully[0m
+[0m05:43:36.932563 [info ] [MainThread]: 
+[0m05:43:36.932967 [info ] [MainThread]: Done. PASS=13 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=13
+[0m05:43:36.933619 [warn ] [MainThread]: [[33mWARNING[0m][DeprecationsSummary]: Deprecated functionality
+Summary of encountered deprecations:
+- DuplicateNameDistinctNodeTypesDeprecation: 2 occurrences
+To see all deprecation instances instead of just the first occurrence of each,
+run command again with the `--show-all-deprecations` flag. You may also need to
+run with `--no-partial-parse` as some deprecations are only encountered during
+parsing.
+[0m05:43:36.934735 [debug] [MainThread]: Resource report: {"command_name": "test", "command_success": true, "command_wall_clock_time": 1.7360497, "process_in_blocks": "0", "process_kernel_time": 0.167544, "process_mem_max_rss": "169968", "process_out_blocks": "2984", "process_user_time": 3.191625}
+[0m05:43:36.935280 [debug] [MainThread]: Command `dbt test` succeeded at 05:43:36.935135 after 1.74 seconds
+[0m05:43:36.935676 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f0446787470>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f0445a6bce0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f043fd1ff50>]}
+[0m05:43:36.936048 [debug] [MainThread]: Flushing usage events
+[0m05:43:36.996599 [debug] [MainThread]: An error was encountered while trying to flush usage events

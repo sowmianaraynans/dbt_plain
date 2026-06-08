@@ -1,0 +1,122 @@
+version: 2
+
+models:
+  - name: dim_customer
+    description: >
+      The canonical customer entity. Unifies Plain customers with their company (account),
+      tenant, tier context, and support health signals. One row per customer.
+      This is the join key for all downstream analytics.
+    columns:
+      - name: customer_id
+        description: Plain's unique customer identifier
+        tests:
+          - unique
+          - not_null
+      - name: company_id
+        description: FK to the company (B2B account) this customer belongs to
+        tests:
+          - not_null
+      - name: customer_status
+        description: active | idle | churned
+        tests:
+          - accepted_values:
+              values: ['active', 'idle', 'churned']
+      - name: company_tier
+        description: enterprise | pro | starter | free
+        tests:
+          - accepted_values:
+              values: ['enterprise', 'pro', 'starter', 'free']
+      - name: health_status
+        description: Rule-based health signal. healthy | idle | needs_attention | at_risk | churned | new
+        tests:
+          - not_null
+
+  - name: dim_company
+    description: >
+      The canonical company dimension. Holds account-level attributes used by downstream models.
+    columns:
+      - name: total_customers
+        description: Number of customers associated with this company.
+      - name: active_customers
+        description: Number of active customers associated with this company.
+      - name: churned_customers
+        description: Number of churned customers associated with this company.
+      - name: tenant_count
+        description: Number of tenants associated with this company.
+      - name: total_threads
+        description: Number of support threads associated with this company.
+      - name: open_threads
+        description: Number of open support threads associated with this company.
+      - name: high_priority_threads
+        description: Number of high-priority support threads associated with this company.
+      - name: sla_breach_count
+        description: Number of SLA breach events for this company.
+  - name: dim_thread
+    description: >
+      Thread-level attributes and status used for reporting and data exploration.
+
+  - name: fact_thread_measures
+    description: >
+      Daily support throughput and speed measures sliced by channel, priority and tier.
+      Primary model for support leader dashboards and operational reviews.
+    columns:
+      - name: created_date
+        description: Date of thread creation. Grain is one row per day/channel/priority/tier.
+        tests:
+          - not_null
+      - name: created_week
+        description: ISO week start date for the thread day.
+        tests:
+          - not_null
+      - name: created_month
+        description: Month for the thread day.
+      - name: created_quarter
+        description: Quarter for the thread day.
+      - name: created_year
+        description: Year for the thread day.
+      - name: total_threads
+        description: Total threads created in this day/channel/priority/tier slice.
+        tests:
+          - not_null
+
+  - name: fact_sla_performance
+    description: >
+      Monthly SLA compliance by company and tier. Flags enterprise and pro customers
+      at risk of breach. Core input for CSM account reviews.
+    columns:
+      - name: company_id
+        tests:
+          - not_null
+      - name: sla_compliance_pct
+        description: Percentage of threads resolved within SLA target (0-100)
+      - name: risk_flag
+        description: critical | warning | ok
+        tests:
+          - accepted_values:
+              values: ['critical', 'warning', 'ok']
+
+  - name: dim_agent_workload
+    description: >
+      Current agent capacity and performance snapshot.
+      Used by support leads for workload balancing and 1:1 reviews.
+    columns:
+      - name: agent_id
+        tests:
+          - unique
+          - not_null
+      - name: workload_status
+        description: overloaded | busy | normal | light
+        tests:
+          - accepted_values:
+              values: ['overloaded', 'busy', 'normal', 'light']
+
+sources:
+  - name: seeds
+    description: Seed data mirroring Plain's GraphQL API response shapes
+    tables:
+      - name: raw_customers
+      - name: raw_companies
+      - name: raw_tenants
+      - name: raw_threads
+      - name: raw_thread_events
+      - name: raw_sla_breaches

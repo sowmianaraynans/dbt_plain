@@ -1,0 +1,7 @@
+plain_analytics:
+  target: dev
+  outputs:
+    dev:
+      type: duckdb
+      path: "plain_analytics.duckdb"
+      threads: 4

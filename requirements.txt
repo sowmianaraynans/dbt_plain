@@ -1,0 +1,7 @@
+dbt-core>=1.8.0
+dbt-duckdb>=1.8.0
+faker>=24.0.0
+
+# To switch to BigQuery: replace dbt-duckdb with:
+# dbt-bigquery>=1.8.0
+# google-cloud-bigquery

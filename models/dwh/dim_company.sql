@@ -1,0 +1,63 @@
+-- dim_company.sql
+-- ============================================================
+-- COMPANY DIMENSION
+-- ============================================================
+-- Enriched account-level dimension with customer and support metrics.
+-- Grain: one row per company_id.
+-- ============================================================
+
+with companies as (
+    select * from {{ ref('stg_companies') }}
+),
+
+customer_counts as (
+    select
+        company_id,
+        count(*)                                        as total_customers,
+        countif(is_active)                              as active_customers,
+        countif(is_churned)                             as churned_customers
+    from {{ ref('stg_customers') }}
+    group by 1
+),
+
+tenant_counts as (
+    select
+        company_id,
+        count(distinct id)                              as tenant_count
+    from {{ ref('raw_tenants') }}
+    group by 1
+),
+
+thread_counts as (
+    select
+        company_id,
+        count(*)                                        as total_threads,
+        countif(not is_resolved)                        as open_threads,
+        countif(is_high_priority)                       as high_priority_threads
+    from {{ ref('stg_threads') }}
+    group by 1
+),
+
+sla_counts as (
+    select
+        company_id,
+        count(*)                                        as sla_breach_count
+    from {{ ref('stg_sla_breaches') }}
+    group by 1
+)
+
+select
+    c.*,
+    coalesce(cc.total_customers, 0)                   as total_customers,
+    coalesce(cc.active_customers, 0)                  as active_customers,
+    coalesce(cc.churned_customers, 0)                 as churned_customers,
+    coalesce(tc.tenant_count, 0)                      as tenant_count,
+    coalesce(tc2.total_threads, 0)                    as total_threads,
+    coalesce(tc2.open_threads, 0)                     as open_threads,
+    coalesce(tc2.high_priority_threads, 0)            as high_priority_threads,
+    coalesce(sc.sla_breach_count, 0)                  as sla_breach_count
+from companies c
+left join customer_counts cc using (company_id)
+left join tenant_counts tc using (company_id)
+left join thread_counts tc2 using (company_id)
+left join sla_counts sc using (company_id)
