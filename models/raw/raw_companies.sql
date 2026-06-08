@@ -2,4 +2,4 @@
 -- Direct mirror of Plain's /graphql/companies API response.
 -- Includes all fields: account-level metadata, tier, region, and MRR.
 
-select * from {{ ref('raw_companies') }}
+select * from {{ source('seeds', 'companies') }}

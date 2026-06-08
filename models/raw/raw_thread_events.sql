@@ -2,4 +2,4 @@
 -- Direct mirror of Plain's /graphql/threadEvents API response.
 -- Raw event history for threads and customer interactions.
 
-select * from {{ ref('raw_thread_events') }}
+select * from {{ source('seeds', 'thread_events') }}

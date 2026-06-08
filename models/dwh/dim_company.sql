@@ -23,8 +23,8 @@ customer_counts as (
 tenant_counts as (
     select
         company_id,
-        count(distinct id)                              as tenant_count
-    from {{ ref('raw_tenants') }}
+        count(distinct tenant_id)                       as tenant_count
+    from {{ ref('stg_tenants') }}
     group by 1
 ),
 
@@ -51,6 +51,15 @@ select
     coalesce(cc.total_customers, 0)                   as total_customers,
     coalesce(cc.active_customers, 0)                  as active_customers,
     coalesce(cc.churned_customers, 0)                 as churned_customers,
+
+    -- Ratio matters more than raw count: 2/3 churned is critical, 2/100 is not.
+    -- CSMs sort by this to prioritise at-risk accounts before the contract lapses.
+    round(
+        100.0 * coalesce(cc.churned_customers, 0)
+            / nullif(coalesce(cc.total_customers, 0), 0),
+        1
+    )                                                 as customer_churn_rate_pct,
+
     coalesce(tc.tenant_count, 0)                      as tenant_count,
     coalesce(tc2.total_threads, 0)                    as total_threads,
     coalesce(tc2.open_threads, 0)                     as open_threads,

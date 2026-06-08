@@ -1,0 +1,33 @@
+DESCRIPTION >
+    Cleaned, typed thread records synced from BigQuery (dbt staging layer).
+    This is the primary data source for all customer-facing thread analytics.
+    Synced from: plain_analytics.staging.stg_threads (BigQuery).
+    Refresh: scheduled sync every 15 minutes via Tinybird BigQuery connector.
+
+    Sorting key puts company_id first — all customer-facing pipes filter on this column.
+    Partition by month for efficient time-range scans.
+
+SCHEMA >
+    `id`                        String,
+    `company_id`                String,
+    `customer_id`               String,
+    `tenant_id`                 String,
+    `company_tier`              LowCardinality(String),
+    `channel`                   LowCardinality(String),
+    `priority`                  LowCardinality(String),
+    `status`                    LowCardinality(String),
+    `label`                     Nullable(String),
+    `assigned_agent_id`         Nullable(String),
+    `assigned_agent_name`       Nullable(String),
+    `is_resolved`               UInt8,
+    `is_escalated`              UInt8,
+    `is_high_priority`          UInt8,
+    `first_response_time_mins`  Nullable(Float32),
+    `resolution_time_mins`      Nullable(Float32),
+    `message_count`             UInt16,
+    `created_at`                DateTime,
+    `updated_at`                DateTime
+
+ENGINE "MergeTree"
+ENGINE_PARTITION_KEY "toYYYYMM(created_at)"
+ENGINE_SORTING_KEY "company_id, created_at, id"

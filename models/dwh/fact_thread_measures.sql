@@ -52,7 +52,7 @@ daily as (
         )                                               as resolution_rate_pct
 
     from threads
-    group by 1, 2, 3, 4
+    group by 1, 2, 3, 4, 5, 6, 7, 8
 )
 
 select * from daily

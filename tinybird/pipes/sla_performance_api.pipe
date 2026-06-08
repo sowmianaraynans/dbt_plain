@@ -1,0 +1,49 @@
+DESCRIPTION >
+    SLA compliance and breach summary for a single customer workspace.
+    Powers the "SLA Health" panel in Plain's embedded analytics UI.
+    Lets customers like Cursor see their own SLA performance — not Plain's aggregate.
+
+    Mirrors metrics defined in: models/metrics.yml
+      → sla_breach_count, sla_compliance_rate
+
+    Example:
+      GET /v0/pipes/sla_performance_api.json
+        ?company_id=abc-123
+        &date_from=2024-01-01
+
+TOKEN "customer_analytics_read" READ
+
+NODE sla_breach_node
+SQL >
+    %
+    SELECT
+        toStartOfMonth(breached_at)                             AS breach_month,
+        sla_type,
+
+        -- Breach counts (mirrors: sla_breach_count)
+        count()                                                 AS breach_count,
+        countDistinct(thread_id)                                AS threads_breached,
+
+        -- Severity
+        round(avg(breach_by_minutes), 1)                        AS avg_breach_by_mins,
+        round(max(breach_by_minutes), 1)                        AS worst_breach_mins,
+
+        -- Channel and priority breakdown
+        countIf(channel = 'slack')                              AS slack_breaches,
+        countIf(channel = 'email')                              AS email_breaches,
+        countIf(priority = 'urgent')                            AS urgent_breaches,
+        countIf(priority = 'high')                              AS high_breaches
+
+    FROM stg_sla_breaches
+    WHERE
+        company_id = {{ String(company_id, required=True, description="Plain company_id — scopes results to this workspace only") }}
+        {% if defined(date_from) %}
+        AND breached_at >= {{ DateTime(date_from, '2024-01-01 00:00:00', description="Start of date range") }}
+        {% end %}
+        {% if defined(sla_type) %}
+        AND sla_type = {{ String(sla_type, description="first_response_time or resolution_time") }}
+        {% end %}
+    GROUP BY breach_month, sla_type
+    ORDER BY breach_month DESC
+
+TYPE endpoint

@@ -24,7 +24,7 @@ companies as (
 ),
 
 tenants as (
-    select * from {{ ref('raw_tenants') }}
+    select * from {{ ref('stg_tenants') }}
 ),
 
 -- thread-level signals per customer
@@ -65,8 +65,8 @@ final as (
         co.is_active                                        as company_is_active,
 
         -- ── Tenant ────────────────────────────────────────────────
-        t.id                                                as tenant_id,
-        t.name                                              as tenant_name,
+        t.tenant_id,
+        t.tenant_name,
 
         -- ── Customer status ───────────────────────────────────────
         c.status                                            as customer_status,

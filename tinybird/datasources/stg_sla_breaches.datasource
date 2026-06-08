@@ -1,0 +1,24 @@
+DESCRIPTION >
+    Cleaned SLA breach records synced from BigQuery (dbt staging layer).
+    Synced from: plain_analytics.staging.stg_sla_breaches (BigQuery).
+    Refresh: scheduled sync every 15 minutes via Tinybird BigQuery connector.
+
+SCHEMA >
+    `id`                    String,
+    `thread_id`             String,
+    `customer_id`           String,
+    `company_id`            String,
+    `company_tier`          LowCardinality(String),
+    `sla_type`              LowCardinality(String),
+    `target_minutes`        UInt32,
+    `actual_minutes`        UInt32,
+    `breach_by_minutes`     UInt32,
+    `priority`              LowCardinality(String),
+    `channel`               LowCardinality(String),
+    `assigned_agent_id`     Nullable(String),
+    `assigned_agent_name`   Nullable(String),
+    `breached_at`           DateTime
+
+ENGINE "MergeTree"
+ENGINE_PARTITION_KEY "toYYYYMM(breached_at)"
+ENGINE_SORTING_KEY "company_id, breached_at, id"

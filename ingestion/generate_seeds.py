@@ -93,7 +93,7 @@ for i in range(N_COMPANIES):
         "updated_at":        ts(days_ago_max=30, days_ago_min=0),
     })
 
-write_csv("raw_companies.csv", companies)
+write_csv("companies.csv", companies)
 
 
 # ── Tenants ───────────────────────────────────────────────────────────────────
@@ -115,7 +115,7 @@ for _ in range(N_TENANTS):
         "updated_at":   ts(days_ago_max=10, days_ago_min=0),
     })
 
-write_csv("raw_tenants.csv", tenants)
+write_csv("tenants.csv", tenants)
 
 
 # ── Customers ─────────────────────────────────────────────────────────────────
@@ -154,7 +154,7 @@ for i in range(N_CUSTOMERS):
         "updated_at":           ts(days_ago_max=14, days_ago_min=0),
     })
 
-write_csv("raw_customers.csv", customers)
+write_csv("customers.csv", customers)
 
 
 # ── Threads ───────────────────────────────────────────────────────────────────
@@ -221,7 +221,7 @@ for _ in range(N_THREADS):
         ),
     })
 
-write_csv("raw_threads.csv", threads)
+write_csv("threads.csv", threads)
 
 
 # ── Thread events (status transitions + assignments) ──────────────────────────
@@ -247,7 +247,7 @@ for thread in threads:
             "occurred_at":      event_dt.strftime("%Y-%m-%dT%H:%M:%SZ"),
         })
 
-write_csv("raw_thread_events.csv", events)
+write_csv("thread_events.csv", events)
 
 
 # ── SLA breaches ──────────────────────────────────────────────────────────────
@@ -279,7 +279,7 @@ for thread in threads:
             "breached_at":          thread["created_at"],
         })
 
-write_csv("raw_sla_breaches.csv", sla_breaches)
+write_csv("sla_breaches.csv", sla_breaches)
 
 print(f"\n✅  Seed generation complete — {len(companies)} companies, {len(customers)} customers, "
       f"{len(threads)} threads, {len(events)} events, {len(sla_breaches)} SLA breaches")

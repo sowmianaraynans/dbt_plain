@@ -2,4 +2,4 @@
 -- Direct mirror of Plain's /graphql/slaBreaches API response.
 -- Captures every SLA breach event from Plain.
 
-select * from {{ ref('raw_sla_breaches') }}
+select * from {{ source('seeds', 'sla_breaches') }}

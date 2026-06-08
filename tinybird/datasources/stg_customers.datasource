@@ -1,0 +1,24 @@
+DESCRIPTION >
+    Cleaned customer records synced from BigQuery (dbt staging layer).
+    Used to power customer health and status endpoints per workspace.
+    Synced from: plain_analytics.staging.stg_customers (BigQuery).
+    Refresh: scheduled sync every 15 minutes via Tinybird BigQuery connector.
+
+SCHEMA >
+    `customer_id`       String,
+    `full_name`         String,
+    `short_name`        String,
+    `email`             String,
+    `company_id`        String,
+    `tenant_id`         String,
+    `company_tier`      LowCardinality(String),
+    `status`            LowCardinality(String),
+    `is_active`         UInt8,
+    `is_churned`        UInt8,
+    `cohort_month`      Date,
+    `created_at`        DateTime,
+    `updated_at`        DateTime
+
+ENGINE "MergeTree"
+ENGINE_PARTITION_KEY "toYYYYMM(created_at)"
+ENGINE_SORTING_KEY "company_id, created_at, customer_id"

@@ -1,6 +1,18 @@
 version: 2
 
 models:
+  - name: metricflow_time_spine
+    description: Date spine required by dbt MetricFlow. Covers 2020–2030.
+    time_spine:
+      standard_granularity_column: date_day
+    columns:
+      - name: date_day
+        description: One row per calendar day.
+        granularity: day
+        tests:
+          - unique
+          - not_null
+
   - name: dim_customer
     description: >
       The canonical customer entity. Unifies Plain customers with their company (account),
@@ -110,13 +122,143 @@ models:
           - accepted_values:
               values: ['overloaded', 'busy', 'normal', 'light']
 
+  # ── Growth & Internal Analytics ──────────────────────────────────────────────
+  # These models answer leadership and growth team questions:
+  # customer acquisition trends, revenue snapshots, and churn signals.
+  #
+  # Data limitation: all three models are snapshot-based (current status only).
+  # True time-series metrics (monthly MRR movement, reactivation rates) require
+  # either a CDC-derived status history table or Stripe subscription events.
+  # These models are the starting point — the shapes are production-ready.
+
+  - name: fact_customer_cohorts
+    description: >
+      Monthly customer cohort retention snapshot. Shows how many customers acquired
+      in each cohort month are still active, idle, or churned today.
+      Used by leadership to understand retention health by tier and acquisition vintage.
+      Grain: one row per (cohort_month, company_tier).
+    columns:
+      - name: cohort_month
+        description: First day of the month the customer was acquired. Cohort anchor.
+        tests:
+          - not_null
+      - name: company_tier
+        description: Tier of the company the customer belongs to (enterprise/pro/starter/free).
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['enterprise', 'pro', 'starter', 'free']
+      - name: cohort_size
+        description: Total customers acquired in this cohort month and tier.
+        tests:
+          - not_null
+      - name: active_customers
+        description: Customers from this cohort who are currently active.
+      - name: idle_customers
+        description: Customers from this cohort who have gone idle — no recent activity. Early churn signal.
+      - name: churned_customers
+        description: Customers from this cohort confirmed as churned.
+      - name: retention_pct
+        description: >
+          Percentage of the cohort still active today (0–100).
+          Snapshot-based — does not reflect month-by-month retention curve.
+          In production, derive from a time-series status history table.
+      - name: churn_pct
+        description: Percentage of the cohort confirmed churned as of today (0–100).
+      - name: idle_pct
+        description: Percentage of the cohort currently idle — directional at-risk signal (0–100).
+      - name: months_since_acquisition
+        description: Age of the cohort in full months from cohort_month to today.
+
+  - name: fact_mrr_snapshot
+    description: >
+      Current MRR and ARR snapshot aggregated by pricing tier.
+      Answers: what is our total ARR? Which tier drives the most revenue?
+      What is average MRR per company and revenue per active customer?
+      Grain: one row per company_tier (excluding free tier).
+      Data limitation: mrr_usd is a static field — not a time-series.
+      MRR movement (expansion, contraction, churned revenue) requires Stripe.
+    columns:
+      - name: company_tier
+        description: Pricing tier (enterprise / pro / starter). Free tier excluded — no revenue.
+        tests:
+          - not_null
+          - unique
+      - name: total_companies
+        description: Total companies in this tier (active and inactive).
+      - name: active_companies
+        description: Companies in this tier with is_active = true.
+      - name: total_mrr_usd
+        description: Sum of mrr_usd across all companies in this tier. Snapshot value.
+      - name: avg_mrr_per_company
+        description: Average MRR per company in this tier (USD). Useful for pricing benchmarking.
+      - name: max_mrr_usd
+        description: Highest single-company MRR in this tier. Signals top account concentration.
+      - name: total_arr_usd
+        description: >
+          Annualised recurring revenue for this tier (total_mrr_usd * 12).
+          Directional only — assumes no MRR movement from current snapshot.
+      - name: total_customers
+        description: Total customers across all companies in this tier.
+      - name: active_customers
+        description: Active customers across all companies in this tier.
+      - name: mrr_per_active_customer
+        description: >
+          MRR divided by active customer count (USD). Revenue efficiency signal.
+          Higher values indicate better account expansion or higher-value customers.
+
+  - name: fact_churn_analysis
+    description: >
+      Point-in-time churn and retention rates by acquisition cohort and tier,
+      with directional revenue impact signals.
+      Used by leadership and CSMs to identify which cohorts and tiers have the
+      highest churn exposure and which MRR is at risk.
+      Grain: one row per (cohort_month, company_tier).
+      Data limitation: status is a snapshot. True monthly churn rate and
+      reactivation tracking require a CDC-derived customer status history table.
+    columns:
+      - name: cohort_month
+        description: Acquisition cohort month (first day of month).
+        tests:
+          - not_null
+      - name: company_tier
+        description: Pricing tier of the customers in this cohort-tier slice.
+        tests:
+          - not_null
+      - name: total_customers
+        description: Total customers in this cohort-tier combination.
+      - name: churned_customers
+        description: Customers with status = churned in this cohort-tier slice.
+      - name: retained_customers
+        description: Customers with status = active in this cohort-tier slice.
+      - name: idle_customers
+        description: Customers with status = idle — at risk of churn, not yet confirmed.
+      - name: churn_rate_pct
+        description: >
+          Percentage of cohort that has churned (0–100).
+          Snapshot-based — represents cumulative churn to date, not a monthly rate.
+      - name: retention_rate_pct
+        description: Percentage of cohort still active today (0–100). Complement of churn_rate_pct.
+      - name: churned_mrr_usd
+        description: >
+          Sum of company MRR where the customer has churned.
+          Directional revenue impact signal — company MRR is not allocated per-customer,
+          so this overstates individual impact for companies with many customers.
+          Replace with Stripe churned subscription value for accuracy.
+      - name: at_risk_mrr_usd
+        description: >
+          Sum of company MRR where the customer is idle (not yet churned).
+          Flags revenue that may churn if idle customers are not re-engaged.
+      - name: retained_mrr_usd
+        description: Sum of company MRR where the customer is still active. Healthy revenue base.
+
 sources:
   - name: seeds
     description: Seed data mirroring Plain's GraphQL API response shapes
     tables:
-      - name: raw_customers
-      - name: raw_companies
-      - name: raw_tenants
-      - name: raw_threads
-      - name: raw_thread_events
-      - name: raw_sla_breaches
+      - name: customers
+      - name: companies
+      - name: tenants
+      - name: threads
+      - name: thread_events
+      - name: sla_breaches

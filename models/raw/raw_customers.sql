@@ -3,4 +3,4 @@
 -- Nothing is dropped, renamed, or cast here.
 -- Append-only — this is the source of truth for all customer data.
 
-select * from {{ ref('raw_customers') }}
+select * from {{ source('seeds', 'customers') }}

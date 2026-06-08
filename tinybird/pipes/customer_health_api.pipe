@@ -1,0 +1,41 @@
+DESCRIPTION >
+    Customer status distribution for a single company workspace.
+    Powers the "Customer Health" panel in Plain's embedded analytics UI.
+    Lets a company see their own active / idle / churned customer breakdown.
+
+    Mirrors metrics defined in: models/metrics.yml
+      → active_customers, churned_customers, at_risk_customers
+
+    Example:
+      GET /v0/pipes/customer_health_api.json
+        ?company_id=abc-123
+
+TOKEN "customer_analytics_read" READ
+
+NODE customer_health_node
+SQL >
+    %
+    SELECT
+        toStartOfMonth(cohort_month)                            AS cohort_month,
+        company_tier,
+
+        -- Volume (mirrors: active_customers, churned_customers)
+        count()                                                 AS total_customers,
+        countIf(is_active = 1)                                  AS active_customers,
+        countIf(is_churned = 1)                                 AS churned_customers,
+        countIf(status = 'idle')                                AS idle_customers,
+
+        -- Rates
+        round(100.0 * countIf(is_active = 1) / count(), 1)     AS retention_pct,
+        round(100.0 * countIf(is_churned = 1) / count(), 1)    AS churn_pct,
+
+        -- Cohort age
+        dateDiff('month', cohort_month, today())                AS months_since_acquisition
+
+    FROM stg_customers
+    WHERE
+        company_id = {{ String(company_id, required=True, description="Plain company_id — scopes results to this workspace only") }}
+    GROUP BY cohort_month, company_tier
+    ORDER BY cohort_month DESC
+
+TYPE endpoint

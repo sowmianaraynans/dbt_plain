@@ -1,0 +1,59 @@
+DESCRIPTION >
+    Thread volume and speed metrics for a single customer workspace.
+    Powers the "Support Overview" panel in Plain's embedded analytics UI.
+
+    Mirrors metrics defined in: models/metrics.yml
+      → thread_volume, resolution_rate, avg_first_response_time,
+        median_first_response_time, avg_resolution_time
+
+    Example:
+      GET /v0/pipes/thread_metrics_api.json
+        ?company_id=abc-123
+        &date_from=2024-01-01
+        &date_to=2024-03-31
+        &channel=slack
+
+TOKEN "customer_analytics_read" READ
+
+NODE thread_metrics_node
+SQL >
+    %
+    SELECT
+        toDate(created_at)                                          AS date,
+        channel,
+        priority,
+
+        -- Volume (mirrors: thread_volume metric)
+        count()                                                     AS total_threads,
+        countIf(is_resolved = 1)                                    AS resolved_threads,
+        countIf(is_resolved = 0)                                    AS open_threads,
+        countIf(is_escalated = 1)                                   AS escalated_threads,
+
+        -- Speed (mirrors: avg_first_response_time, median_first_response_time)
+        round(avg(first_response_time_mins), 1)                     AS avg_frt_mins,
+        round(quantile(0.50)(first_response_time_mins), 1)          AS median_frt_mins,
+        round(quantile(0.90)(first_response_time_mins), 1)          AS p90_frt_mins,
+
+        -- Resolution (mirrors: avg_resolution_time, resolution_rate)
+        round(avg(resolution_time_mins), 1)                         AS avg_ttr_mins,
+        round(100.0 * countIf(is_resolved = 1) / count(), 1)        AS resolution_rate_pct
+
+    FROM stg_threads
+    WHERE
+        company_id = {{ String(company_id, required=True, description="Plain company_id — scopes results to this workspace only") }}
+        {% if defined(date_from) %}
+        AND created_at >= {{ DateTime(date_from, '2024-01-01 00:00:00', description="Start of date range (YYYY-MM-DD)") }}
+        {% end %}
+        {% if defined(date_to) %}
+        AND created_at <= {{ DateTime(date_to, '2024-12-31 23:59:59', description="End of date range (YYYY-MM-DD)") }}
+        {% end %}
+        {% if defined(channel) %}
+        AND channel = {{ String(channel, description="Filter by channel: email, slack, chat, api") }}
+        {% end %}
+        {% if defined(priority) %}
+        AND priority = {{ String(priority, description="Filter by priority: urgent, high, normal, low") }}
+        {% end %}
+    GROUP BY date, channel, priority
+    ORDER BY date DESC
+
+TYPE endpoint
