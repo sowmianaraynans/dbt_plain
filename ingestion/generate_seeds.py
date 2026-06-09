@@ -281,6 +281,61 @@ for thread in threads:
 
 write_csv("sla_breaches.csv", sla_breaches)
 
+# ── Company monthly status history ────────────────────────────────────────────
+# Simulates what snapshots/company_snapshot.sql would produce after months of
+# scheduled `dbt snapshot` runs against a live database.
+#
+# For each company, generates one row per calendar month from cohort_month
+# to the current month. Companies that are currently inactive (churned) are
+# assigned a random churn month; all rows before it are active, rows from
+# it onwards are inactive.
+#
+# This seed enables true period-by-period cohort analysis in fact_company_cohorts.
+# In production, replace this seed with the output of the dbt snapshot.
+
+from datetime import date
+
+def month_range(start: datetime, end: datetime) -> list[date]:
+    """Return the first day of each month from start to end (inclusive)."""
+    months = []
+    current = start.replace(day=1)
+    end_month = end.replace(day=1)
+    while current <= end_month:
+        months.append(current.date())
+        # advance one month
+        if current.month == 12:
+            current = current.replace(year=current.year + 1, month=1)
+        else:
+            current = current.replace(month=current.month + 1)
+    return months
+
+today = datetime.utcnow()
+company_monthly_status = []
+
+for company in companies:
+    created_dt  = datetime.strptime(company["created_at"], "%Y-%m-%dT%H:%M:%SZ")
+    is_churned  = not company["is_active"]
+    months      = month_range(created_dt, today)
+
+    if is_churned and len(months) > 1:
+        # Pick a churn month: at least 1 month in, at most the last month
+        churn_idx = random.randint(1, len(months) - 1)
+    else:
+        churn_idx = None
+
+    for i, month in enumerate(months):
+        active = True if not is_churned else (i < churn_idx)
+        company_monthly_status.append({
+            "company_id":   company["id"],
+            "snapshot_month": month.strftime("%Y-%m-%d"),
+            "company_tier": company["tier"],
+            "is_active":    active,
+            "mrr_usd":      company["mrr_usd"] if active else 0,
+        })
+
+write_csv("company_monthly_status.csv", company_monthly_status)
+
 print(f"\n✅  Seed generation complete — {len(companies)} companies, {len(customers)} customers, "
-      f"{len(threads)} threads, {len(events)} events, {len(sla_breaches)} SLA breaches")
+      f"{len(threads)} threads, {len(events)} events, {len(sla_breaches)} SLA breaches, "
+      f"{len(company_monthly_status)} company monthly status rows")
 print(f"    Output directory: {SEED_DIR}")
