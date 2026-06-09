@@ -70,9 +70,8 @@ Each layer has a clear contract. Analysts always know which tier they're on. Sta
 
 | Model | Key metrics | Question answered |
 |---|---|---|
-| `fact_customer_cohorts` | New acquisitions per month, active customers, retention %, churn % | How many customers are we acquiring? Which cohorts and tiers retain best? |
-| `fact_mrr_snapshot` | Total MRR, projected ARR (MRR × 12), active companies, MRR per active customer | What does our revenue base look like by tier? Note: ARR is annualised from current MRR snapshot — not actual billed ARR. Stripe required for true ARR movement. |
-| `fact_churn_analysis` | Churn rate %, retained vs churned customers, at-risk MRR | What is our churn rate by cohort and tier? How much MRR is at risk? |
+| `fact_company_cohorts` | Logo and MRR retention by cohort month and tier, at-risk MRR | How are our paying accounts retaining? Which cohorts and tiers churn fastest? |
+| `fact_mrr_monthly` | Active MRR, new MRR, churned MRR, net new MRR — monthly per tier | Is revenue growing? What was gained and lost each month? Note: expansion MRR requires Stripe. |
 
 ---
 
@@ -120,19 +119,23 @@ The `tinybird/` directory in this repo contains reference datasource schemas and
 ## Getting started
 
 ```bash
-# 1. Install dependencies
+# 1. Create and activate a virtual environment
+python3 -m venv .venv
+source .venv/bin/activate      # Windows: .venv\Scripts\activate
+
+# 2. Install dependencies
 pip install -r requirements.txt
 
-# 2. Generate mock seed data
-python ingestion/generate_seeds.py
+# 3. Generate mock seed data
+python3 ingestion/generate_seeds.py
 
-# 3. Load seeds and run models
+# 4. Load seeds and run models
 dbt seed && dbt run
 
-# 4. Run tests
+# 5. Run tests
 dbt test
 
-# 5. Explore docs and lineage
+# 6. Explore docs and lineage
 dbt docs generate && dbt docs serve
 ```
 

@@ -285,16 +285,7 @@ models:
         description: Date of thread creation. Grain is one row per day/channel/priority/tier.
         tests:
           - not_null
-      - name: created_week
-        description: ISO week start date for the thread day.
-        tests:
-          - not_null
-      - name: created_month
-        description: Month for the thread day.
-      - name: created_quarter
-        description: Quarter for the thread day.
-      - name: created_year
-        description: Year for the thread day.
+
       - name: total_threads
         description: Total threads created in this day/channel/priority/tier slice.
         tests:
