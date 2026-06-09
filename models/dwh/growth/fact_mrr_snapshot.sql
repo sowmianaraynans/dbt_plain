@@ -37,7 +37,7 @@ company_detail as (
         coalesce(cu.active_customers, 0)   as active_customers,
         coalesce(cu.churned_customers, 0)  as churned_customers
     from companies co
-    left join customer_counts cu using (company_id)
+    left join customer_counts cu on co.company_id = cu.company_id
     where co.company_tier != 'free'
 ),
 

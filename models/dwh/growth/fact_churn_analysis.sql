@@ -49,7 +49,7 @@ churn as (
         sum(case when c.is_active then co.mrr_usd else 0 end)          as retained_mrr_usd
 
     from customers c
-    left join companies co using (company_id)
+    left join companies co on c.company_id = co.company_id
     group by 1, 2
 )
 

@@ -89,8 +89,8 @@ final as (
         t.resolved_at
 
     from threads t
-    left join companies co  using (company_id)
-    left join customers cu  using (customer_id)
+    left join companies co  on t.company_id  = co.company_id
+    left join customers cu  on t.customer_id = cu.customer_id
 )
 
 select * from final

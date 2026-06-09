@@ -31,15 +31,19 @@ tenants as (
 thread_signals as (
     select
         customer_id,
-        count(*)                                            as total_threads,
-        countif(is_resolved)                                as resolved_threads,
-        countif(not is_resolved)                            as open_threads,
-        countif(is_escalated)                               as escalated_threads,
-        countif(is_high_priority)                           as high_priority_threads,
-        max(created_at)                                     as last_thread_at,
-        min(created_at)                                     as first_thread_at,
-        avg(first_response_time_mins)                       as avg_first_response_time_mins,
-        avg(resolution_time_mins)                           as avg_resolution_time_mins
+        count(*)                                                        as total_threads,
+        countif(is_resolved)                                            as resolved_threads,
+        countif(not is_resolved)                                        as open_threads,
+        countif(is_escalated)                                           as escalated_threads,
+        countif(is_high_priority)                                       as high_priority_threads,
+        max(created_at)                                                 as last_thread_at,
+        min(created_at)                                                 as first_thread_at,
+        round(avg(first_response_time_mins), 1)                         as avg_first_response_time_mins,
+        round(avg(resolution_time_mins), 1)                             as avg_resolution_time_mins,
+        round(percentile_cont(0.90) within group
+            (order by first_response_time_mins), 1)                     as p90_first_response_time_mins,
+        round(percentile_cont(0.90) within group
+            (order by resolution_time_mins), 1)                         as p90_resolution_time_mins
     from {{ ref('stg_threads') }}
     group by 1
 ),
@@ -81,18 +85,34 @@ final as (
         coalesce(ts.high_priority_threads, 0)               as high_priority_threads,
         ts.avg_first_response_time_mins,
         ts.avg_resolution_time_mins,
+        ts.p90_first_response_time_mins,
+        ts.p90_resolution_time_mins,
         ts.last_thread_at,
         ts.first_thread_at,
 
-        -- ── Health signal (simple rule-based) ─────────────────────
-        -- In production: plug in ML model score or CSM input here
+        -- ── Health signal (rule-based — replace with ML score when available) ──
+        -- Evaluated top-down; first match wins.
+        -- churned:          hard status from source — overrides everything.
+        -- at_risk:          multiple escalations signal a relationship in trouble.
+        -- needs_attention:  pile-up of open threads — support load is a burden.
+        -- idle:             previously engaged but silent for 60+ days.
+        --                   Requires total_threads > 0 — a customer who never
+        --                   needed support is NOT idle; silence is a positive signal.
+        -- healthy:          active customer, no red flags. Not needing support
+        --                   is a valid healthy state — absence of tickets ≠ disengaged.
+        -- new:              just onboarded, no meaningful signal yet.
         case
-            when c.is_churned                               then 'churned'
-            when ts.escalated_threads > 2                   then 'at_risk'
-            when ts.open_threads > 5                        then 'needs_attention'
-            when ts.last_thread_at < current_timestamp - interval '60 days'
+            when c.is_churned
+                                                            then 'churned'
+            when coalesce(ts.escalated_threads, 0) > 2
+                                                            then 'at_risk'
+            when coalesce(ts.open_threads, 0) > 5
+                                                            then 'needs_attention'
+            when coalesce(ts.total_threads, 0) > 0
+                and ts.last_thread_at < current_timestamp - interval '60 days'
                                                             then 'idle'
-            when c.is_active and ts.total_threads > 0       then 'healthy'
+            when c.is_active
+                                                            then 'healthy'
             else 'new'
         end                                                 as health_status,
 
@@ -101,9 +121,9 @@ final as (
         c.updated_at
 
     from customers c
-    left join companies co  using (company_id)
-    left join tenants t     on c.tenant_id = t.id
-    left join thread_signals ts on c.customer_id = ts.customer_id
+    left join companies co      on c.company_id   = co.company_id
+    left join tenants t         on c.tenant_id    = t.tenant_id
+    left join thread_signals ts on c.customer_id  = ts.customer_id
 )
 
 select * from final

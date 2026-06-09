@@ -15,15 +15,53 @@ models:
 
   - name: dim_customer
     description: >
-      The canonical customer entity. Unifies Plain customers with their company (account),
-      tenant, tier context, and support health signals. One row per customer.
-      This is the join key for all downstream analytics.
+      The customer spine — the single canonical entity that unifies every end user
+      with their company, tenant, tier, and support health signal.
+      One row per customer. The join key for all downstream analytics.
+
+      In Plain's model: customers are the individual end users who contact a company
+      (e.g. a developer contacting Cursor's support). They belong to a company account.
+
+      SELF-SERVE QUERY GUIDE:
+        CSM: customers at risk within a specific account:
+          SELECT customer_name, email, health_status,
+                 escalated_threads, open_threads, last_thread_at
+          FROM dim_customer
+          WHERE company_name = 'Cursor'
+            AND health_status IN ('at_risk', 'needs_attention')
+          ORDER BY escalated_threads DESC
+
+        Support ops: customers with worst p90 response time:
+          SELECT customer_name, company_name, company_tier,
+                 avg_first_response_time_mins, p90_first_response_time_mins
+          FROM dim_customer
+          WHERE total_threads > 0
+          ORDER BY p90_first_response_time_mins DESC
+
+        Leadership: active customer count by tier:
+          SELECT company_tier, COUNT(*) as active_customers
+          FROM dim_customer
+          WHERE is_active
+          GROUP BY 1
+
+      JOIN GUIDE:
+        - Join to dim_company on company_id for account-level context
+        - Join to dim_thread on customer_id for individual thread detail
+        - Use dim_company instead when the question is at the account level
     columns:
       - name: customer_id
         description: Plain's unique customer identifier
         tests:
           - unique
           - not_null
+      - name: email
+        description: >
+          Customer email address. PII — do not expose in self-serve BI dashboards,
+          data exports, or any external-facing surface without data governance approval.
+          Mask or exclude when sharing query results outside the data team.
+        meta:
+          pii: true
+          sensitivity: high
       - name: company_id
         description: FK to the company (B2B account) this customer belongs to
         tests:
@@ -39,38 +77,209 @@ models:
           - accepted_values:
               values: ['enterprise', 'pro', 'starter', 'free']
       - name: health_status
-        description: Rule-based health signal. healthy | idle | needs_attention | at_risk | churned | new
+        description: >
+          Rule-based health signal. healthy | idle | needs_attention | at_risk | churned | new.
+          idle requires prior engagement (total_threads > 0) — a customer who never needed
+          support is healthy, not idle. Silence is a positive signal, not disengagement.
         tests:
           - not_null
+      - name: p90_first_response_time_mins
+        description: >
+          90th percentile first response time across this customer's threads.
+          More actionable than average for spotting worst-case support experience.
+      - name: p90_resolution_time_mins
+        description: >
+          90th percentile resolution time across this customer's threads.
+          Use alongside avg to understand tail latency for the customer.
 
   - name: dim_company
     description: >
-      The canonical company dimension. Holds account-level attributes used by downstream models.
+      The primary account-level table for CSM and GTM self-serve analytics.
+      One row per company (Plain's paying customer — e.g. Cursor, Linear, Vercel).
+
+      Each company row aggregates:
+        - Account attributes: tier, region, MRR, active status
+        - Customer health distribution: how many of this company's end users
+          are healthy / idle / at_risk / needs_attention / churned
+        - Support speed: avg and p90 FRT and TTR rolled up across all customers
+        - Thread counts and SLA breach totals
+
+      Health data is sourced from dim_customer (not stg_customers) so that
+      health_status logic is computed once and flows here consistently.
+
+      SELF-SERVE QUERY GUIDE:
+        CSM weekly intervention list:
+          SELECT company_name, company_tier, total_customers,
+                 at_risk_customers, needs_attention_customers,
+                 pct_customers_needing_attention, sla_breach_count
+          FROM dim_company
+          ORDER BY pct_customers_needing_attention DESC
+
+        GTM account overview by tier:
+          SELECT company_tier, COUNT(*) as companies,
+                 SUM(total_customers) as total_customers,
+                 SUM(at_risk_customers) as at_risk
+          FROM dim_company WHERE is_active
+          GROUP BY 1
+
+        Support speed by account (CSM prep):
+          SELECT company_name, avg_frt_mins, p90_frt_mins,
+                 avg_ttr_mins, sla_breach_count
+          FROM dim_company
+          WHERE company_tier = 'enterprise'
+          ORDER BY p90_frt_mins DESC
+
+      JOIN GUIDE:
+        - Join to dim_customer on company_id for individual user detail
+        - Join to fact_sla_performance on company_id for monthly SLA trend
+        - Join to fact_thread_measures on company_tier for tier benchmarking
+
     columns:
+      # ── Identity ──────────────────────────────────────────────────────────
+      - name: company_id
+        description: Plain's unique company identifier. Primary key. Join key for all downstream models.
+        tests:
+          - unique
+          - not_null
+      - name: company_name
+        description: Display name of the company account (e.g. Cursor, Linear, Vercel).
+      - name: domain_name
+        description: Primary domain of the company. Used for email routing context.
+      - name: company_tier
+        description: Pricing tier — enterprise | pro | starter | free. Drives SLA targets and risk flags.
+        tests:
+          - accepted_values:
+              values: ['enterprise', 'pro', 'starter', 'free']
+      - name: region
+        description: Geographic region of the account — us-east | eu-west | ap-south | us-west.
+      - name: is_active
+        description: Whether the company account is currently active in Plain.
+      - name: is_enterprise
+        description: True if company_tier = enterprise. Shortcut for high-touch CSM filtering.
+      - name: is_paying
+        description: True if company_tier is enterprise or pro. Excludes starter and free accounts.
+      - name: mrr_usd
+        description: >
+          Monthly recurring revenue in USD. Static placeholder — sourced from Plain's API
+          which exposes this as a customer-facing field. Not a reliable internal billing source.
+          Replace with Stripe subscription data for accurate MRR analytics.
+
+      # ── Customer counts ───────────────────────────────────────────────────
       - name: total_customers
-        description: Number of customers associated with this company.
+        description: Total end users associated with this company across all statuses.
       - name: active_customers
-        description: Number of active customers associated with this company.
+        description: End users with customer_status = active.
       - name: churned_customers
-        description: Number of churned customers associated with this company.
+        description: >
+          End users with customer_status = churned. These are individual users who stopped
+          engaging with this company's support — not the company itself churning from Plain.
+          A high count relative to total_customers is an account health warning for CSMs.
+      - name: customer_churn_rate_pct
+        description: >
+          churned_customers / total_customers as a percentage (0–100).
+          More meaningful than the raw count — 2 churned out of 3 users is critical;
+          2 churned out of 100 is noise. Sort by this to prioritise CSM outreach.
+
+      # ── Health distribution ───────────────────────────────────────────────
+      # Sourced from dim_customer.health_status — computed once, flows here.
+      # Use pct_customers_needing_attention as the primary account risk score.
+      - name: healthy_customers
+        description: >
+          Users whose support experience has no red flags and who are actively engaged.
+          Includes users who have never needed support — silence is a positive signal.
+      - name: new_customers
+        description: Recently onboarded users with no meaningful support history yet. Not a risk signal.
+      - name: idle_customers
+        description: >
+          Users who previously contacted support but have not done so in 60+ days.
+          Distinct from healthy (never needed support) — idle implies prior engagement
+          that has gone quiet. Worth monitoring for re-engagement.
+      - name: needs_attention_customers
+        description: >
+          Users with more than 5 open threads. Support load is becoming a burden for them.
+          CSM should check whether the account needs more agent capacity in Plain.
+      - name: at_risk_customers
+        description: >
+          Users with more than 2 escalated threads. Multiple escalations signal a relationship
+          under stress. Highest priority for CSM intervention — risk of losing the user or the account.
+      - name: pct_customers_needing_attention
+        description: >
+          (at_risk_customers + needs_attention_customers) / total_customers as a percentage (0–100).
+          Composite account risk score. Primary sort column for CSM weekly account reviews.
+          An enterprise account above 20% warrants immediate outreach.
+
+      # ── Support speed (rolled up across all customers in the account) ─────
+      - name: avg_frt_mins
+        description: Average first response time in minutes across all this company's customers.
+      - name: p90_frt_mins
+        description: >
+          90th percentile first response time across all this company's customers.
+          Reflects the worst-case experience for the top 10% of users. More actionable
+          than average for spotting accounts where some users consistently wait too long.
+      - name: avg_ttr_mins
+        description: Average time to resolution in minutes across all this company's customers.
+      - name: p90_ttr_mins
+        description: >
+          90th percentile time to resolution. Use alongside p90_frt_mins to assess
+          whether the account's end-to-end support experience is within SLA.
+
+      # ── Thread and SLA counts ─────────────────────────────────────────────
       - name: tenant_count
-        description: Number of tenants associated with this company.
+        description: Number of distinct tenants (workspaces) within this company.
       - name: total_threads
-        description: Number of support threads associated with this company.
+        description: All support threads ever created under this company.
       - name: open_threads
-        description: Number of open support threads associated with this company.
+        description: Currently unresolved threads. High values combined with high p90_frt signal backlog.
       - name: high_priority_threads
-        description: Number of high-priority support threads associated with this company.
+        description: Threads marked urgent or high priority. Elevated counts warrant CSM attention.
       - name: sla_breach_count
-        description: Number of SLA breach events for this company.
+        description: >
+          Total SLA breach events for this company. Cross-reference with fact_sla_performance
+          for month-by-month trend and breach severity detail.
   - name: dim_thread
     description: >
-      Thread-level attributes and status used for reporting and data exploration.
+      Thread-level detail enriched with company and customer context.
+      One row per thread. Use for ad-hoc investigation, per-thread filtering,
+      and individual ticket analysis. Not for aggregated metrics — use
+      fact_thread_measures for aggregated throughput and speed reporting.
+
+      SELF-SERVE QUERY GUIDE:
+        Open high-priority threads by company:
+          SELECT company_name, company_tier, title, assigned_agent_name,
+                 age_hours_open, first_response_time_mins
+          FROM dim_thread
+          WHERE is_resolved = false AND is_high_priority = true
+          ORDER BY age_hours_open DESC
+
+        Resolution distribution analysis:
+          SELECT resolution_bucket, COUNT(*) as threads,
+                 ROUND(100.0 * COUNT(*) / SUM(COUNT(*)) OVER (), 1) as pct
+          FROM dim_thread
+          GROUP BY 1
 
   - name: fact_thread_measures
     description: >
-      Daily support throughput and speed measures sliced by channel, priority and tier.
-      Primary model for support leader dashboards and operational reviews.
+      Daily support throughput and speed — the operational heartbeat model.
+      Grain: one row per (created_date, channel, priority, company_tier).
+      Primary table for support leader dashboards and weekly operational reviews.
+      Use this for trends and aggregates. Use dim_thread for individual ticket detail.
+
+      SELF-SERVE QUERY GUIDE:
+        Weekly FRT trend by channel (last 12 weeks):
+          SELECT created_week, channel,
+                 SUM(total_threads) as threads,
+                 ROUND(AVG(median_frt_mins), 1) as median_frt
+          FROM fact_thread_measures
+          WHERE created_date >= CURRENT_DATE - INTERVAL 84 DAY
+          GROUP BY 1, 2 ORDER BY 1, 2
+
+        Resolution rate by tier (last 30 days):
+          SELECT company_tier,
+                 SUM(total_threads) as threads,
+                 ROUND(AVG(resolution_rate_pct), 1) as resolution_rate
+          FROM fact_thread_measures
+          WHERE created_date >= CURRENT_DATE - INTERVAL 30 DAY
+          GROUP BY 1 ORDER BY 2 DESC
     columns:
       - name: created_date
         description: Date of thread creation. Grain is one row per day/channel/priority/tier.
@@ -93,8 +302,26 @@ models:
 
   - name: fact_sla_performance
     description: >
-      Monthly SLA compliance by company and tier. Flags enterprise and pro customers
-      at risk of breach. Core input for CSM account reviews.
+      Monthly SLA compliance by company and tier.
+      Grain: one row per (breach_month, company_id, company_tier, sla_type).
+      Core input for CSM account reviews and escalation decisions.
+      Use dim_company.sla_breach_count for a total count snapshot.
+      Use this model for month-by-month trend and risk_flag detail.
+
+      SELF-SERVE QUERY GUIDE:
+        Enterprise accounts with critical SLA risk this month:
+          SELECT company_id, company_tier, breach_count,
+                 sla_compliance_pct, worst_breach_mins
+          FROM fact_sla_performance
+          WHERE breach_month = DATE_TRUNC('month', CURRENT_DATE)
+            AND risk_flag = 'critical'
+          ORDER BY breach_count DESC
+
+        SLA compliance trend for a specific company:
+          SELECT breach_month, sla_compliance_pct, breach_count, risk_flag
+          FROM fact_sla_performance
+          WHERE company_id = '<id>'
+          ORDER BY breach_month DESC
     columns:
       - name: company_id
         tests:
@@ -109,18 +336,192 @@ models:
 
   - name: dim_agent_workload
     description: >
-      Current agent capacity and performance snapshot.
-      Used by support leads for workload balancing and 1:1 reviews.
+      Current agent capacity snapshot, derived from fact_agent_daily.
+      One row per agent. Answers: who is overloaded RIGHT NOW?
+
+      Sourced from fact_agent_daily (not stg_threads directly), so speed metrics
+      use the correct weighted average (sum/count) and stg_threads is read only once.
+      Lineage: staging → fact_agent_daily → dim_agent_workload.
+
+        dim_agent_workload → who needs re-balancing TODAY (current open queue)
+        fact_agent_daily   → how has performance trended OVER TIME (historical time-series)
+
+      SELF-SERVE QUERY GUIDE:
+        Overloaded agents right now:
+          SELECT agent_name, open_threads, open_high_priority,
+                 workload_status, sla_breaches, avg_ttr_mins
+          FROM dim_agent_workload
+          WHERE workload_status IN ('overloaded', 'busy')
+          ORDER BY open_threads DESC
+
+        All-time performance comparison (correct weighted avg):
+          SELECT agent_name, total_threads, resolved_threads,
+                 avg_frt_mins, avg_ttr_mins, sla_breaches
+          FROM dim_agent_workload
+          ORDER BY avg_frt_mins ASC
+
+      JOIN GUIDE:
+        - Join to fact_agent_daily on agent_id for date-level trend detail
     columns:
       - name: agent_id
         tests:
           - unique
           - not_null
+      - name: open_threads
+        description: >
+          Current open thread count. Derived as SUM(threads_open_eod) across all dates.
+          threads_open_eod is evaluated at model-run time, so the sum equals
+          threads assigned to this agent that are still unresolved today.
+      - name: open_high_priority
+        description: Currently open threads that are also high priority. Additive derivation from fact_agent_daily.
+      - name: avg_frt_mins
+        description: >
+          All-time average first response time using correct weighted calculation:
+          SUM(sum_frt_mins) / SUM(frt_response_count) across all dates.
+          Not an average of daily averages.
+      - name: avg_ttr_mins
+        description: All-time average time to resolution. Weighted calculation, same pattern as avg_frt_mins.
+      - name: last_7d_threads
+        description: Threads assigned in the trailing 7 days (from most recent fact_agent_daily rolling window).
+      - name: last_7d_avg_frt_mins
+        description: >
+          Average FRT over the trailing 7 days. Correctly weighted via rolling sums in fact_agent_daily.
+          Use alongside avg_frt_mins to spot recent degradation vs all-time baseline.
+      - name: companies_breached_on_sla
+        description: >
+          Sum of daily distinct company SLA breach counts. Upper-bound approximation —
+          overcounts if the same company had breaches across multiple days.
       - name: workload_status
-        description: overloaded | busy | normal | light
+        description: overloaded | busy | normal | light — thresholds on open_threads (>20 / >12 / >5 / else)
         tests:
           - accepted_values:
               values: ['overloaded', 'busy', 'normal', 'light']
+
+  - name: fact_agent_daily
+    description: >
+      Agent performance time-series. One row per (activity_date, agent_id).
+      Answers questions that dim_agent_workload (snapshot) cannot:
+        - Is this agent's FRT improving or degrading week on week?
+        - Which weeks see the highest escalation volume?
+        - Is an agent's resolution rate dropping under heavy load?
+        - How does throughput compare across agents over the same period?
+
+      ADDITIVE vs NON-ADDITIVE COLUMNS:
+        Additive — sum freely across any dimension or date range:
+          threads_assigned, threads_resolved, threads_escalated,
+          frt_response_count, sum_frt_mins, ttr_resolved_count, sum_ttr_mins,
+          sla_breaches, slack_threads, email_threads, chat_threads, api_threads
+
+        Non-additive — daily-grain percentile approximations:
+          p90_frt_mins, p90_ttr_mins, median_frt_mins, median_ttr_mins
+          DO NOT average these across days — averaging percentiles of subgroups
+          does not produce the correct overall percentile.
+          Use for single-day comparisons or trend direction only.
+
+      COMPUTING AVERAGES in any BI layer or metric query:
+        avg_frt_mins      = SUM(sum_frt_mins)  / NULLIF(SUM(frt_response_count), 0)
+        avg_ttr_mins      = SUM(sum_ttr_mins)  / NULLIF(SUM(ttr_resolved_count), 0)
+        resolution_rate   = SUM(threads_resolved) / NULLIF(SUM(threads_assigned), 0)
+        rolling_7d_avg_frt = SUM(rolling_7d_sum_frt_mins) / NULLIF(SUM(rolling_7d_frt_response_count), 0)
+
+      SELF-SERVE QUERY GUIDE:
+        Agent FRT trend over last 8 weeks (correct average from sums):
+          SELECT agent_name, activity_week,
+                 ROUND(SUM(sum_frt_mins) / NULLIF(SUM(frt_response_count), 0), 1) as avg_frt_mins,
+                 SUM(threads_assigned) as volume
+          FROM fact_agent_daily
+          WHERE activity_date >= CURRENT_DATE - INTERVAL 56 DAY
+          GROUP BY 1, 2 ORDER BY 1, 2
+
+        Agents with worsening FRT trend (rolling 7d vs prior 7d):
+          SELECT agent_name, activity_date, rolling_7d_avg_frt_mins
+          FROM fact_agent_daily
+          WHERE activity_date = CURRENT_DATE - 1
+          ORDER BY rolling_7d_avg_frt_mins DESC
+
+        Team weekly resolution rate:
+          SELECT activity_week,
+                 ROUND(100.0 * SUM(threads_resolved) / NULLIF(SUM(threads_assigned), 0), 1) as resolution_rate
+          FROM fact_agent_daily
+          GROUP BY 1 ORDER BY 1 DESC
+
+      JOIN GUIDE:
+        - Join to dim_agent_workload on agent_id to pair historical trend with current queue state
+        - Aggregate on activity_week or activity_month for reporting rollups
+    columns:
+      - name: activity_date
+        description: Calendar date of the agent's activity. Grain is one row per (date, agent_id).
+        tests:
+          - not_null
+      - name: activity_week
+        description: ISO week start date for the activity day. Use for weekly aggregations.
+      - name: activity_month
+        description: Month start date for the activity day. Use for monthly rollups.
+      - name: agent_id
+        description: Agent identifier. Join key to dim_agent_workload.
+        tests:
+          - not_null
+      - name: agent_name
+        description: Agent display name.
+      - name: threads_assigned
+        description: Threads created and assigned to this agent on this date. Additive.
+      - name: threads_resolved
+        description: Threads resolved by this agent on this date. Additive.
+      - name: threads_open_eod
+        description: Threads assigned today that were not yet resolved by end of day. Snapshot estimate.
+      - name: threads_escalated
+        description: Threads escalated on this date assigned to this agent. Additive.
+      - name: high_priority_threads
+        description: High-priority threads assigned to this agent on this date. Additive.
+      - name: frt_response_count
+        description: >
+          Count of threads where a first response time was recorded on this date.
+          Use as the denominator when computing average FRT: SUM(sum_frt_mins) / SUM(frt_response_count).
+      - name: sum_frt_mins
+        description: >
+          Sum of all first response times in minutes for this agent-day.
+          Divide by frt_response_count to get average FRT. Additive across any dimension.
+      - name: ttr_resolved_count
+        description: >
+          Count of threads resolved with a recorded resolution time on this date.
+          Use as denominator: SUM(sum_ttr_mins) / SUM(ttr_resolved_count).
+      - name: sum_ttr_mins
+        description: >
+          Sum of all resolution times in minutes for threads resolved on this date.
+          Divide by ttr_resolved_count to get average TTR. Additive across any dimension.
+      - name: p90_frt_mins
+        description: >
+          90th percentile first response time for this agent on this specific date.
+          Daily-grain approximation — DO NOT aggregate across multiple days.
+          Valid for: single-day outlier detection, daily trend charts only.
+      - name: p90_ttr_mins
+        description: >
+          90th percentile time to resolution for this agent on this specific date.
+          Same non-additive caveat as p90_frt_mins.
+      - name: median_frt_mins
+        description: Median first response time for this agent on this date. Non-additive — daily grain only.
+      - name: median_ttr_mins
+        description: Median resolution time for this agent on this date. Non-additive — daily grain only.
+      - name: sla_breaches
+        description: SLA breach events for this agent on this date. Additive.
+      - name: companies_breached
+        description: Distinct companies that had an SLA breach via this agent on this date.
+      - name: rolling_7d_threads_assigned
+        description: Sum of threads_assigned over the preceding 7 days (inclusive). Additive running sum.
+      - name: rolling_7d_frt_response_count
+        description: Sum of frt_response_count over preceding 7 days. Use as denominator for rolling avg FRT.
+      - name: rolling_7d_sum_frt_mins
+        description: >
+          Sum of sum_frt_mins over preceding 7 days.
+          Rolling 7-day avg FRT = rolling_7d_sum_frt_mins / NULLIF(rolling_7d_frt_response_count, 0).
+      - name: rolling_7d_avg_frt_mins
+        description: >
+          Pre-divided convenience column: rolling_7d_sum_frt_mins / rolling_7d_frt_response_count.
+          Ready for single-agent dashboards. For cross-agent aggregation use the sum columns above.
+      - name: rolling_7d_avg_ttr_mins
+        description: >
+          Pre-divided convenience column: rolling 7-day average TTR.
+          For cross-agent aggregation use rolling_7d_sum_ttr_mins / rolling_7d_ttr_resolved_count.
 
   # ── Growth & Internal Analytics ──────────────────────────────────────────────
   # These models answer leadership and growth team questions:
