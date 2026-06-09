@@ -15,12 +15,11 @@ with breaches as (
 threads as (
     select
         company_id,
-        company_tier,
         date_trunc('month', created_at)     as thread_month,
         count(*)                            as total_threads
     from {{ ref('stg_threads') }}
     where company_tier != 'free'            -- free tier has no SLA
-    group by 1, 2, 3
+    group by 1, 2
 ),
 
 breach_agg as (
@@ -70,7 +69,6 @@ final as (
     from breach_agg ba
     left join threads t
         on  ba.company_id   = t.company_id
-        and ba.company_tier = t.company_tier
         and ba.breach_month = t.thread_month
 )
 
