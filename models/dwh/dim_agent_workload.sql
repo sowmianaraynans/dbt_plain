@@ -29,19 +29,24 @@ with all_days as (
     select * from {{ ref('fact_agent_daily') }}
 ),
 
--- latest rolling-window values per agent (trailing 7d at most recent date)
-latest_per_agent as (
-    select
-        agent_id,
-        max(activity_date)              as latest_date,
-        max(rolling_7d_threads_assigned)
-            filter (where activity_date = max(activity_date) over (partition by agent_id))
-                                        as last_7d_threads,
-        max(rolling_7d_avg_frt_mins)
-            filter (where activity_date = max(activity_date) over (partition by agent_id))
-                                        as last_7d_avg_frt_mins
+-- latest date per agent — split into two CTEs to avoid window-in-aggregate
+latest_date_per_agent as (
+    select agent_id, max(activity_date) as latest_date
     from all_days
     group by 1
+),
+
+-- rolling values at that latest date only
+latest_per_agent as (
+    select
+        ad.agent_id,
+        ad.rolling_7d_threads_assigned  as last_7d_threads,
+        ad.rolling_7d_avg_frt_mins      as last_7d_avg_frt_mins,
+        ld.latest_date
+    from all_days ad
+    inner join latest_date_per_agent ld
+        on  ad.agent_id      = ld.agent_id
+        and ad.activity_date = ld.latest_date
 ),
 
 agent_totals as (

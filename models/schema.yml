@@ -688,6 +688,7 @@ models:
 
 sources:
   - name: seeds
+    schema: main_seeds
     description: Seed data mirroring Plain's GraphQL API response shapes
     tables:
       - name: customers
