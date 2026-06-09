@@ -1,5 +1,0 @@
--- raw_companies.sql
--- Direct mirror of Plain's /graphql/companies API response.
--- Includes all fields: account-level metadata, tier, region, and MRR.
-
-select * from "plain_analytics"."seeds"."companies"
