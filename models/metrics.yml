@@ -3,14 +3,21 @@ version: 2
 # ============================================================
 # SEMANTIC MODELS + METRICS  (dbt MetricFlow)
 # ============================================================
-# This file is the single source of truth for metric definitions.
-# Internal BI (Metabase / Looker) queries these via the dbt Semantic Layer.
-# Tinybird pipes implement the same aggregations scoped per company_id.
-# Metric names and descriptions are the contract both sides share.
+# Single source of truth for metric definitions.
+# Internal BI queries these via the dbt Semantic Layer.
+# Tinybird pipes implement the same aggregations per company_id.
+# Metric names and descriptions are the naming contract both sides share.
+#
+# AGGREGATION DISCIPLINE:
+#   Measures on fact tables use additive primitives (sum, count_distinct, sum).
+#   Averages and rates are defined as ratio metrics (numerator / denominator)
+#   so the calculation is always correct regardless of which dimensions you
+#   group by — never an average of averages.
 # ============================================================
 
 semantic_models:
 
+  # ── Support throughput and speed ─────────────────────────────────────────────
   - name: threads_daily
     description: >
       Daily thread measures by channel, priority, and tier.
@@ -45,6 +52,7 @@ semantic_models:
         description: enterprise / pro / starter / free
 
     measures:
+      # Additive volume — sum correctly across any dimension combination
       - name: thread_count
         description: Total threads created.
         agg: sum
@@ -57,23 +65,38 @@ semantic_models:
         description: Threads marked as escalated.
         agg: sum
         expr: escalated_threads
-      - name: avg_frt_mins
-        description: Average first response time in minutes.
-        agg: average
-        expr: avg_frt_mins
-      - name: median_frt_mins
-        description: Median first response time in minutes.
-        agg: median
-        expr: median_frt_mins
-      - name: avg_ttr_mins
-        description: Average time to resolution in minutes.
-        agg: average
-        expr: avg_ttr_mins
-      - name: resolution_rate_pct
-        description: Percentage of threads resolved.
-        agg: average
-        expr: resolution_rate_pct
 
+      # Additive FRT components — divide in ratio metrics below
+      - name: sum_frt_mins
+        description: Sum of all first response times in minutes. Divide by frt_response_count for correct avg.
+        agg: sum
+        expr: sum_frt_mins
+      - name: frt_response_count
+        description: Threads with a first response time recorded.
+        agg: sum
+        expr: frt_response_count
+
+      # Additive TTR components
+      - name: sum_ttr_mins
+        description: Sum of all resolution times in minutes. Divide by ttr_resolved_count for correct avg.
+        agg: sum
+        expr: sum_ttr_mins
+      - name: ttr_resolved_count
+        description: Threads resolved with a recorded resolution time.
+        agg: sum
+        expr: ttr_resolved_count
+
+      # Daily-grain percentile approximations — non-additive, kept for single-day reference
+      - name: median_frt_daily
+        description: Median FRT for this specific day. Non-additive approximation — do not avg across days.
+        agg: average
+        expr: median_frt_mins
+      - name: p90_frt_daily
+        description: p90 FRT for this specific day. Non-additive approximation.
+        agg: average
+        expr: p90_frt_mins
+
+  # ── SLA compliance ────────────────────────────────────────────────────────────
   - name: sla_performance_monthly
     description: >
       Monthly SLA compliance by company and tier.
@@ -115,15 +138,16 @@ semantic_models:
         description: Distinct threads that breached SLA.
         agg: sum
         expr: threads_breached
-      - name: avg_sla_compliance_pct
-        description: Average SLA compliance rate (0–100).
-        agg: average
+      - name: sum_sla_compliance_pct
+        description: Sum of compliance percentages — divide by company_month_count for avg.
+        agg: sum
         expr: sla_compliance_pct
-      - name: avg_breach_by_mins
-        description: Average overage past the SLA target in minutes.
-        agg: average
-        expr: avg_breach_by_mins
+      - name: company_month_count
+        description: Number of company-month rows — denominator for avg compliance rate.
+        agg: count_distinct
+        expr: "company_id || '|' || breach_month"
 
+  # ── Customer health ───────────────────────────────────────────────────────────
   - name: customer_health_snapshot
     description: >
       Customer-level health and support signals.
@@ -174,82 +198,198 @@ semantic_models:
         agg: sum
         expr: "CASE WHEN health_status IN ('at_risk', 'needs_attention') THEN 1 ELSE 0 END"
 
-  # fact_mrr_snapshot is a point-in-time snapshot with no time dimension.
-  # MetricFlow requires a time dimension on every semantic model, so MRR/ARR
-  # metrics are excluded from the semantic layer. Query fact_mrr_snapshot
-  # directly in BI tools. When Stripe is connected, replace with a time-series
-  # model (one row per company per month) and add a semantic model here.
+  # ── MRR time-series ───────────────────────────────────────────────────────────
+  # fact_mrr_monthly now has a time dimension (snapshot_month), so MRR metrics
+  # can join MetricFlow. Previously excluded because fact_mrr_snapshot was a
+  # point-in-time snapshot with no time axis.
+  - name: mrr_monthly
+    description: >
+      Monthly MRR movements by tier — active, new, churned, and net new MRR.
+      Grain: one row per (snapshot_month, company_tier).
+      Source for revenue trend metrics.
+    model: ref('fact_mrr_monthly')
+    defaults:
+      agg_time_dimension: snapshot_month
+
+    entities:
+      - name: mrr_slice
+        type: primary
+        expr: "snapshot_month || '|' || company_tier"
+
+    dimensions:
+      - name: snapshot_month
+        type: time
+        label: Month
+        type_params:
+          time_granularity: month
+      - name: company_tier
+        type: categorical
+        label: Company Tier
+        description: enterprise / pro / starter
+
+    measures:
+      - name: active_mrr_sum
+        description: Total MRR from active companies this month.
+        agg: sum
+        expr: active_mrr
+      - name: new_mrr_sum
+        description: MRR from companies that became active this month.
+        agg: sum
+        expr: new_mrr
+      - name: churned_mrr_sum
+        description: MRR lost from companies that went inactive this month.
+        agg: sum
+        expr: churned_mrr
+      - name: net_new_mrr_sum
+        description: new_mrr minus churned_mrr. Positive = growing.
+        agg: sum
+        expr: net_new_mrr
+      - name: active_company_count
+        description: Companies active this month.
+        agg: sum
+        expr: active_companies
 
 
 # ── Metrics ────────────────────────────────────────────────────────────────────
 # Named, reusable metrics consumed by internal BI and used as the
 # naming contract for equivalent Tinybird pipe endpoints.
+#
+# METRIC GLOSSARY: visible in dbt docs under the Metrics section.
+# Run: dbt docs generate --static  →  single shareable HTML file.
 
 metrics:
 
-  # Support throughput
+  # ── Support throughput ────────────────────────────────────────────────────────
+  # NOTE: MetricFlow ratio metrics reference other metric names, not measure names.
+  # Component metrics (threads_resolved, total_frt_mins, etc.) are listed here
+  # as simple metrics first, then composed into ratio metrics below.
+
   - name: thread_volume
     label: Thread Volume
-    description: Total support threads created in the period. Primary volume signal for support ops.
+    description: >
+      Total support threads created in the period.
+      Primary volume signal for support ops. Rising volume without rising headcount
+      is an early warning for SLA risk.
     type: simple
     type_params:
       measure: thread_count
+
+  - name: threads_resolved
+    label: Threads Resolved
+    description: Threads with status = done in the period. Numerator for resolution_rate.
+    type: simple
+    type_params:
+      measure: resolved_thread_count
 
   - name: resolution_rate
     label: Resolution Rate (%)
     description: >
       Percentage of threads resolved (status = done) in the period.
-      Key support health metric. Drops signal under-staffing or rising complexity.
+      Calculated as resolved_threads / total_threads — never an average of daily rates.
+      Drops signal under-staffing, rising ticket complexity, or routing problems.
+    type: ratio
+    type_params:
+      numerator: threads_resolved
+      denominator: thread_volume
+
+  # ── Speed ─────────────────────────────────────────────────────────────────────
+  - name: total_frt_mins
+    label: Total First Response Time (mins)
+    description: Sum of all first response times in minutes. Divide by first_response_volume for correct average.
     type: simple
     type_params:
-      measure: resolution_rate_pct
+      measure: sum_frt_mins
 
-  # Speed
+  - name: first_response_volume
+    label: First Responses Recorded
+    description: Threads with a first response time recorded. Denominator for avg_first_response_time.
+    type: simple
+    type_params:
+      measure: frt_response_count
+
   - name: avg_first_response_time
     label: Avg First Response Time (mins)
     description: >
       Average time between thread creation and first agent response.
-      Core SLA input. Enterprise target: ≤ 60 min. Pro target: ≤ 240 min.
+      Calculated as SUM(frt_mins) / COUNT(responses) — correct across any dimension slice.
+      Enterprise SLA target: ≤ 60 min. Pro target: ≤ 240 min.
+    type: ratio
+    type_params:
+      numerator: total_frt_mins
+      denominator: first_response_volume
+
+  - name: total_ttr_mins
+    label: Total Time to Resolution (mins)
+    description: Sum of all resolution times in minutes. Divide by resolutions_recorded for correct average.
     type: simple
     type_params:
-      measure: avg_frt_mins
+      measure: sum_ttr_mins
+
+  - name: resolutions_recorded
+    label: Resolutions Recorded
+    description: Resolved threads with a recorded resolution time. Denominator for avg_resolution_time.
+    type: simple
+    type_params:
+      measure: ttr_resolved_count
+
+  - name: avg_resolution_time
+    label: Avg Time to Resolution (mins)
+    description: >
+      Average time from thread creation to resolution.
+      Calculated as SUM(ttr_mins) / COUNT(resolved). Operational efficiency measure.
+    type: ratio
+    type_params:
+      numerator: total_ttr_mins
+      denominator: resolutions_recorded
 
   - name: median_first_response_time
     label: Median First Response Time (mins)
     description: >
       Median FRT — less sensitive to outliers than average.
-      Use alongside p90 to understand the full distribution.
+      Daily-grain approximation. Use for trend direction and single-day comparisons.
+      For exact cross-period median, raw thread data is required.
     type: simple
     type_params:
-      measure: median_frt_mins
+      measure: median_frt_daily
 
-  - name: avg_resolution_time
-    label: Avg Time to Resolution (mins)
-    description: Average time from thread creation to resolution. Operational efficiency measure.
-    type: simple
-    type_params:
-      measure: avg_ttr_mins
-
-  # SLA
+  # ── SLA ───────────────────────────────────────────────────────────────────────
   - name: sla_breach_count
     label: SLA Breach Count
     description: >
       Total SLA breach events in the period.
-      High values for enterprise accounts trigger critical risk flag.
+      Enterprise: any breach triggers warning; >1 triggers critical risk flag.
+      Pro: >3 breaches triggers warning.
     type: simple
     type_params:
       measure: breach_count
 
+  - name: sla_compliance_score
+    label: SLA Compliance Score (sum)
+    description: >
+      Running total of per-company-month compliance percentages.
+      Divide by sla_measurement_count to get the average compliance rate.
+    type: simple
+    type_params:
+      measure: sum_sla_compliance_pct
+
+  - name: sla_measurement_count
+    label: SLA Measurement Count
+    description: Company-month observations measured for SLA compliance. Denominator for sla_compliance_rate.
+    type: simple
+    type_params:
+      measure: company_month_count
+
   - name: sla_compliance_rate
     label: SLA Compliance Rate (%)
     description: >
-      Percentage of threads resolved within SLA targets.
+      Average percentage of threads resolved within SLA targets across measured company-months.
       Below 95% for enterprise is critical. Below 80% for pro is warning.
-    type: simple
+    type: ratio
     type_params:
-      measure: avg_sla_compliance_pct
+      numerator: sla_compliance_score
+      denominator: sla_measurement_count
 
-  # Customers
+  # ── Customers ─────────────────────────────────────────────────────────────────
   - name: active_customers
     label: Active Customers
     description: Customers with status = active. The retained base.
@@ -259,7 +399,7 @@ metrics:
 
   - name: churned_customers
     label: Churned Customers
-    description: Customers with status = churned. Input to churn rate.
+    description: Customers with status = churned. Input to churn rate calculation.
     type: simple
     type_params:
       measure: churned_customer_count
@@ -268,7 +408,7 @@ metrics:
     label: At-Risk Customers
     description: >
       Customers with health_status = at_risk or needs_attention.
-      CSM intervention target — prevents confirmed churn.
+      CSM intervention target — act before these become churned_customers.
     type: simple
     type_params:
       measure: at_risk_customer_count
@@ -277,18 +417,47 @@ metrics:
     label: New Customer Acquisitions
     description: >
       Customers acquired in the selected period, measured by created_at.
-      Query at monthly grain for acquisition trend. The primary input
-      to cohort retention analysis — each cohort starts as an acquisition count.
+      Query at monthly grain for acquisition trend.
       For GTM: track MoM growth. For leadership: spot acceleration or slowdown early.
     type: simple
     type_params:
       measure: customer_count
 
-  # Revenue
-  # total_mrr, total_arr, and projected_arr are excluded from MetricFlow —
-  # fact_mrr_snapshot has no time dimension (snapshot model). Query it directly in BI tools.
-  #
-  # projected_arr = total_mrr_usd * 12. This is an annualised run-rate from the
-  # current MRR snapshot, NOT actual billed ARR. It is a directional signal only.
-  # True ARR (with expansion, contraction, and churn movements) requires Stripe.
-  # These metrics become MetricFlow-compatible once Stripe provides time-series MRR data.
+  # ── Revenue ───────────────────────────────────────────────────────────────────
+  - name: active_mrr
+    label: Active MRR (USD)
+    description: >
+      Monthly recurring revenue from all active companies in the period.
+      Directional signal — mrr_usd is a static field, not a Stripe billing event.
+      Replace with Stripe subscription data for exact MRR.
+    type: simple
+    type_params:
+      measure: active_mrr_sum
+
+  - name: new_mrr
+    label: New MRR (USD)
+    description: >
+      MRR from companies that became active this month (new or reactivated).
+      Gross revenue added — compare to churned_mrr for net growth picture.
+    type: simple
+    type_params:
+      measure: new_mrr_sum
+
+  - name: churned_mrr
+    label: Churned MRR (USD)
+    description: >
+      MRR lost from companies that went inactive this month.
+      Direct revenue loss signal. Rising churned_mrr with flat new_mrr = contraction.
+    type: simple
+    type_params:
+      measure: churned_mrr_sum
+
+  - name: net_new_mrr
+    label: Net New MRR (USD)
+    description: >
+      new_mrr minus churned_mrr. The headline growth metric for leadership.
+      Positive = growing. Negative = contracting. Zero = flat but could mask churn.
+      Does not include expansion or contraction MRR — requires Stripe for full waterfall.
+    type: simple
+    type_params:
+      measure: net_new_mrr_sum
