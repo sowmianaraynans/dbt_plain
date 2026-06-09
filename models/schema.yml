@@ -630,42 +630,61 @@ models:
           Compare to logo_churn_pct: divergence reveals whether high-value or
           low-value accounts are churning — materially different stories for GTM.
 
-  - name: fact_mrr_snapshot
+  - name: fact_mrr_monthly
     description: >
-      Current MRR and ARR snapshot aggregated by pricing tier.
-      Answers: what is our total ARR? Which tier drives the most revenue?
-      What is average MRR per company and revenue per active customer?
-      Grain: one row per company_tier (excluding free tier).
-      Data limitation: mrr_usd is a static field — not a time-series.
-      MRR movement (expansion, contraction, churned revenue) requires Stripe.
+      Monthly MRR movements by tier — active MRR, new MRR, churned MRR, and net new MRR.
+      Powered by stg_company_snapshots (monthly history from company_monthly_status.csv seed,
+      which simulates snapshots/company_snapshot.sql run on a schedule).
+
+      Replaces fact_mrr_snapshot — the current ARR snapshot is just the latest month:
+        WHERE snapshot_month = (SELECT MAX(snapshot_month) FROM fact_mrr_monthly)
+
+      Expansion/contraction MRR is always 0 with static seed data — mrr_usd does not change
+      between months. In production with Stripe, add expansion_mrr and contraction_mrr
+      for the full MRR waterfall view.
+
+      SELF-SERVE QUERY GUIDE:
+        Current ARR by tier:
+          SELECT company_tier, active_mrr * 12 as arr_usd, active_companies
+          FROM fact_mrr_monthly
+          WHERE snapshot_month = (SELECT MAX(snapshot_month) FROM fact_mrr_monthly)
+          ORDER BY arr_usd DESC
+
+        Is growth accelerating? (net new MRR by month):
+          SELECT snapshot_month, SUM(net_new_mrr) as total_net_new_mrr
+          FROM fact_mrr_monthly
+          GROUP BY 1 ORDER BY 1
+
+      Grain: one row per (snapshot_month, company_tier). Free tier excluded.
     columns:
+      - name: snapshot_month
+        description: First day of the calendar month being observed.
+        tests:
+          - not_null
       - name: company_tier
         description: Pricing tier (enterprise / pro / starter). Free tier excluded — no revenue.
         tests:
           - not_null
-          - unique
-      - name: total_companies
-        description: Total companies in this tier (active and inactive).
       - name: active_companies
-        description: Companies in this tier with is_active = true.
-      - name: total_mrr_usd
-        description: Sum of mrr_usd across all companies in this tier. Snapshot value.
-      - name: avg_mrr_per_company
-        description: Average MRR per company in this tier (USD). Useful for pricing benchmarking.
-      - name: max_mrr_usd
-        description: Highest single-company MRR in this tier. Signals top account concentration.
-      - name: total_arr_usd
+        description: Companies with is_active = true this month.
+      - name: active_mrr
+        description: Sum of mrr_usd for active companies this month. The headline MRR number.
+      - name: active_arr
+        description: active_mrr * 12. Directional — assumes no MRR movement within the month.
+      - name: new_companies
+        description: Companies that became active this month (new or reactivated).
+      - name: new_mrr
+        description: MRR from newly active companies. Gross new revenue added this month.
+      - name: churned_companies
+        description: Companies that went inactive this month. Each = lost MRR.
+      - name: churned_mrr
         description: >
-          Annualised recurring revenue for this tier (total_mrr_usd * 12).
-          Directional only — assumes no MRR movement from current snapshot.
-      - name: total_customers
-        description: Total customers across all companies in this tier.
-      - name: active_customers
-        description: Active customers across all companies in this tier.
-      - name: mrr_per_active_customer
+          MRR lost from companies that churned this month. Uses prev_mrr_usd because
+          mrr_usd is set to 0 once a company is inactive.
+      - name: net_new_mrr
         description: >
-          MRR divided by active customer count (USD). Revenue efficiency signal.
-          Higher values indicate better account expansion or higher-value customers.
+          new_mrr - churned_mrr. The growth signal leadership watches monthly.
+          Positive = growing. Negative = contraction. Zero = flat.
 
 sources:
   - name: seeds
