@@ -73,6 +73,46 @@ Each layer has a clear contract. Analysts always know which tier they're on. Sta
 | `fact_company_cohorts` | Logo and MRR retention by cohort month and tier, at-risk MRR | How are our paying accounts retaining? Which cohorts and tiers churn fastest? |
 | `fact_mrr_monthly` | Active MRR, new MRR, churned MRR, net new MRR — monthly per tier | Is revenue growing? What was gained and lost each month? Note: expansion MRR requires Stripe. |
 
+**Mart (BI consumption layer)**
+
+| Model | Grain | Description |
+|---|---|---|
+| `mart_support_monthly` | month × tier | Support KPIs pre-aggregated for BI. Thread volume, resolution rate, avg FRT, avg TTR. |
+| `mart_revenue_monthly` | month × tier | MRR waterfall + logo movement. Includes correctly-computed logo_churn_rate_pct (bop denominator) and ARPA. |
+| `mart_sla_monthly` | month × tier | SLA breach concentration. Companies at critical/warning risk, avg breach severity. |
+| `mart_customer_health` | tier (snapshot) | Current customer health distribution. At-risk %, healthy %, churn % per tier. |
+
+---
+
+## Connecting a BI tool
+
+The mart tables in `main_mart.*` are the target schema for BI consumption. No joins required — each mart is pre-aggregated to the leadership reporting grain.
+
+**Metabase (recommended for local demo)**
+
+1. Install the [DuckDB Metabase driver](https://github.com/motherduckdb/metabase-duckdb-driver)
+2. Connect to the local DuckDB file: `plain_analytics.duckdb`
+3. Select schema `main_mart` — four tables appear immediately
+4. Build dashboards on `mart_revenue_monthly`, `mart_support_monthly`, `mart_sla_monthly`, `mart_customer_health`
+
+**Evidence.dev (static report alternative)**
+
+```bash
+npm create evidence@latest
+# Point to plain_analytics.duckdb in evidence.config.yaml
+# Query mart tables directly in .md report files
+```
+
+**MotherDuck (cloud DuckDB — share without local setup)**
+
+```bash
+pip install motherduck
+python3 -c "import duckdb; con = duckdb.connect('md:plain_analytics'); con.execute('COPY FROM plain_analytics.duckdb')"
+# Share the MotherDuck workspace URL with stakeholders
+```
+
+> In production: mart tables sit on top of BigQuery (replace DuckDB adapter). Connect Metabase, Looker, or Tableau to BigQuery — same SQL, no model changes.
+
 ---
 
 ## Metrics

@@ -418,12 +418,12 @@ metrics:
   - name: sla_compliance_rate
     label: SLA Compliance Rate (%)
     description: >
-      Average SLA compliance rate across company-month observations.
-      Each company-month-sla_type row is weighted equally regardless of
-      company size. For volume-weighted compliance, query breach_count /
-      total_threads directly from fact_sla_performance.
-      Below 95% for enterprise signals commitment risk.
-      Below 80% for pro signals churn risk.
+      Average SLA compliance rate — averaged across company-months that had
+      at least one breach. SELECTION BIAS: fact_sla_performance only contains
+      company-months with a breach event. Companies with perfect compliance are
+      absent, so this metric is always biased below the true fleet-wide rate.
+      Use mart_sla_monthly.avg_compliance_pct for the same signal with
+      full-fleet context. Below 95% for enterprise signals commitment risk.
     type: simple
     type_params:
       measure: avg_sla_compliance_pct
@@ -534,11 +534,13 @@ metrics:
   - name: logo_churn_rate
     label: Logo Churn Rate (%)
     description: >
-      Percentage of active companies lost this month.
-      Computed as logo_churn_count / active_company_count — correct at monthly
-      grain since both come from the same fact_mrr_monthly row (same snapshot_month).
-      The headline retention metric for leadership.
-      Compare across tiers: enterprise churn rate should be near zero.
+      Percentage of companies lost this month relative to active_company_count
+      (end-of-period). Standard formula uses beginning-of-period count
+      (bop = active - new + churned) — that correct form is computed in
+      mart_revenue_monthly.logo_churn_rate_pct. This MetricFlow metric uses
+      end-of-period as denominator, which slightly overstates the rate when
+      there are net new logos (denominator is larger than bop).
+      The headline retention metric for leadership; compare across tiers.
     type: ratio
     type_params:
       numerator: logo_churn_count

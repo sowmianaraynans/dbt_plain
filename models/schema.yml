@@ -677,6 +677,66 @@ models:
           new_mrr - churned_mrr. The growth signal leadership watches monthly.
           Positive = growing. Negative = contraction. Zero = flat.
 
+  # ── Mart layer ───────────────────────────────────────────────────────────────
+  # Pre-aggregated tables designed for direct BI tool consumption.
+  # These sit above the dwh layer and remove all detail grain so that
+  # BI tools see simple monthly rows — no joins required.
+
+  - name: mart_support_monthly
+    description: >
+      Monthly support operations metrics by tier. Aggregates fact_thread_measures
+      from daily × channel × priority × tier down to monthly × tier.
+      Grain: one row per (report_month, company_tier).
+    columns:
+      - name: report_month
+        tests:
+          - not_null
+      - name: company_tier
+        tests:
+          - not_null
+      - name: resolution_rate_pct
+        description: Must be between 0 and 100.
+
+  - name: mart_revenue_monthly
+    description: >
+      Monthly MRR waterfall and logo movement by tier. Extends fact_mrr_monthly
+      with correctly-computed logo_churn_rate_pct (bop denominator) and ARPA.
+      Grain: one row per (report_month, company_tier).
+    columns:
+      - name: report_month
+        tests:
+          - not_null
+      - name: company_tier
+        tests:
+          - not_null
+      - name: logo_churn_rate_pct
+        description: churned / beginning-of-period logos. Industry-standard churn rate.
+
+  - name: mart_sla_monthly
+    description: >
+      Monthly SLA health by tier. Shows breach concentration and risk flag distribution.
+      Selection bias caveat — only company-months with at least one breach are included.
+      Grain: one row per (report_month, company_tier).
+    columns:
+      - name: report_month
+        tests:
+          - not_null
+      - name: company_tier
+        tests:
+          - not_null
+
+  - name: mart_customer_health
+    description: >
+      Current-state customer health snapshot by tier. Shows health status distribution,
+      at-risk count, and churn rate for CSM and leadership.
+      Snapshot — refreshed on each dbt run. Not historical.
+      Grain: one row per company_tier.
+    columns:
+      - name: company_tier
+        tests:
+          - unique
+          - not_null
+
 sources:
   - name: seeds
     schema: main_seeds
