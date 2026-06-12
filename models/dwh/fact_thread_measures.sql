@@ -27,12 +27,12 @@
 -- ============================================================
 
 with threads as (
-    select * from {{ ref('stg_threads') }}
+    select * from {{ ref('fact_threads') }}
 ),
 
 daily as (
     select
-        date_trunc('day', created_at)::date                             as created_date,
+        created_date,
         channel,
         priority,
         company_tier,
@@ -40,8 +40,6 @@ daily as (
         -- ── Volume (additive) ─────────────────────────────────────
         count(*)                                                        as total_threads,
         countif(is_resolved)                                            as resolved_threads,
-        -- open_threads: created on this date and not yet resolved at model-run time.
-        -- Rows for older dates decrease as threads resolve — this table is not immutable.
         countif(not is_resolved)                                        as open_threads,
         countif(is_escalated)                                           as escalated_threads,
         countif(is_high_priority)                                       as high_priority_threads,
@@ -59,8 +57,8 @@ daily as (
         sum(message_count)                                              as sum_messages,
 
         -- ── Daily-grain percentile approximations ─────────────────
-        -- Use for single-row comparisons or trend direction only.
-        -- Averaging these across rows does not produce a correct overall percentile.
+        -- Computed here (not in fact_threads) because percentiles require
+        -- all thread rows for the group — they cannot be re-aggregated.
         round(median(first_response_time_mins), 1)                      as median_frt_mins,
         round(percentile_cont(0.90) within group
             (order by first_response_time_mins), 1)                     as p90_frt_mins,

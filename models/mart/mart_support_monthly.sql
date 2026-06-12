@@ -1,60 +1,66 @@
 -- mart_support_monthly.sql
 -- ============================================================
--- SUPPORT OPERATIONS — MONTHLY ROLLUP
+-- SUPPORT OPERATIONS — MONTHLY BY COMPANY
 -- ============================================================
--- Leadership view of support health by month and tier.
--- Aggregates fact_thread_measures (daily × channel × priority × tier)
--- up to monthly × tier grain for BI consumption.
+-- Leadership and CSM view of support health.
+-- Sources from fact_threads (thread grain) — all company dimensions
+-- are already joined there, so the mart inherits them cleanly.
 --
--- All averages computed as weighted sum / count — never avg(avg).
--- p90 / median omitted: non-additive, cannot be reconstructed
--- by summing daily percentile rows.
+-- Grain: one row per (report_month, company_id)
+-- Metabase users can filter by company_name, region, or company_tier
+-- and group/pivot freely without any join configuration.
 --
--- Grain: one row per (report_month, company_tier)
+-- Weighted averages computed as SUM/COUNT — never avg(avg).
 -- ============================================================
 
-with daily as (
-    select * from {{ ref('fact_thread_measures') }}
+with threads as (
+    select * from {{ ref('fact_threads') }}
 ),
 
 monthly as (
     select
-        date_trunc('month', created_date)::date                             as report_month,
+        date_trunc('month', created_date)::date                         as report_month,
+
+        -- ── Company dimensions ────────────────────────────────────
+        company_id,
+        company_name,
         company_tier,
+        region,
 
-        -- ── Volume ────────────────────────────────────────────────────
-        sum(total_threads)                                                  as thread_volume,
-        sum(resolved_threads)                                               as threads_resolved,
-        sum(open_threads)                                                   as threads_open_eod,
-        sum(escalated_threads)                                              as escalations,
-        sum(high_priority_threads)                                          as high_priority_threads,
+        -- ── Volume ────────────────────────────────────────────────
+        count(*)                                                        as thread_volume,
+        countif(is_resolved)                                            as threads_resolved,
+        countif(not is_resolved)                                        as threads_open_eod,
+        countif(is_escalated)                                           as escalations,
+        countif(is_high_priority)                                       as high_priority_threads,
 
-        -- ── Resolution ────────────────────────────────────────────────
+        -- ── Resolution ────────────────────────────────────────────
         round(
-            100.0 * sum(resolved_threads) / nullif(sum(total_threads), 0), 1
-        )                                                                   as resolution_rate_pct,
+            100.0 * countif(is_resolved) / nullif(count(*), 0), 1
+        )                                                               as resolution_rate_pct,
 
-        -- ── First response time ───────────────────────────────────────
-        -- Weighted avg: SUM(mins) / COUNT(responses). Correct across tiers.
+        -- ── First response time (weighted avg) ────────────────────
+        count(first_response_time_mins)                                 as frt_threads_with_response,
         round(
-            sum(sum_frt_mins) / nullif(sum(frt_response_count), 0), 1
-        )                                                                   as avg_frt_mins,
-        sum(frt_response_count)                                             as frt_threads_with_response,
+            sum(first_response_time_mins)
+                / nullif(count(first_response_time_mins), 0), 1
+        )                                                               as avg_frt_mins,
 
-        -- ── Time to resolution ────────────────────────────────────────
+        -- ── Time to resolution (weighted avg) ─────────────────────
+        countif(is_resolved and resolution_time_mins is not null)       as ttr_threads_resolved,
         round(
-            sum(sum_ttr_mins) / nullif(sum(ttr_resolved_count), 0), 1
-        )                                                                   as avg_ttr_mins,
-        sum(ttr_resolved_count)                                             as ttr_threads_resolved,
+            sum(case when is_resolved then resolution_time_mins end)
+                / nullif(countif(is_resolved and resolution_time_mins is not null), 0), 1
+        )                                                               as avg_ttr_mins,
 
-        -- ── Engagement ────────────────────────────────────────────────
+        -- ── Engagement ────────────────────────────────────────────
         round(
-            sum(sum_messages) / nullif(sum(total_threads), 0), 1
-        )                                                                   as avg_messages_per_thread
+            sum(message_count) / nullif(count(*), 0), 1
+        )                                                               as avg_messages_per_thread
 
-    from daily
-    group by 1, 2
+    from threads
+    group by 1, 2, 3, 4, 5
 )
 
 select * from monthly
-order by report_month desc, company_tier
+order by report_month desc, thread_volume desc

@@ -35,20 +35,20 @@ semantic_models:
   # ── Support throughput and speed ─────────────────────────────────────────────
   - name: threads_daily
     description: >
-      Daily thread measures by channel, priority, and tier.
-      Grain: one row per (created_date, channel, priority, company_tier).
+      Thread-grain fact table — one row per thread.
       Source for all support throughput and speed metrics.
-      Note: p90 and median columns exist in the underlying fact_thread_measures
-      table but are not exposed here — they are non-additive across this
-      4-dimensional grain and must be queried via direct SQL.
-    model: ref('fact_thread_measures')
+      Dimensions include company_id, region, channel, priority, and tier,
+      so MetricFlow can slice by any combination without pre-aggregation.
+      p90 and median are available in fact_thread_measures for direct SQL
+      (they cannot be computed by summing thread-level rows).
+    model: ref('fact_threads')
     defaults:
       agg_time_dimension: created_date
 
     entities:
-      - name: thread_slice
+      - name: thread
         type: primary
-        expr: "created_date || '|' || channel || '|' || priority || '|' || company_tier"
+        expr: thread_id
 
     dimensions:
       - name: created_date
@@ -68,48 +68,54 @@ semantic_models:
         type: categorical
         label: Company Tier
         description: enterprise / pro / starter / free
+      - name: region
+        type: categorical
+        label: Region
+      - name: label
+        type: categorical
+        label: Thread Label
 
     measures:
-      # Additive volume counts — safe to sum across any dimension combination
+      # Additive volume — one flag per thread row, sum freely across any dimension
       - name: thread_count
         label: Thread Count
         description: Total threads created.
-        agg: sum
-        expr: total_threads
+        agg: count_distinct
+        expr: thread_id
       - name: resolved_thread_count
         label: Resolved Thread Count
         description: Threads resolved (status = done).
         agg: sum
-        expr: resolved_threads
+        expr: "CASE WHEN is_resolved THEN 1 ELSE 0 END"
       - name: escalated_thread_count
         label: Escalated Thread Count
         description: Threads marked as escalated.
         agg: sum
-        expr: escalated_threads
+        expr: "CASE WHEN is_escalated THEN 1 ELSE 0 END"
 
-      # FRT additive components — numerator/denominator for avg_first_response_time
+      # FRT additive components — sum then divide for correct weighted average
       - name: sum_frt_mins
         label: Sum FRT (mins)
         description: Sum of all first response times in minutes.
         agg: sum
-        expr: sum_frt_mins
+        expr: first_response_time_mins
       - name: frt_response_count
         label: FRT Response Count
         description: Threads with a first response time recorded.
         agg: sum
-        expr: frt_response_count
+        expr: "CASE WHEN first_response_time_mins IS NOT NULL THEN 1 ELSE 0 END"
 
-      # TTR additive components — numerator/denominator for avg_resolution_time
+      # TTR additive components
       - name: sum_ttr_mins
         label: Sum TTR (mins)
         description: Sum of all resolution times in minutes.
         agg: sum
-        expr: sum_ttr_mins
+        expr: resolution_time_mins
       - name: ttr_resolved_count
         label: TTR Resolved Count
         description: Resolved threads with a recorded resolution time.
         agg: sum
-        expr: ttr_resolved_count
+        expr: "CASE WHEN is_resolved AND resolution_time_mins IS NOT NULL THEN 1 ELSE 0 END"
 
   # ── SLA compliance ────────────────────────────────────────────────────────────
   - name: sla_performance_monthly

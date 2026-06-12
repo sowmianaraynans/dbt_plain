@@ -2,22 +2,21 @@
 -- ============================================================
 -- THREAD DIMENSION
 -- ============================================================
--- Thread-level attributes enriched with company and customer context.
--- Used for ad-hoc analysis, filtering, and downstream joins.
--- Grain: one row per thread_id.
+-- Thread-level descriptor enriched with customer context
+-- and computed classification buckets.
+--
+-- Sources from fact_threads (which already joins company dims).
+-- Adds: customer_name, customer_email, resolution_bucket, age_hours_open.
+--
+-- Use for: ad-hoc filtering, thread-level drill-down in BI,
+-- resolution time distribution analysis.
+-- For aggregated metrics, use fact_thread_measures or mart_support_monthly.
+--
+-- Grain: one row per thread_id
 -- ============================================================
 
 with threads as (
-    select * from {{ ref('stg_threads') }}
-),
-
-companies as (
-    select
-        company_id,
-        company_name,
-        company_tier,
-        region
-    from {{ ref('stg_companies') }}
+    select * from {{ ref('fact_threads') }}
 ),
 
 customers as (
@@ -32,31 +31,28 @@ final as (
     select
         -- ── Identity ──────────────────────────────────────────────
         t.thread_id,
-        t.external_id,
 
         -- ── Customer / Company ────────────────────────────────────
         t.customer_id,
         cu.customer_name,
         cu.customer_email,
         t.company_id,
-        co.company_name,
-        co.company_tier,
-        co.region,
+        t.company_name,
+        t.company_tier,
+        t.region,
         t.tenant_id,
 
         -- ── Thread attributes ─────────────────────────────────────
-        t.title,
-        t.status,
-        t.priority,
         t.channel,
+        t.priority,
         t.label,
         t.assigned_agent_id,
-        t.assigned_agent_name,
 
         -- ── Status flags ──────────────────────────────────────────
         t.is_resolved,
         t.is_escalated,
         t.is_high_priority,
+        t.is_assigned,
 
         -- ── Speed metrics ─────────────────────────────────────────
         t.first_response_time_mins,
@@ -76,21 +72,18 @@ final as (
         -- ── Thread age (open threads only) ────────────────────────
         case
             when not t.is_resolved
-            then datediff(
-                'hour',
-                t.created_at,
-                current_timestamp
-            )
+            then datediff('hour', t.created_at, current_timestamp)
         end                                                     as age_hours_open,
 
         -- ── Timestamps ────────────────────────────────────────────
+        t.created_date,
+        t.resolved_date,
         t.created_at,
         t.updated_at,
         t.resolved_at
 
     from threads t
-    left join companies co  on t.company_id  = co.company_id
-    left join customers cu  on t.customer_id = cu.customer_id
+    left join customers cu on t.customer_id = cu.customer_id
 )
 
 select * from final
